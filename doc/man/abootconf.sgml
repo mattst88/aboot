@@ -115,7 +115,7 @@ boot <parameter>dqa -fl "4:2"</parameter>
 at the SRM prompt.
 </para>
 <para>
-Note that this applies to Linux only as <ProductName>VMS</ProductName>, <ProductName>True64</ProductName>, *BSD and
+Note that this applies to Linux only as <ProductName>VMS</ProductName>, <ProductName>Tru64</ProductName>, *BSD and
 <ProductName>Windows NT</ProductName> each have their own secondary boot loader.
 </para>
 </refsect1>

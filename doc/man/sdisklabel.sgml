@@ -1,0 +1,214 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="sdisklabel">
+
+<refmeta>
+<refentrytitle>sdisklabel</refentrytitle>
+<manvolnum>8</manvolnum>
+<refmiscinfo>sdisklabel</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>sdisklabel</refname>
+<refpurpose>
+Create/modify disklabels on Linux/Alpha systems
+</refpurpose>
+</refnamediv>
+
+<refsect1><title>SYNOPSIS</title>
+<para>sdisklabel <parameter>drive [print|zero|sum]</parameter></para>
+<para>sdisklabel <parameter>drive size partsize</parameter></para>
+<para>sdisklabel <parameter>drive partnum offset size parttype</parameter></para>
+<!-- <para>sdisklabel <parameter>drive size size_in_sectors</parameter></para>
+<para>sdisklabel <parameter>drive partition_number offset_in_sectors size_in_sectors partition_type</parameter></para> -->
+</refsect1> 
+
+<!-- <refsect1><title>COPYRIGHT</title>
+<para>
+<application>sdisklabel</application> is Copyright (C) 
+</para>
+</refsect1> -->
+
+<refsect1><title>DESCRIPTIONS</title>
+<para>
+<indexterm><primary>sdisklabel</primary></indexterm>
+<application>sdisklabel</application>
+can be used to create partitions (called disklabels) on Linux/Alpha
+systems. You <emphasis>must</emphasis> use disklabels instead of the
+<productname>DOS</productname> type
+partitioning scheme on any hard disk which you want to boot from via SRM or
+which you want to share with <productname>HP Tru64</productname>.
+If you instead are booting from <application>milo</application>
+then you <emphasis>must not</emphasis> use disklabels on your boot hard disk.
+</para>
+
+<para>
+Even if you are using disklabels, it is recommended to use 
+<application>fdisk</application>(8) instead
+of <application>sdisklabel</application>.
+</para>
+
+<para>
+<application>sdisklabel</application> also assumes 
+you have a SCSI disk with 512-byte sectors,
+though it should work fine on an IDE drive as well.  All sizes are
+specified on the command line in sectors.
+</para>
+
+<para>
+There are 8 partitions in total which are numbered from 0 to 7. They
+correspond to BSD disklabels A to H.
+Partitions have to be added sequentially, as 
+<application>sdisklabel</application> won't let
+you leave empty partitions unlike many BSD disklabel programs. If you
+want this (or if you want overlapping disk labels) 
+use <application>fdisk</application>(8) instead.
+</para>
+
+<para>
+First off, if you have an invalid disk label (you've never run 
+<application>sdisklabel</application> on this disk
+before) you have to issue
+</para>
+
+<para>
+<command>
+sdisklabel <parameter>/dev/sda zero</parameter>
+</command>
+</para>
+
+<para>
+(<filename>/dev/sda</filename> is the device you're partitioning, 
+substitute as appropriate).
+</para>
+
+<para>
+This zeros out your disk label. Only do this if you really want to
+zero your disk label. It just does it; it doesn't ask, or warn, or
+anything.
+</para>
+
+<para>
+The program also probably printed out the size of your disk in Kb. If
+it was wrong, you now get to use the "<parameter>size xxx</parameter>"
+option along with the
+rest of these commands. The size isn't critical, it's just used to try
+and make sure you don't go past the end of the disk.
+</para>
+
+<para>
+Next, add your first partition. This <emphasis>doesn't</emphasis>
+start from 0, as you
+have to leave room for the boot loader and other stuff. 256K (or 512
+sectors) will be enough.
+</para>
+
+<para>
+Let's pretend that you want to make a 250000 Kb partition starting
+from sector offset 512:
+</para>
+
+<para>
+<command>
+sdisklabel <parameter>/dev/sda 0 512 500000 8 print</parameter>
+</command>
+</para>
+
+<para>
+The last number is the filesystem type, and is currently 8 for ext2fs
+filesystems. (A different number would be used to specify an
+<productname>Tru64</productname>
+partition, for example).
+</para>
+
+<para>
+If all was successful, the program should print out the partition (the
+last keyword, "print", specifies that it should print the partition
+after modifying it with the previous command), and you should see
+something like
+</para>
+
+<para>
+<blockquote>
+<literallayout>
+----------------------------------------------------------
+I think your disk is 528870K total size.
+If I'm wrong, override the size with the 'size num' option
+
+partition 0: type 8, starts sector 512, size 500000
+----------------------------------------------------------
+</literallayout>
+</blockquote>
+</para>
+
+<para>
+You can then add the next partition, which would be partition 1.
+To add a second partition that is 200000 Kb long, you'd run
+</para>
+
+<para>
+<command>
+sdisklabel <parameter>/dev/sda 1 512256 400000 8 print</parameter>
+</command>
+</para>
+<para>
+And both partitions would then be printed out.
+</para>
+
+<para>
+If for some reason the size got determined incorrectly, you'd do
+instead
+</para>
+<para>
+<command>
+sdisklabel <parameter>/dev/sda size 528870 0 512 400000 8 print</parameter>
+</command>
+</para>
+
+<para>
+The size option should come immediately after the device name, and the
+size is the total # of sectors on the drive.
+</para>
+
+</refsect1>
+<refsect1><title>BUGS</title>
+<para>
+<application>sdisklabel</application> does not check for all errors, so
+use with care.
+</para>
+</refsect1>
+<refsect1><title>NOTES</title>
+<para>
+If you want to share the disk with <productname>HP Tru64</productname>
+(<productname>OSF/1</productname>) it is recommended to
+use the <productname>Tru64</productname> 
+partitioning tools to prepare the disk.
+</para>
+<para>
+To actually boot from the freshly labeled disk you also need to install
+a boot strap as well, see
+<application>aboot</application>(8) and <application>swriteboot</application>(8)
+for details.
+</para>
+<para>
+The print command may be placed before or after any other command.
+</para>
+<para>
+In case you do want to leave empty partitions or create lables wich
+extend beyond the end of the disk (e.g. when you know 
+<application>sdisklabel</application> is reporting a wrong size) then
+use can use the <parameter>force</parameter> switch on the command line.
+</para>
+</refsect1>
+<refsect1><title>AUTHOR</title>
+<para>
+This man page was written by Helge Kreutzmann <email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project but may be used by others. It is
+heavily based on the <filename>README</filename> provided along with the
+<application>sdisklabel</application> source.
+</para>
+</refsect1>
+<refsect1><title>SEE ALSO</title>
+<para> 
+<application>fdisk</application>(8), <application>aboot</application>(8), <application>swriteboot</application>(8)
+</para>
+</refsect1>
+</refentry>

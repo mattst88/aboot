@@ -1,3 +1,8 @@
+2002-09-18  Will Woods <will.woods@hp.com>
+	* branched the 0.9 tree to add bugfixes
+	* fixed some compilation errors with newer gcc/glibc versions
+	* added newer manpages
+
 2002-01-15  Will Woods <will.woods@compaq.com>
 	* lib/isolib.c: moved out of lib/ so we don't build isofs code into
 	  the network bootloader.

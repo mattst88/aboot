@@ -56,7 +56,7 @@ issue
 </para>
 <para>
 Note that this applies to Linux booting via SRM only as
-<ProductName>VMS</ProductName>, <ProductName>True64</ProductName>, *BSD and
+<ProductName>VMS</ProductName>, <ProductName>Tru64</ProductName>, *BSD and
 <ProductName>Windows NT</ProductName> each have their own secondary boot loader.
 Furthermore <application>aboot</application> is also not needed if the system is booted via
 <application>milo</application>.

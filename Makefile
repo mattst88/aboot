@@ -39,7 +39,7 @@ CPPFLAGS	= $(CFGDEFS) -I$(TOP)/include -I$(KSRC)/include
 CFLAGS		= $(CPPFLAGS) -D__KERNEL__ -mcpu=ev4 -Os -Wall -fno-builtin -mno-fp-regs -ffixed-8
 else
 CPPFLAGS	= -DTESTING $(CFGDEFS) -I$(TOP)/include -I$(KSRC)/include
-CFLAGS		= $(CPPFLAGS) -O -g3 -Wall -Wcast-align -D__KERNEL__ -ffixed-8
+CFLAGS		= $(CPPFLAGS) -O -g3 -Wall -D__KERNEL__ -ffixed-8
 endif
 ASFLAGS		= $(CPPFLAGS)
 

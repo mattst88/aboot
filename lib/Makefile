@@ -1,7 +1,7 @@
 CC	= gcc
 CPPFLAGS +=  -D__KERNEL__ -I../include
 ifeq ($(TESTING),)
-CFLAGS	= -Os -Wall -mno-fp-regs
+CFLAGS	= -Os -Wall -mno-fp-regs -fno-builtin
 else
 CFLAGS  = -Os -g3 -Wall
 endif

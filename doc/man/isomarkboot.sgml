@@ -1,0 +1,92 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="isomarkboot">
+
+<refmeta>
+<refentrytitle>isomarkboot</refentrytitle>
+<manvolnum>8</manvolnum>
+<refmiscinfo>isomarkboot</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>isomarkboot</refname>
+<refpurpose>
+Create bootable CD-ROMs for Linux/Alpha systems.
+</refpurpose>
+</refnamediv>
+
+<refsect1><title>SYNOPSIS</title>
+<para>isomarkboot <parameter>/dev/xxx path/to/bootlx [path/to/root.bin]</parameter></para>
+</refsect1> 
+
+<refsect1><title>COPYRIGHT</title>
+<para>
+<application>isomarkboot</application> is Copyright (C) 1996 David Mosberger-Tang
+</para>
+</refsect1>
+
+<refsect1><title>DESCRIPTIONS</title>
+<para>
+<indexterm><primary>isomarkboot</primary></indexterm>
+<application>isomarkboot</application>
+enables ISO images created with <application>mkisofs</application>(8) or
+retrieved from the net
+to be booted on Linux/Alpha systems.
+</para>
+
+<para>
+First you have to prepare your ISO image and mount it loopback on
+<filename>/dev/xxx</filename> (typically <filename>/dev/loop0</filename>)
+(see <application>mount</application>(8) for details). 
+</para>
+
+<para>
+Next you need to locate the aboot-loader (called <filename>bootlx</filename>)
+and the ram disk image containing the root file system (the latter is optional
+but usually sensible to specify) which is often called 
+<filename>root.bin</filename> within your ISO image.
+</para>
+<para>
+Finally enable the image to be booted:
+</para>
+<para>
+<command>
+isomarkboot <parameter>/dev/xxx path/to/bootlx path/to/root.bin</parameter>
+</command>
+</para>
+<para>
+A typical location of <filename>bootlx</filename> on the disk image is
+<filename>boot/bootlx</filename>. The path of <filename>bootlx</filename>
+and <filename>root.bin</filename> are relative to the root of the image. If
+your image is not mounted you have to replace <filename>/dev/xxx</filename>
+with the path to the image.
+</para>
+
+<para>
+Finally you have to burn the CD using e.g.
+<application>xcdroast</application> after unmounting the image.
+</para>
+
+</refsect1>
+<refsect1><title>BUGS</title>
+<para>
+<application>isomarkboot</application> is currently only available on 
+Linux/Alpha systems though it can be compiled and used with minor
+modifications on other platforms as well.
+</para>
+</refsect1>
+<refsect1><title>NOTES</title>
+<para>
+<application>isomarkboot</application> is capable of handling symlinks
+within the image.
+</para>
+</refsect1>
+<refsect1><title>AUTHOR</title>
+<para>
+This man page was written by Helge Kreutzmann <email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project but may be used by others.
+</para>
+</refsect1>
+<refsect1><title>SEE ALSO</title>
+<para><application>aboot</application>(8), <application>mkisofs</application>(8)
+</para>
+</refsect1>
+</refentry>

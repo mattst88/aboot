@@ -13,8 +13,8 @@
  * the Alpha AXP Architecture Reference Manual, Second Edition by
  * Richard L. Sites and Richard T. Witek.
  */
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 
 #include <sys/fcntl.h>
