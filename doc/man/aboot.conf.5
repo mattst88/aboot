@@ -3,7 +3,7 @@
 .\" <http://shell.ipoline.com/~elmert/hacks/docbook2X/> 
 .\" Please send any bug reports, improvements, comments, patches, 
 .\" etc. to Steve Cheng <steve@ggi-project.org>.
-.TH "ABOOT.CONF" "5" "09 April 2001" "aboot.conf" ""
+.TH "ABOOT.CONF" "5" "17 Januar 2003" "aboot.conf" ""
 .SH NAME
 aboot.conf \- The configuration file for aboot(8)
 .SH "DESCRIPTION"
@@ -14,6 +14,23 @@ for \fBaboot\fR(8). Each boot setting
 has a unique number which can be supplied at the SRM-Prompt.
 .
 .PP
+\fIaboot.conf\fR must be in a directory called
+\fIetc\fR on the \fBsame partition\fR
+as your kernels reside on unless you explicitly list the partitions
+for your kernels (see below for details). So if you create a separate
+boot partition (called \fI/boot\fR) then
+\fIaboot.conf\fR should reside in \fI/boot/etc/\fR.
+.PP
+In the following example the kernels reside on a different partition (hda4)
+then \fI/\fR belongs to (hda5) while in the fourth
+line \fI/boot\fR is on the same partition (hda6) as
+\fI/\fR.
+Therefore \fIaboot.conf\fR can be located on any of the
+three partitions but \fBalways\fR in a directory
+\fIetc\fR at the top level of the file system on that
+partition. You can change the partition to use with
+\fBabootconf\fR(8).
+.PP
 .SS "EXAMPLE ABOOT.CONF"
 .sp
 .RS
@@ -22,7 +39,7 @@ has a unique number which can be supplied at the SRM-Prompt.
 0:4/vmlinuz root=/dev/hda5
 1:4/vmlinuz root=/dev/hda5 single
 2:4/vmlinuz.old ro root=/dev/hda5
-8:6/boot/vmlinuz ro root=/dev/hda8
+8:6/boot/vmlinuz ro root=/dev/hda6
 .sp
 .fi
 .RE
@@ -38,15 +55,15 @@ where dka0 has to be replaced by your boot device and the boot configuration
 \fIetc/aboot.conf\fR.
 .PP
 After the colon the number of the partition the kernel resides on is given. 1
-corresponds to A:, 2 to B: and so on. 
+corresponds to the BSD partition labeled A:, 2 to B: and so on. 
 .PP
 After the slash the name of the kernel to boot is given, including a possible
-path. If your kernel does not reside on a filesystem but is located directly
-after aboot at the beginning of the hard disk you would ommit the number, the
-slash and the kernel name.
+path. If your kernel does not reside on a file system but is located directly
+after \fBaboot\fR at the beginning of the hard disk
+you would omit the number, the slash and the kernel name.
 .PP
-Next the name of the partition to mount as / is given. Other kernel
-parameters follow as required.
+Next the name of the partition to mount as \fI/\fR is given.
+Other kernel parameters follow as required.
 .PP
 The contents of this file can be shown before booting if necessary by
 using the interactive
@@ -55,7 +72,8 @@ and then issuing "h" at the \fBaboot\fR-prompt.
 .SH "AUTHOR"
 .PP
 This man page was written by Helge Kreutzmann
-<kreutzm@itp.uni-hannover.de> for the Debian GNU/Linux project.
+<kreutzm@itp.uni-hannover.de> for the Debian GNU/Linux project but
+may be used by others.
 .SH "SEE ALSO"
 .PP
-\fBaboot\fR(8), \fBabootconf\fR(8), \fBswriteboot\fR(8), Compaq SRM Manual
+\fBaboot\fR(8), \fBabootconf\fR(8), \fBswriteboot\fR(8), HP SRM Manual

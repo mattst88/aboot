@@ -14,7 +14,7 @@
 
 <refsect1><title>COPYRIGHT</title>
 <para>
-<application>aboot</application> is Copyright (C) 1996 Linus Torvalds, David Mosberger and Michael Schwingen (??)
+<application>aboot</application> is Copyright (C) 1996 Linus Torvalds, David Mosberger-Tang and Michael Schwingen
 </para>
 </refsect1>
 
@@ -48,7 +48,7 @@ If you do not want to use the <filename>etc/aboot.conf</filename> as set
 up by <application>abootconf</application> you can explicitly tell 
 <application>aboot</application> where to look for <filename>etc/aboot.conf</filename> by prepending the number of the configuration with the proper
 partition, i.e. if your <filename>etc/aboot.conf</filename> is on your
-second partition and you want to boot the entry labled three you would
+second partition and you want to boot the entry labeled three you would
 issue
 </para>
 <para>
@@ -56,7 +56,7 @@ issue
 </para>
 <para>
 Note that this applies to Linux booting via SRM only as
-<ProductName>VMS</ProductName>, <ProductName>Tru64</ProductName>, *BSD and
+<ProductName>VMS</ProductName>, <ProductName>True64</ProductName>, *BSD and
 <ProductName>Windows NT</ProductName> each have their own secondary boot loader.
 Furthermore <application>aboot</application> is also not needed if the system is booted via
 <application>milo</application>.
@@ -67,7 +67,8 @@ Furthermore <application>aboot</application> is also not needed if the system is
 <refsect1><title>AUTHOR</title>
 <para>
 This man page was written by Helge Kreutzmann
-<email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project.
+<email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project
+but may be used by others.
 </para>
 </refsect1>
 
@@ -77,6 +78,6 @@ This man page was written by Helge Kreutzmann
 
 <refsect1><title>SEE ALSO</title>
 <para><application>abootconf</application>(8), <filename>aboot.conf</filename>(5),
-<application>swriteboot</application>(8), Compaq SRM Manual</para>
+<application>swriteboot</application>(8), HP SRM Manual</para>
 </refsect1>
 </refentry>

@@ -1,28 +1,32 @@
-These are my suggestions regarding the man pages for aboot, abootconf
-and etc/aboot.conf.
+This compilation contains man pages for various boot aspects on the Linux/Alpha
+platform. They are licensed under the GPL. Comments, suggestions and patches
+should be forwarded either to me or to the current aboot maintainer.
 
-The man page for aboot is rather brief. There are propably several things
-which could be mentioned there.
+The following files are included:
 
-I also included the man pages for e2writeboot (from the aboot 7a tar ball)
-and swriteboot (from the debian aboot-package). Since I have no experience
-with these programmes I left them (almost) untouched.
+README             this document
+aboot.8            man pages for aboot
+aboot.sgml         sgml-source for man page for aboot
+aboot.conf.5       man page for configuration file etc/aboot.conf
+aboot.conf.sgml    sgml-source for above man page
+abootconf.8        man page for abootconf
+abootconf.sgml     sgml-source for man page for abootconf
+e2writeboot.8      man page for e2writeboot (from aboot 7a tarball, modified)
+swriteboot.8       man page for swriteboot (from debian distribution, modified)
+isomarkboot.sgml   sgml-source for man page for isomarkboot
+isomarkboot.8      man page for isomarkboot
+sdisklabel.sgml    sgml-source for man page for sdisklabel
+sdisklabel.8       man page for sdisklabel
 
-Is it correct that the example in swriteboot talks about e2writeboot ?
+Since I have no experience regarding e2writeboot and swriteboot I made only
+small modifications in these man pages.
 
-Maybe the list of authors has to be updated ?
+The list of authors was verified as best as possible (by contacting all
+person still reachable via email), if you feel this is not complete/accureate
+please contact me.
 
-The man pages I created are in sgml as well as in nroff-format. I would
-appreciate all comments/patches regarding the contents relative to the sgml-
-file if possible. 
+Technical note:
+To create the nroff version from the SGML sources, nsgml was used like
+        nsgmls abootconf.sgml | sgmlspl sgmlspl-specs/docbook2man-spec.pl
 
-The layout given is the one provided by the docbook dtd.[1]
-
-Please mail your comments to
-Helge Kreutzmann <kreutzm@itp.uni-hannover.de>
-
-Thanks.
-
-[1] I am aware that the visual appareance might vary slightly from distribution
-    to distribution, e.g. the appereance I create under PLD Linux is slightly
-    different then the one I create under Debian GNU/Linux.
+Hannover, Germany, January 17th 2003

@@ -10,31 +10,33 @@
 <refnamediv>
 <refname>abootconf</refname>
 <refpurpose>
-Configure the location of the configuration file for the secondary boot loader
-<application>aboot</application>(8) for Linux/Alpha.
+Configure the location of the configuration file for the secondary boot
+loader <application>aboot</application>(8) for Linux/Alpha.
 </refpurpose>
 </refnamediv>
 
-<refsect1><title>SYNOPSIS</title>
-<para>abootconf <parameter>/dev/xxx num</parameter></para>
-</refsect1> 
+<refsynopsisdiv>
+ <cmdsynopsis>
+   <command>abootconf</command> <arg choice="plain">/dev/xxx num</arg>
+ </cmdsynopsis>
+</refsynopsisdiv>
 
 <refsect1><title>COPYRIGHT</title>
 <para>
-<application>abootconf</application> is Copyright (C) 1996 Linus Torvalds, David Mosberger and Michael Schwingen
+<application>abootconf</application> is Copyright (C) 1996 Linus Torvalds, David Mosberger-Tang and Michael Schwingen
 </para>
 </refsect1>
 
 <refsect1><title>DESCRIPTIONS</title>
 <para>
 <indexterm><primary>abootconf</primary></indexterm>
+<indexterm><primary>aboot</primary></indexterm>
 <application>abootconf</application> is used to change the partition<indexterm><primary>partition
 </primary></indexterm>
 the alpha Linux boot loader <application>aboot</application>(8)
-<indexterm><primary>aboot</primary></indexterm>
 looks for its configuration file in. The configuration file is stored
 in <filename>etc/aboot.conf</filename>(5)
-relative to the root of the filesystem in this partition.
+relative to the root of the file system in this partition.
 </para>
 <para> 
 <application>abootconf</application> requires the boot device
@@ -65,7 +67,7 @@ boot <parameter>dqa</parameter>
 </command>
 </para>
 <para>
-to boot from your first ide hard disk. See the Compaq SRM-Manual and
+to boot from your first IDE hard disk. See the HP SRM-Manual and
 <application>aboot</application>(8)
 for details.
 </para>
@@ -87,7 +89,7 @@ boot <parameter>dqa -fl "2"</parameter>
 </command>
 </para>
 <para>
-See the Compaq SRM manual and <filename>aboot.conf</filename>(5)
+See the HP SRM manual and <filename>aboot.conf</filename>(5)
 for details.
 </para>
 <para>
@@ -115,19 +117,24 @@ boot <parameter>dqa -fl "4:2"</parameter>
 at the SRM prompt.
 </para>
 <para>
-Note that this applies to Linux only as <ProductName>VMS</ProductName>, <ProductName>Tru64</ProductName>, *BSD and
+Note that this applies to Linux only as <ProductName>VMS</ProductName>, <ProductName>True64</ProductName>, *BSD and
 <ProductName>Windows NT</ProductName> each have their own secondary boot loader.
+</para>
+<para>
+Also note that for initial hard disk setup <application>abootconf</application>
+is no longer needed as <application>swriteboot</application>(8) contains the
+entire functionality of <application>abootconf</application>.
 </para>
 </refsect1>
 <refsect1><title>AUTHOR</title>
 <para>
-This man page was written by Helge Kreutzmann <email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project.
+This man page was written by Helge Kreutzmann <email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project but may be used by others.
 </para>
 </refsect1>
 <refsect1><title>FILES</title>
 <para><filename>etc/aboot.conf</filename></para>
 </refsect1>
 <refsect1><title>SEE ALSO</title>
-<para><application>aboot</application>(8), <application>swriteboot</application>(8), <filename>aboot.conf</filename>(5), Compaq SRM Manual</para>
+<para><application>aboot</application>(8), <application>swriteboot</application>(8), <filename>aboot.conf</filename>(5), HP SRM Manual</para>
 </refsect1>
 </refentry>

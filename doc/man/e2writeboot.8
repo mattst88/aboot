@@ -1,5 +1,5 @@
 .\" e2writeboot - Write secondary SRM bootloader to ext2 filesystem.
-.TH e2writeboot 8 "17 January 1995" "David Mosberger" ""
+.TH e2writeboot 8 "17 January 1995" "David Mosberger-Tang" ""
 .SH NAME
 e2writeboot \- Write secondary SRM bootloader to ext2 filesystem.
 .SH SYNOPSIS
@@ -10,21 +10,21 @@ e2writeboot \- Write secondary SRM bootloader to ext2 filesystem.
 an ext2 formatted filesystem (normally on a floppy disk).  The loader
 is written in a way that allows the SRM firmware to boot from the
 filesystem (SRM is the firmware that is also used to boot
-\fBCompaq Tru64\fP, OpenVMS and *BSD).  Specifically, the
+\fBHP True 64\fP, \fBOpenVMS\fP and *BSD).  Specifically, the
 loader is written to a physically
 contiguous range of sectors and the first sector is updated such that
 the SRM firmware can find the boot loader.  The loader is always
 stored with filename \fBlinuxboot\fP and if such a file already
 exists, it will be overwritten unconditionally.  This command may
 fail if the filesystem is highly fragmented.  If so, re-format the
-filesystem with \fBmke2fs\fP (this will destroy the existing contents
+filesystem with \fBmke2fs\fP(8) (this will destroy the existing contents
 of the filesystem, so use this with care).
 
 .P
 The \fI<ext2fs>\fP argument specifies the filesystem or special device
 to which the \fI<bootloader>\fP file should be written to.  The boot
 loader file must be an ECOFF object file.  A typical command to make a
-floppy disk bootable with the \fIaboot\fP loader is shown below:
+floppy disk bootable with the \fIaboot\fP(8) loader is shown below:
 
 .I "e2writeboot /dev/fd0 aboot"
 
@@ -37,6 +37,6 @@ floppy disk bootable with the \fIaboot\fP loader is shown below:
 .SH AUTHORS
 .nf
 Jim Paradis <paradis@amt.tay1.dec.com>
-Jay Estabrook <jestabro@amt.tay1.dec.com>
-David Mosberger-Tang <davidm@azstarnet.com>
+Jay Estabrook <Jay.Estabrook@hp.com>
+David Mosberger-Tang <David.Mosberger@acm.org>
 .fi

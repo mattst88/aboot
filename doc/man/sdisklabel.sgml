@@ -14,13 +14,36 @@ Create/modify disklabels on Linux/Alpha systems
 </refpurpose>
 </refnamediv>
 
+<!-- This is the proper SGML way, but somehow doesn't work here -->
+<!-- <refsynopsisdiv>
+ <cmdsynopsis>
+   <command>sdisklabel</command>
+     <arg choice="plain">drive</arg>
+     <group choice="opt"><arg choice="plain">print</arg>
+       <arg choice="plain">zero</arg>
+       <arg choice="plain">sum</arg>
+     </group>
+ </cmdsynopsis>
+ <cmdsynopsis>
+   <command>sdisklabel</command>
+     <arg choice="plain">drive</arg>
+     <arg choice="plain">size</arg>
+     <arg choice="plain">partsize</arg>
+ </cmdsynopsis>
+ <cmdsynopsis>
+   <command>sdisklabel</command>
+     <arg choice="plain">drive</arg>
+     <arg choice="plain">partnum</arg>
+     <arg choice="plain">offset</arg>
+     <arg choice="plain">size</arg>
+     <arg choice="plain">parttype</arg>
+ </cmdsynopsis>
+</refsynopsisdiv> -->
 <refsect1><title>SYNOPSIS</title>
 <para>sdisklabel <parameter>drive [print|zero|sum]</parameter></para>
 <para>sdisklabel <parameter>drive size partsize</parameter></para>
 <para>sdisklabel <parameter>drive partnum offset size parttype</parameter></para>
-<!-- <para>sdisklabel <parameter>drive size size_in_sectors</parameter></para>
-<para>sdisklabel <parameter>drive partition_number offset_in_sectors size_in_sectors partition_type</parameter></para> -->
-</refsect1> 
+</refsect1>
 
 <!-- <refsect1><title>COPYRIGHT</title>
 <para>
@@ -36,7 +59,7 @@ can be used to create partitions (called disklabels) on Linux/Alpha
 systems. You <emphasis>must</emphasis> use disklabels instead of the
 <productname>DOS</productname> type
 partitioning scheme on any hard disk which you want to boot from via SRM or
-which you want to share with <productname>HP Tru64</productname>.
+which you want to share with <productname>HP True64</productname>.
 If you instead are booting from <application>milo</application>
 then you <emphasis>must not</emphasis> use disklabels on your boot hard disk.
 </para>
@@ -116,7 +139,7 @@ sdisklabel <parameter>/dev/sda 0 512 500000 8 print</parameter>
 <para>
 The last number is the filesystem type, and is currently 8 for ext2fs
 filesystems. (A different number would be used to specify an
-<productname>Tru64</productname>
+<productname>True 64</productname>
 partition, for example).
 </para>
 
@@ -178,9 +201,9 @@ use with care.
 </refsect1>
 <refsect1><title>NOTES</title>
 <para>
-If you want to share the disk with <productname>HP Tru64</productname>
+If you want to share the disk with <productname>HP True64</productname>
 (<productname>OSF/1</productname>) it is recommended to
-use the <productname>Tru64</productname> 
+use the <productname>True64</productname> 
 partitioning tools to prepare the disk.
 </para>
 <para>

@@ -14,9 +14,14 @@ Create bootable CD-ROMs for Linux/Alpha systems.
 </refpurpose>
 </refnamediv>
 
-<refsect1><title>SYNOPSIS</title>
-<para>isomarkboot <parameter>/dev/xxx path/to/bootlx [path/to/root.bin]</parameter></para>
-</refsect1> 
+<refsynopsisdiv>
+ <cmdsynopsis>
+   <command>isomarkboot</command> 
+        <arg choice="plain">/dev/xxx</arg>
+        <arg choice="plain">path/to/bootlx</arg>
+        <arg choice="opt">path/to/root.bin</arg>
+   </cmdsynopsis>
+</refsynopsisdiv>
 
 <refsect1><title>COPYRIGHT</title>
 <para>

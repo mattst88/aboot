@@ -3,26 +3,26 @@
 .\" <http://shell.ipoline.com/~elmert/hacks/docbook2X/> 
 .\" Please send any bug reports, improvements, comments, patches, 
 .\" etc. to Steve Cheng <steve@ggi-project.org>.
-.TH "ABOOTCONF" "8" "09 April 2001" "abootconf" ""
+.TH "ABOOTCONF" "8" "17 Januar 2003" "abootconf" ""
 .SH NAME
-abootconf \- Configure the location of the configuration file for the secondary boot loader aboot(8) for Linux/Alpha.
-.SH "SYNOPSIS"
-.PP
-abootconf \fI/dev/xxx num\fR
+abootconf \- Configure the location of the configuration file for the secondary bootloader aboot(8) for Linux/Alpha.
+.SH SYNOPSIS
+.sp
+\fBabootconf\fR \fB/dev/xxx num\fR
 .SH "COPYRIGHT"
 .PP
-\fBabootconf\fR is Copyright (C) 1996 Linus Torvalds, David Mosberger and Michael Schwingen
+\fBabootconf\fR is Copyright (C) 1996 Linus Torvalds, David Mosberger-Tang and Michael Schwingen
 .SH "DESCRIPTIONS"
 .PP
 
+
 \fBabootconf\fR is used to change the partition
 the alpha Linux boot loader \fBaboot\fR(8)
-
 looks for its configuration file in. The configuration file is stored
 in \fIetc/aboot.conf\fR(5)
-relative to the root of the filesystem in this partition.
+relative to the root of the file system in this partition.
 .PP
-\fBabootconf\fR requires the bootdevice
+\fBabootconf\fR requires the boot device
 (e.g. /dev/hdb, /dev/sda) and the partition
 to be used (e.g. 3). Thus if you want to boot from partition E: on your second
 SCSI disk you would enter
@@ -41,7 +41,7 @@ the SRM prompt as the second argument, e.g.
 .PP
 \fBboot \fIdqa\fB\fR
 .PP
-to boot from your first ide hard disk. See the Compaq SRM-Manual and
+to boot from your first IDE hard disk. See the HP SRM-Manual and
 \fBaboot\fR(8)
 for details.
 .PP
@@ -54,27 +54,42 @@ would not require \fBabootconf\fR except for initial
 set up. You can then
 boot the requested
 Linux kernel by giving the appropriate flags at the SRM prompt, e.g. to boot
-the entry labled 2 you would use
+the entry labeled 2 you would use
 .PP
 \fBboot \fIdqa -fl "2"\fB\fR
 .PP
-See the Compaq SRM manual and \fIaboot.conf\fR(5)
+See the HP SRM manual and \fIaboot.conf\fR(5)
 for details.
 .PP
 To show the current setting simply omit the last argument (i.e. the partition
 number).
 .PP
-Not that you have to rerun \fBabootconf\fR if you updated
+Note that you have to rerun \fBabootconf\fR if you updated
 \fBaboot\fR.
 .PP
-Note that this applies to Linux only as VMS, Tru64, *BSD and
+Strictly speaking \fBabootconf\fR is not necessary as
+you can specify the partition which \fIetc/aboot.conf\fR
+resides on at the SRM-Prompt by prepending the partition number and a colon
+in the flags-parameter, i.e. if \fIetc/aboot.conf\fR
+resided on the fourth partition and you want to boot the entry labeled 2
+you could also issue
+.PP
+\fBboot \fIdqa -fl "4:2"\fB\fR
+.PP
+at the SRM prompt.
+.PP
+Note that this applies to Linux only as VMS, True64, *BSD and
 Windows NT each have their own secondary boot loader.
+.PP
+Also note that for initial hard disk setup \fBabootconf\fR
+is no longer needed as \fBswriteboot\fR(8) contains the
+entire functionality of \fBabootconf\fR.
 .SH "AUTHOR"
 .PP
-This man page was written by Helge Kreutzmann <kreutzm@itp.uni-hannover.de> for the Debian GNU/Linux project.
+This man page was written by Helge Kreutzmann <kreutzm@itp.uni-hannover.de> for the Debian GNU/Linux project but may be used by others.
 .SH "FILES"
 .PP
 \fIetc/aboot.conf\fR
 .SH "SEE ALSO"
 .PP
-\fBaboot\fR(8), \fBswriteboot\fR(8), \fIaboot.conf\fR(5), Compaq SRM Manual
+\fBaboot\fR(8), \fBswriteboot\fR(8), \fIaboot.conf\fR(5), HP SRM Manual

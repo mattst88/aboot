@@ -3,12 +3,12 @@
 .\" <http://shell.ipoline.com/~elmert/hacks/docbook2X/> 
 .\" Please send any bug reports, improvements, comments, patches, 
 .\" etc. to Steve Cheng <steve@ggi-project.org>.
-.TH "ABOOT" "8" "09 April 2001" "aboot" ""
+.TH "ABOOT" "8" "11 Juli 2002" "aboot" ""
 .SH NAME
 aboot \- The secondary boot loader for Linux/Alpha
 .SH "COPYRIGHT"
 .PP
-\fBaboot\fR is Copyright (C) 1996 Linus Torvalds, David Mosberger and Michael Schwingen (??)
+\fBaboot\fR is Copyright (C) 1996 Linus Torvalds, David Mosberger-Tang and Michael Schwingen
 .SH "DESCRIPTION"
 .PP
 
@@ -33,24 +33,25 @@ If you do not want to use the \fIetc/aboot.conf\fR as set
 up by \fBabootconf\fR you can explicitly tell 
 \fBaboot\fR where to look for \fIetc/aboot.conf\fR by prepending the number of the configuration with the proper
 partition, i.e. if your \fIetc/aboot.conf\fR is on your
-second partition and you want to boot the entry labled three you would
+second partition and you want to boot the entry labeled three you would
 issue
 .PP
 \fBboot \fIdqa -fl "2:3"\fB\fR
 .PP
 Note that this applies to Linux booting via SRM only as
-VMS, Tru64, *BSD and
+VMS, True64, *BSD and
 Windows NT each have their own secondary boot loader.
 Furthermore \fBaboot\fR is also not needed if the system is booted via
 \fBmilo\fR.
 .SH "AUTHOR"
 .PP
 This man page was written by Helge Kreutzmann
-<kreutzm@itp.uni-hannover.de> for the Debian GNU/Linux project.
+<kreutzm@itp.uni-hannover.de> for the Debian GNU/Linux project
+but may be used by others.
 .SH "FILES"
 .PP
 \fIetc/aboot.conf\fR
 .SH "SEE ALSO"
 .PP
 \fBabootconf\fR(8), \fIaboot.conf\fR(5),
-\fBswriteboot\fR(8), Compaq SRM Manual
+\fBswriteboot\fR(8), HP SRM Manual

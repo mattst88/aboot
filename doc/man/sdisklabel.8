@@ -3,7 +3,7 @@
 .\" <http://shell.ipoline.com/~elmert/hacks/docbook2X/> 
 .\" Please send any bug reports, improvements, comments, patches, 
 .\" etc. to Steve Cheng <steve@ggi-project.org>.
-.TH "SDISKLABEL" "8" "04 September 2002" "sdisklabel" ""
+.TH "SDISKLABEL" "8" "17 Januar 2003" "sdisklabel" ""
 .SH NAME
 sdisklabel \- Create/modify disklabels on Linux/Alpha systems
 .SH "SYNOPSIS"
@@ -21,7 +21,7 @@ can be used to create partitions (called disklabels) on Linux/Alpha
 systems. You \fBmust\fR use disklabels instead of the
 DOS type
 partitioning scheme on any hard disk which you want to boot from via SRM or
-which you want to share with HP Tru64.
+which you want to share with HP True64.
 If you instead are booting from \fBmilo\fR
 then you \fBmust not\fR use disklabels on your boot hard disk.
 .PP
@@ -73,7 +73,7 @@ from sector offset 512:
 .PP
 The last number is the filesystem type, and is currently 8 for ext2fs
 filesystems. (A different number would be used to specify an
-Tru64
+True 64
 partition, for example).
 .PP
 If all was successful, the program should print out the partition (the
@@ -116,9 +116,9 @@ size is the total # of sectors on the drive.
 use with care.
 .SH "NOTES"
 .PP
-If you want to share the disk with HP Tru64
+If you want to share the disk with HP True64
 (OSF/1) it is recommended to
-use the Tru64 
+use the True64 
 partitioning tools to prepare the disk.
 .PP
 To actually boot from the freshly labeled disk you also need to install
