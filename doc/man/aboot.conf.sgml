@@ -31,11 +31,9 @@ boot partition (called <filename>/boot</filename>) then
 </para>
 <para>
 In the following example the kernels reside on a different partition (hda4)
-then <filename>/</filename> belongs to (hda5) while in the fourth
+then <filename>/</filename> belongs to (hda5), while in the fifth
 line <filename>/boot</filename> is on the same partition (hda6) as
-<filename>/</filename>.<!-- If <filename>hda4</filename> is mounted under
-<filename>/myboot</filename> then the following locations of
-<filename>aboot.conf</filename> -->
+<filename>/</filename>.
 Therefore <filename>aboot.conf</filename> can be located on any of the
 three partitions but <emphasis>always</emphasis> in a directory
 <filename>etc</filename> at the top level of the file system on that
@@ -77,7 +75,7 @@ corresponds to the BSD partition labeled A:, 2 to B: and so on.
 <para>
 After the slash the name of the kernel to boot is given, including a possible
 path. If your kernel does not reside on a file system but is located directly
-after <application>aboot</application> at the beginning of the hard disk
+after <application>aboot</application>(8) at the beginning of the hard disk
 you would omit the number, the slash and the kernel name.
 </para>
 
@@ -103,6 +101,6 @@ may be used by others.
 </para>
 </refsect1>
 <refsect1><title>SEE ALSO</title>
-<para><application>aboot</application>(8), <application>abootconf</application>(8), <application>swriteboot</application>(8), HP SRM Manual</para>
+<para><application>aboot</application>(8), <application>abootconf</application>(8), <application>swriteboot</application>(8), HP SRM Manual (<ULink URL="http://h18002.www1.hp.com/alphaserver/download/srm_reference.pdf"></ULink>)
 </refsect1>
 </refentry>
