@@ -1,3 +1,12 @@
+2003-03-21  Will Woods <will.woods@hp.com>
+	* Added include/string.h, since we have our own string.c, replaced 
+	  #includes of <linux/string.h> with "string.h" since linux/string.h
+	  no longer has user-includable prototypes.
+	  (thanks to Kelledin <kelledin@skarpsey.dyndns.org> for the idea)
+	* Changed #includes of our headers to use quotes instead of <>
+	* Don't build with -mcpu=ev4 (default code works on ev4 and is smaller)
+	* Cleaned up a couple other warnings 
+
 2003-01-14  Will Woods <will.woods@hp.com>
 	* Fixed typos in man pages ("True 64")
 	* Bumped version number to 0.9b

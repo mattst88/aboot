@@ -1,5 +1,4 @@
 #include <linux/kernel.h>
-#include <linux/string.h>
 
 #include <asm/hwrpb.h>
 #include <linux/version.h>
@@ -9,6 +8,7 @@
 
 #include "aboot.h"
 #include "cons.h"
+#include "string.h"
 
 
 unsigned long free_mem_ptr = 0;

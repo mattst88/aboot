@@ -1,15 +1,15 @@
 #include <alloca.h>
 
 #include <linux/kernel.h>
-#include <linux/string.h>
 
 #include <asm/console.h>
 #include <asm/hwrpb.h>
 #include <asm/system.h>
 
-#include <aboot.h>
-#include <cons.h>
-#include <utils.h>
+#include "aboot.h"
+#include "cons.h"
+#include "utils.h"
+#include "string.h"
 
 long cons_dev;			/* console device */
 extern long int dispatch();	/* Need the full 64 bit return here...*/

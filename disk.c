@@ -20,20 +20,18 @@
  */
 #ifdef TESTING
 #  include <stdlib.h>
-#  include <string.h>
 #  include <stdio.h>
 #  include <fcntl.h>
 #  include <unistd.h>
-#else
-#  include <linux/string.h>
 #endif
 
-#include <config.h>
-#include <aboot.h>
-#include <bootfs.h>
-#include <cons.h>
-#include <disklabel.h>
-#include <utils.h>
+#include "config.h"
+#include "aboot.h"
+#include "bootfs.h"
+#include "cons.h"
+#include "disklabel.h"
+#include "utils.h"
+#include "string.h"
 
 #include <linux/elf.h>
 #include <asm/console.h>
@@ -483,6 +481,7 @@ get_default_args (struct bootfs *fs, char *str, int num)
 				break;
 
 			      default:
+				break;
 			}
 			p++;
 		}
