@@ -17,7 +17,7 @@ VMLINUXGZ	= $(KSRC)/arch/alpha/boot/vmlinux.gz
 #TESTING	= yes
 
 # for boot testing
-#CFGDEFS       	= -DDEBUG_ISO -DDEBUG_ROCK -DDEBUG
+#CFGDEFS       	= -DDEBUG_ISO -DDEBUG_ROCK -DDEBUG_EXT2 -DDEBUG
 
 # root, aka prefix
 root		=

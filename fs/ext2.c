@@ -141,7 +141,7 @@ static struct ext2_inode *ext2_iget(int ino)
 
 	ip = 0;
 	for (i = 0; i < MAX_OPEN_FILES; i++) {
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 		printf("ext2_iget: looping, entry %d inode %d free %d\n",
 		       i, inode_table[i].inumber, inode_table[i].free);
 #endif
@@ -157,14 +157,14 @@ static struct ext2_inode *ext2_iget(int ino)
 	}
 
 	group = (ino-1) / sb.s_inodes_per_group;
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 	printf("group is %d\n", group);
 #endif
 	offset = partition_offset
 		+ ((long) gds[group].bg_inode_table * (long)ext2fs.blocksize)
 		+ (((ino - 1) % EXT2_INODES_PER_GROUP(&sb))
 		   * EXT2_INODE_SIZE(&sb));
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 	printf("ext2_iget: reading %ld bytes at offset %ld "
 	       "(%ld + (%d * %d) + ((%d) %% %d) * %d) "
 	       "(inode %d -> table %d)\n", 
@@ -199,7 +199,7 @@ static void ext2_iput(struct ext2_inode *ip)
 	/* Find and free the inode table slot we used... */
 	itp = (struct inode_table_entry *)ip;
 
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 	printf("ext2_iput: inode %d table %d\n", itp->inumber,
 	       (int) (itp - inode_table));
 #endif
@@ -342,7 +342,7 @@ static int ext2_breadi(struct ext2_inode *ip, long blkno, long nblks,
 		} else {
 			/* Read it for real */
 			offset = partition_offset + (long) dev_blkno* (long) ext2fs.blocksize;
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 			printf("ext2_bread: reading %ld bytes at offset %ld\n",
 			       nbytes, offset);
 #endif
@@ -374,7 +374,7 @@ static struct ext2_dir_entry_2 *ext2_readdiri(struct ext2_inode *dir_inode,
 			return NULL;
 	}
 
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 	printf("ext2_readdiri: blkoffset %d diroffset %d len %d\n",
 		blockoffset, diroffset, dir_inode->i_size);
 #endif
@@ -382,7 +382,7 @@ static struct ext2_dir_entry_2 *ext2_readdiri(struct ext2_inode *dir_inode,
 		diroffset += ext2fs.blocksize;
 		if (diroffset >= dir_inode->i_size)
 			return NULL;
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 		printf("ext2_readdiri: reading block at %d\n",
 			diroffset);
 #endif
@@ -396,7 +396,7 @@ static struct ext2_dir_entry_2 *ext2_readdiri(struct ext2_inode *dir_inode,
 
 	dp = (struct ext2_dir_entry_2 *) (blkbuf + blockoffset);
 	blockoffset += dp->rec_len;
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 	printf("ext2_readdiri: returning %p = %.*s\n", dp, dp->name_len, dp->name);
 #endif
 	return dp;
@@ -438,19 +438,19 @@ static struct ext2_inode *ext2_namei(const char *name)
 				     component_length) == 0))
 			{
 				/* Found it! */
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 				printf("ext2_namei: found entry %s\n",
 					component);
 #endif
 				next_ino = dp->inode;
 				break;
 			}
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 			printf("ext2_namei: looping\n");
 #endif
 		}
 	
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 		printf("ext2_namei: next_ino = %d\n", next_ino);
 #endif
 
@@ -552,13 +552,13 @@ static struct ext2_inode * ext2_follow_link(struct ext2_inode * from,
 		linkto = blkbuf;
 		if (ext2_breadi(from, 0, 1, blkbuf) == -1)
 			return NULL;
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 		printf("long link!\n");
 #endif
 	} else {
 		linkto = (char*)from->i_block;
 	}
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 	printf("symlink to %s\n", linkto);
 #endif
 
@@ -570,7 +570,7 @@ static struct ext2_inode * ext2_follow_link(struct ext2_inode * from,
 			strncpy(fullname, base, end - base + 1);
 			fullname[end - base + 1] = '\0';
 			strcat(fullname, linkto);
-#ifdef DEBUG
+#ifdef DEBUG_EXT2
 			printf("resolved to %s\n", fullname);
 #endif
 			return ext2_namei(fullname);
