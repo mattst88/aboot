@@ -5,6 +5,7 @@
 #include <asm/system.h>
 
 #include <stdarg.h>
+#include <errno.h>
 
 #include "aboot.h"
 #include "cons.h"
@@ -139,6 +140,60 @@ void pal_init(void)
 	tbia();
 }
 
+int check_memory(unsigned long start, unsigned long size)
+{
+	unsigned long phys_start, start_pfn, end_pfn;
+	struct memclust_struct *cluster;
+	struct memdesc_struct *memdesc;
+	int i;
+
+	/*
+	 * Get the physical address start. 
+	 * If 43-bit superpage is being used (VA<63:41> = 0x7ffffe)
+	 * then the "correct" translation across all implementations is to
+	 * sign extend the VA from bit 40. Othewise, assume it's already a
+	 * physical address.
+	 */
+	phys_start = start;
+	if (((long)phys_start >> 41) == -2) 
+		phys_start = (long)((start) << (64-41)) >> (64-41);
+	start_pfn = phys_start >> PAGE_SHIFT;
+	end_pfn = (phys_start + size - 1) >> PAGE_SHIFT;
+
+	memdesc = (struct memdesc_struct *)
+	    (INIT_HWRPB->mddt_offset + (unsigned long) INIT_HWRPB);
+	for (cluster = memdesc->cluster, i = 0;
+	     i < memdesc->numclusters; 
+	     i++, cluster++) {
+		if ((cluster->start_pfn > end_pfn) ||
+		    ((cluster->start_pfn + cluster->numpages) <= start_pfn))
+			continue;	/* no overlap */
+
+		/* 
+		 * This cluster overlaps the memory we're checking, check
+		 * the usage:
+		 * 	bit 0 is console/PAL reserved
+		 * 	bit 1 is non-volatile
+		 * If either is set, it's a problem, return -EBUSY
+		 */
+		if (cluster->usage & 3)
+			return -EBUSY;	/* reserved */
+
+		/*
+		 * It's not reserved, take it out of what we're checking
+		 */
+		if (cluster->start_pfn <= end_pfn) 
+			end_pfn = cluster->start_pfn - 1;
+		if ((cluster->start_pfn + cluster->numpages) > start_pfn)
+			start_pfn = cluster->start_pfn + cluster->numpages;
+
+		if (end_pfn < start_pfn)
+			return 0;	/* all found, ok */
+	}
+
+	/* no conflict, but not all memory found */
+	return -ENOMEM;
+}
 
 unsigned long memory_end(void)
 {

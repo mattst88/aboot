@@ -28,6 +28,7 @@
 #include <asm/system.h>
 
 #include <alloca.h>
+#include <errno.h>
 
 #include "aboot.h"
 #include "config.h"
@@ -116,6 +117,8 @@ first_block (const char *buf, long blocksize)
 		       nchunks, start_addr, entry_addr);
 #endif
 		for (i = 0; i < elf->e_phnum; ++i) {
+			int status;
+
 			chunks[i].addr   = phdrs[i].p_vaddr;
 			chunks[i].offset = phdrs[i].p_offset;
 			chunks[i].size   = phdrs[i].p_filesz;
@@ -123,6 +126,20 @@ first_block (const char *buf, long blocksize)
 			printf("aboot: segment %d vaddr %#lx offset %#lx size %#lx\n",
 			       i, chunks[i].addr, chunks[i].offset, chunks[i].size);
 #endif
+
+			status = check_memory(chunks[i].addr, chunks[i].size);
+			if (status) {
+				printf("aboot: Can't load kernel.\n"
+				       "  Memory at %lx - %lx (chunk %i) "
+				         "is %s\n",
+				       chunks[i].addr,
+				       chunks[i].addr + chunks[i].size - 1,
+				       i,
+				       (status == -ENOMEM) ?
+				          "Not Found" :
+					  "Busy (Reserved)");
+				return -1;
+			}
 		}
 		bss_start = (char *) (phdrs[elf->e_phnum - 1].p_vaddr +
 				      phdrs[elf->e_phnum - 1].p_filesz);
