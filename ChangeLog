@@ -1,3 +1,6 @@
+2003-11-30  Will Woods <wgwoods@mac.com>
+	* Patch for USB console (as on Wildfire) from Jeff.Wiedemeier@hp.com
+	
 2003-11-07  Will Woods <wgwoods@mac.com>
 	* Changed version number to 1.0pre1 (aboot should hit 1.0 before 
 	  they stop making the Alpha, I think)

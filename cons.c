@@ -11,6 +11,14 @@
 #include "utils.h"
 #include "string.h"
 
+#ifndef CCB_OPEN_CONSOLE	/* new callback w/ ARM v4 */
+# define CCB_OPEN_CONSOLE 0x07
+#endif
+
+#ifndef CCB_CLOSE_CONSOLE	/* new callback w/ ARM v4 */
+# define CCB_CLOSE_CONSOLE 0x08
+#endif
+
 long cons_dev;			/* console device */
 extern long int dispatch();	/* Need the full 64 bit return here...*/
 
@@ -159,6 +167,16 @@ cons_read(long dev, void *buf, long count, long offset)
 }
 
 
+void cons_open_console(void)
+{
+	dispatch(CCB_OPEN_CONSOLE);
+}
+
+void cons_close_console(void)
+{
+	dispatch(CCB_CLOSE_CONSOLE);
+}
+
 void
 cons_init(void)
 {
@@ -168,4 +186,6 @@ cons_init(void)
 		halt();		/* better than random crash */
 	}
 	cons_dev = simple_strtoul(envval, 0, 10);
+
+	cons_open_console();
 }

@@ -221,6 +221,8 @@ main_ (void)
 	if (INIT_HWRPB->pagesize != 8192) {
 		printf("aboot: expected 8kB pages, got %ldkB\n",
 		       INIT_HWRPB->pagesize >> 10);
+
+		cons_close_console();
 		return;
 	}
 
@@ -229,6 +231,7 @@ main_ (void)
 	result = load_kernel();
 	if (result < 0) {
 		printf("aboot: kernel load failed (%ld)\n", result);
+		cons_close_console();
 		return;
 	}
 	printf("aboot: starting kernel %s with arguments %s\n",
@@ -239,11 +242,14 @@ main_ (void)
 	*(unsigned long *)(start_addr + PARAM_OFFSET + 0x108)
 		= initrd_size;
 
+	cons_close_console();
 	run_kernel(entry_addr, start_addr + STACK_OFFSET);
 
+	cons_open_console();
 	printf("aboot: kernel returned unexpectedly.  Halting slowly...\n");
 	for (i = 0 ; i < 0x100000000 ; i++)
 		/* nothing */;
+	cons_close_console();
 	halt();
 }
 #endif /* TESTING */

@@ -14,6 +14,8 @@ extern long dispatch(long proc, ...);
 #define cons_read(d,b,c,o) ({ lseek(d, o, 0); read(d,b,c);})
 #define cons_putchar(c)    putchar(c)
 #define cons_getchar()     getchar()
+#define cons_open_console()
+#define cons_close_console()
 #else
 extern void cons_init (void);
 extern long cons_getenv (long index, char *envval, long maxlen);
@@ -23,6 +25,8 @@ extern long cons_close (long dev);
 extern long cons_read (long dev, void *buf, long count, long offset);
 extern void cons_putchar(char c);
 extern int cons_getchar(void);
+extern void cons_open_console(void);
+extern void cons_close_console(void);
 #endif
 
 /* this isn't in the kernel for some reason */
