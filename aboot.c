@@ -219,6 +219,8 @@ int main()
 		printf("aboot: kernel load failed (%ld)\n", result);
 		return 0;
 	}
+	printf("aboot: starting kernel %s with arguments %s\n",
+	       boot_file, kernel_args);
 	return 0;
 }
 #else /* not TESTING */

@@ -522,37 +522,56 @@ get_aboot_options (long dev)
 {
 	int preset      = 0; /* no preset */
 	int interactive = 0;  /* non-interactive */
+	char *extra_args = NULL;
 
 #ifdef DEBUG
 	printf("get_aboot_options(%lx)\n",dev);
+	printf("kernel_args=\"%s\"\n",kernel_args);
 #endif
 
 	/* Forms of -flags argument from SRM */
 	if (kernel_args[0] >= '1' && kernel_args[0] <= '9'
 	    && kernel_args[1] == ':' && kernel_args[2]
-	    && !kernel_args[3])
+	    && (kernel_args[3] == '\0' || kernel_args[3] == ' '))
 	{
 		/* <partition>:<preset> - where <preset> is an entry
                    in /etc/aboot.conf (to be found on <partition>), or
                    'i' for interactive */
 		config_file_partition = kernel_args[0] - '0';
 		preset = kernel_args[2];
+		if (kernel_args[3]) {
+			extra_args=&kernel_args[3];
+			while (*extra_args == ' ') { extra_args++; }
+			if (*extra_args == '\0') extra_args = NULL;
+		}
 #ifdef DEBUG
 		printf("partition:preset = %ld:%c\n", config_file_partition,
 		       preset);
 #endif
-	} else if (kernel_args[0] && kernel_args[1] == '\0') {
+	} else if (kernel_args[0] 
+		   && (kernel_args[1] == '\0' || kernel_args[1] == ' '))  {
 		/* Single character option, for Jensen and friends -
                    this is either a preconfigured entry in
                    /etc/aboot.conf or 'i' for interactive*/
 		if (kernel_args[0] == 'i') interactive = 1;
-		else preset = kernel_args[0];
+		else {
+			preset = kernel_args[0];
+			if (kernel_args[1]) {
+				/* are there actually extra args? */
+				extra_args=&kernel_args[1];
+				while (*extra_args == ' ') { extra_args++; }
+				if (*extra_args == '\0') extra_args = NULL;
+			}
+		}
 	} else if (kernel_args[0] == '\0') {
 		interactive = 1;
 	} else {
 		/* attempt to parse the arguments given */
 	}
 
+#ifdef DEBUG
+	if (extra_args) printf("extra args: \"%s\"\n",extra_args);
+#endif
 
 	if (preset || interactive) {
 		char buf[256], *p;
@@ -671,11 +690,24 @@ get_aboot_options (long dev)
 				break;
 			case '0' ... '9':
 				preset = buf[0];
+				p = strchr(buf, ' ');
+				while (p && *p == ' ') ++p;
+				if (p) {
+					strcpy(kernel_args, p);
+					extra_args=kernel_args;
+				}
 				break;
 			default:
 				break;
 
 			}
+		}
+
+		/* if we have extra args, append them to buf */
+		if (extra_args) {
+			p=buf; while (p && *p) p++;
+			*p++=' ';
+			strcpy(p, extra_args);
 		}
 
 		/* split on space into kernel + args */
@@ -688,6 +720,10 @@ get_aboot_options (long dev)
 		}
 		strcpy(boot_file, buf);
 	}
+
+#ifdef DEBUG
+	printf("boot_file=\"%s\", kernel_args=\"%s\"\n",boot_file,kernel_args);
+#endif
 
 	{
 		/* parse off initrd= option from kernel_args if any */

@@ -22,7 +22,7 @@ extern size_t strspn(const char *,const char *);
 extern char * strpbrk(const char * cs,const char * ct);
 extern char * strtok(char * s,const char * ct);
 extern void * memset(void * s, int c, size_t count);
-extern char * bcopy(const char * src, char * dest, int count);
+extern void bcopy(const void * src, void * dest, size_t count);
 extern void * memcpy(void * dest,const void *src,size_t count);
 extern void * memmove(void * dest,const void *src,size_t count);
 extern int memcmp(const void * cs,const void * ct,size_t count);

@@ -37,10 +37,10 @@ ABOOT_LDFLAGS = -static -N -Taboot.lds
 CC		= gcc
 TOP		= $(shell pwd)
 ifeq ($(TESTING),)
-CPPFLAGS	= $(CFGDEFS) -I$(TOP)/include -I$(KSRC)/include
+CPPFLAGS	= $(CFGDEFS) -I$(TOP)/include
 CFLAGS		= $(CPPFLAGS) -D__KERNEL__ -Os -Wall -fno-builtin -mno-fp-regs -ffixed-8
 else
-CPPFLAGS	= -DTESTING $(CFGDEFS) -I$(TOP)/include -I$(KSRC)/include
+CPPFLAGS	= -DTESTING $(CFGDEFS) -I$(TOP)/include
 CFLAGS		= $(CPPFLAGS) -O -g3 -Wall -D__KERNEL__ -ffixed-8
 endif
 ASFLAGS		= $(CPPFLAGS)
