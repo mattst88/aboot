@@ -1,3 +1,10 @@
+2001-10-08  Will Woods <will.woods@compaq.com>
+	* fs/ext2.c: Fixed elusive overflow bug. If part of the kernel was 
+	past the 524,287th block (given 4096 bytes per block) the byte offset
+	was too big to fit in an int. 
+	* sdisklabel/sdisklabel.c: borrowed code from fdisk for getting
+	the correct size of the disk. 
+	
 2001-07-10  Will Woods <will.woods@compaq.com>
 	* aboot.c, tools/objstrip.c: elf_check_arch takes different arguments
 	in Linux 2.4 than it did in 2.2; added an aboot_elf_check_arch which
