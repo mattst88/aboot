@@ -1,6 +1,9 @@
 2001-10-09  Will Woods <will.woods@compaq.com>
 	* aboot.c, disk.c, include/config.c: replaced ABOOT_MINOR and 
 	ABOOT_MAJOR with ABOOT_VERSION. Bumped version number to 0.8pre2.
+	* aboot.c: fixed ELF header bug that snuck in somewhere.
+	* fs/ext2.c, Makefile: fixes for proper #includes to allow compilation
+	of userspace testing aboot against the 2.4 kernel.
 
 2001-10-08  Will Woods <will.woods@compaq.com>
 	* fs/ext2.c: Fixed elusive overflow bug. If part of the kernel was 

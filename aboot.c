@@ -109,7 +109,7 @@ first_block (const char *buf, long blocksize)
 			       (long) elf->e_phoff);
 			return -1;
 		}
-		phdrs = (struct elf_phdr *) (elf + elf->e_phoff);
+		phdrs = (struct elf_phdr *) (buf + elf->e_phoff);
 		chunks = malloc(sizeof(struct segment) * elf->e_phnum);
 		nchunks = elf->e_phnum;
 		start_addr = phdrs[0].p_vaddr; /* assume they are sorted */
