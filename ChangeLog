@@ -1,3 +1,6 @@
+2001-10-25  Will Woods <will.woods@compaq.com>
+	* sdisklabel/sdisklabel.c: fixed cylinder-counting bug
+
 2001-10-11  Will Woods <will.woods@compaq.com>
 	* applied a patch from the debian version of aboot. Here's the debian
 	maintainer's changelog:

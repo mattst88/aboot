@@ -9,3 +9,20 @@ Thu Jun 27 03:23:08 1996
   may need to add '-ffreestanding' flag to CFLAGS, in the Makefile.
 
 - Type "make".
+
+- To install the newly created aboot image (named "bootlx"), in most cases,
+  you use swriteboot (found in the sdisklabel directory), like this:
+
+    # swriteboot -c[boot partition #] [boot device] bootlx
+
+  for example, on my system, the kernel images (and aboot.conf) are on my 
+  root partition, /dev/sda2. hence:
+
+    # swriteboot -c2 /dev/sda bootlx
+  
+  DON'T DO THIS UNLESS YOU'RE SURE OF THE PARTITION INFO. If you don't know 
+  exactly what you're doing, and your system already boots okay, there's no 
+  reason to be installing a new bootloader.
+
+  For more info, read the SRM HOWTO, in doc/faq/srm.html, or at:
+  http://www.alphalinux.org/faq/srm.html

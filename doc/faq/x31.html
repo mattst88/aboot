@@ -1,0 +1,438 @@
+<HTML
+><HEAD
+><TITLE
+>What is SRM?</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.52"><LINK
+REL="HOME"
+TITLE="SRM Firmware Howto"
+HREF="t1.html"><LINK
+REL="PREVIOUS"
+TITLE="SRM Firmware Howto"
+HREF="t1.html"><LINK
+REL="NEXT"
+TITLE="SRM Device Naming"
+HREF="x99.html"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>SRM Firmware Howto</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="t1.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x99.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN31"
+>What is SRM?</A
+></H1
+><P
+>SRM console is used by Alpha systems as
+Unix-style boot firmware. Tru64 Unix and OpenVMS depend on it and
+Linux can boot from it. You can recognize SRM console as a blue screen
+with a prompt that is presented to you on power-up.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN34"
+>Getting to SRM</A
+></H2
+><P
+>Most Alpha systems have both the SRM and ARC/AlphaBIOS console in
+their firmware.  On one of these machines, if your machine starts up
+with ARC/AlphaBIOS by default, you can switch to SRM through the
+"Console Selection" option in the Advanced CMOS Setup menu.  To make
+the change permanent, you should set the <TT
+CLASS="LITERAL"
+>os_type</TT
+> environment
+variable in SRM to "OpenVMS" or "Unix", like this:
+
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>&#62;&#62;&#62; set os_type Unix</PRE
+></TD
+></TR
+></TABLE
+>&#13;</P
+><P
+>Either one will work to boot Linux.  However, if you intend to
+dual-boot OpenVMS on this machine, you must set <TT
+CLASS="LITERAL"
+>os_type</TT
+> to
+"OpenVMS".  Conversely, to return to ARC/AlphaBIOS, you can set
+<TT
+CLASS="LITERAL"
+>os_type</TT
+> to "NT".</P
+><P
+>Some older systems may not have both SRM and ARC in firmware as
+shipped.  On these systems, you will have to upgrade your firmware.
+See <A
+HREF="http://ftp.digital.com/pub/DEC/Alpha/firmware/"
+TARGET="_top"
+>http://ftp.digital.com/pub/DEC/Alpha/firmware</A
+> for the
+latest firmware updates and instructions.</P
+><P
+>A few older systems (primarily evaluation boards such as the 164SX
+and 164LX) are "half-flash" systems, whose firmware can hold SRM or
+AlphaBIOS, but not both.  If you have one of these machines, you will
+have to reflash your firmware with the SRM console using the AlphaBIOS
+firmware update utility.  Again, see
+<A
+HREF="http://ftp.digital.com/pub/DEC/Alpha/firmware/"
+TARGET="_top"
+>http://ftp.digital.com/pub/DEC/Alpha/firmware</A
+> for firmware
+images and instructions.  If you wish to return to AlphaBIOS on these
+machines, you may rerun the firmware update utility from a floppy in
+SRM using the <TT
+CLASS="LITERAL"
+>fwupdate</TT
+> command.  You can also start AlphaBIOS
+from a floppy using the <TT
+CLASS="LITERAL"
+>arc</TT
+> command.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN48"
+>Using the SRM console</A
+></H2
+><P
+>The SRM console works very much like a Unix or OpenVMS shell.  It
+views your NVRAM and devices as a pseudo-filesystem.  You can see this
+if you use the <TT
+CLASS="LITERAL"
+>ls</TT
+> command.  Also, it contains a fairly large set
+of diagnostic, setup, and debugging utilities, the details of which
+are beyond the scope of this document.  As in the Unix shell, you can
+pipe the output of one command to the input of another, and there is a
+<TT
+CLASS="LITERAL"
+>more</TT
+> command that works not unlike the Unix one.  To get a full
+listing of available commands, run:
+
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>&#62;&#62;&#62; help | more</PRE
+></TD
+></TR
+></TABLE
+>&#13;</P
+><P
+>As well, SRM has environment variables, a number of which are
+pre-defined and correspond to locations in NVRAM.  You can view the
+entire list of environment variables and their values with the
+<TT
+CLASS="LITERAL"
+>show</TT
+> command (there are quite a few of them, so you will probably
+want to pipe its output to <TT
+CLASS="LITERAL"
+>more</TT
+>).  You can also show variables
+matching a "glob" pattern - for example, <TT
+CLASS="LITERAL"
+>show boot*</TT
+> will show all
+the variables starting in "boot".</P
+><P
+>Environment variables are categorized as either <I
+CLASS="EMPHASIS"
+>read-only</I
+>,
+<I
+CLASS="EMPHASIS"
+>warm non-volatile</I
+>, or <I
+CLASS="EMPHASIS"
+>cold non-volatile</I
+>.  The full listing
+of pre-defined variables is detailed in the Alpha Architecture
+Reference Manual.  The most useful pre-defined environment variables
+for the purposes of booting Linux are <TT
+CLASS="LITERAL"
+>bootdef_dev</TT
+>,
+<TT
+CLASS="LITERAL"
+>boot_file</TT
+>, <TT
+CLASS="LITERAL"
+>boot_flags</TT
+>, and
+<TT
+CLASS="LITERAL"
+>auto_action</TT
+>, all of which are cold non-volatile.</P
+><P
+>To set environment variables, use the <TT
+CLASS="LITERAL"
+>set</TT
+> command, like this:
+
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>&#62;&#62;&#62; set bootdef_def dka0</PRE
+></TD
+></TR
+></TABLE
+>&#13;</P
+><P
+>If you set an undefined variable, it will be created for you, however
+it will not persist across reboots.</P
+><P
+>The <TT
+CLASS="LITERAL"
+>bootdef_dev</TT
+> variable specifies the device (using
+VMS naming conventions - see <A
+HREF="aboot.html#DEVICE-NAMING"
+>the section called <I
+>Device Naming</I
+></A
+> for an
+explanation of these) which will be booted from if no device is
+specified on the <TT
+CLASS="LITERAL"
+>boot</TT
+> command line, or in an automatic boot.
+The <TT
+CLASS="LITERAL"
+>boot_file</TT
+> variable contains the filename to be
+loaded by the secondary bootloader, while <TT
+CLASS="LITERAL"
+>boot_flags</TT
+>
+contains any extra flags.  <TT
+CLASS="LITERAL"
+>auto_action</TT
+> specifies the
+action which the console should take on power-up.  By default, it is
+set to <TT
+CLASS="LITERAL"
+>HALT</TT
+>, meaning that the machine will start up in the
+SRM console.  Once you have configured your bootloader and the
+boot-related variables, you can set it to <TT
+CLASS="LITERAL"
+>BOOT</TT
+> in order to
+boot automatically on power-up.</P
+><P
+>Finally, two helpful console keystrokes you should know are
+Control-C, which, as in the shell, halts a command in progress (such
+as an automatic boot), and Control-P, which if issued from the aboot
+prompt (or other secondary bootloader) will halt the bootloader and
+return you to the SRM console.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOW-SRM-BOOTS"
+>How Does SRM Boot an OS?</A
+></H2
+><P
+>All versions of SRM can boot from SCSI disks and the versions for
+recent platforms, such as the Noname or AlphaStations can boot from
+floppy disks as well.  Network booting via <TT
+CLASS="LITERAL"
+>bootp</TT
+> is supported.
+Note that older SRM versions (notably the one for the Jensen)
+cannot boot from floppy disks. Booting from IDE devices
+is supported on newer platforms ( 164SX, 164LX, 164UX, DS20, DS10, DP264, UP2000(+), UP1000, UP1100 etc..). </P
+><P
+>Booting Linux with SRM is a two step process: first, SRM loads and
+transfers control to the secondary bootstrap loader.  Then the
+secondary bootstrap loader sets up the environment for Linux, reads
+the kernel image from a disk filesystem and finally transfers control to Linux.</P
+><P
+>Currently, there are two secondary bootstrap loaders for Linux:
+the <I
+CLASS="EMPHASIS"
+>raw</I
+> loader that comes with the Linux kernel and <TT
+CLASS="LITERAL"
+>aboot</TT
+>
+which is distributed separately.  These two loaders are described in
+more detail below.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN88"
+>Loading The Secondary Bootstrap Loader</A
+></H2
+><P
+>SRM knows nothing about filesystems or disk-partitions.  It simply
+expects that the secondary bootstrap loader occupies a consecutive
+range of physical disk sector, starting from a given offset.  The
+information on the size of the secondary bootstrap loader and the
+offset of its first disk sector is stored in the first 512 byte
+sector.  Specifically, the long integer at offset 480 stores the
+<I
+CLASS="EMPHASIS"
+>size</I
+> of the secondary bootstrap loader (in 512-byte blocks) and
+the long at offset 488 gives the <I
+CLASS="EMPHASIS"
+>sector number</I
+> at which the
+secondary bootstrap loader starts.  The first sector also stores a
+flag-word at offset 496 which is always 0 and a checksum at offset
+504.  The checksum is simply the sum of the first 63 long integers in
+the first sector.</P
+><P
+>If the checksum in the first sector is correct, SRM goes ahead and
+reads the <I
+CLASS="EMPHASIS"
+>size</I
+> sectors starting from the sector given in the
+<I
+CLASS="EMPHASIS"
+>sector number</I
+> field and places them in <I
+CLASS="EMPHASIS"
+>virtual</I
+> memory at
+address <TT
+CLASS="LITERAL"
+>0x20000000</TT
+>.  If the reading completes successfully,
+SRM performs a jump to address <TT
+CLASS="LITERAL"
+>0x20000000</TT
+>.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="t1.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x99.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>SRM Firmware Howto</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>SRM Device Naming</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,269 @@
+<HTML
+><HEAD
+><TITLE
+>SRM Device Naming</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.52"><LINK
+REL="HOME"
+TITLE="SRM Firmware Howto"
+HREF="t1.html"><LINK
+REL="PREVIOUS"
+TITLE="What is SRM?"
+HREF="x31.html"><LINK
+REL="NEXT"
+TITLE="The Raw Loader"
+HREF="x162.html"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>SRM Firmware Howto</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x31.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x162.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN99"
+>SRM Device Naming</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN101"
+>The First Two Letter</A
+></H2
+><P
+>The following is based on the example device dkb1.2.3.4.5 taken from a Digital Server 3300 (Whitebox version of
+an AS800).</P
+><P
+>Two letter port or class driver designator:
+<P
+></P
+><UL
+><LI
+><P
+>         DR:     RAID set device </P
+></LI
+><LI
+><P
+>         DV:     Floppy Drive </P
+></LI
+><LI
+><P
+>         EW:     Ethernet port (TULIP, DEC 21040) </P
+></LI
+><LI
+><P
+>         EI:     Ethernet port (Intel 82557 or 82559) </P
+></LI
+><LI
+><P
+>         PK:     SCSI port (controller) </P
+></LI
+><LI
+><P
+>         DK:     SCSI disk </P
+></LI
+><LI
+><P
+>         MK:     SCSI tape </P
+></LI
+><LI
+><P
+>         PU:     DSSI port </P
+></LI
+><LI
+><P
+>         DU:     DSSI disk </P
+></LI
+><LI
+><P
+>         MU:     DSSI tape </P
+></LI
+><LI
+><P
+>         JK:     SCSI monitor (or robot) </P
+></LI
+><LI
+><P
+>	 DQ:	 (E)IDE Device (disk or CD-ROM)</P
+></LI
+></UL
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN130"
+>The Rest Of The Device Name</A
+></H2
+><P
+>&#13;<P
+></P
+><UL
+><LI
+><P
+> b-&#62; adapter ID (one letter adapter designator)</P
+></LI
+><LI
+><P
+> 1-&#62;Device number (SCSI unit numbers are forced to 100x Node ID)</P
+></LI
+><LI
+><P
+> 2-&#62;Bus Node ID</P
+></LI
+><LI
+><P
+> 3-&#62;Channel Number</P
+></LI
+><LI
+><P
+> 4-&#62;Channel Number (used for multi-channel devices)</P
+></LI
+><LI
+><P
+> 5-&#62;Logical Slot number
+
+  <P
+></P
+><UL
+><LI
+><P
+>EISA: they correspond to the physical slot numbers (1-3)</P
+></LI
+><LI
+><P
+>PCI:</P
+><P
+></P
+><UL
+><LI
+><P
+>slot 5= SCSI controller on system backplane (DS3300)</P
+></LI
+><LI
+><P
+>slot 6= On board VGA (DS3300)</P
+></LI
+><LI
+><P
+>slot 7= PCI to EISA bridge chip (DS3300)</P
+></LI
+><LI
+><P
+>slots 11 - 14 = Correspond to Physical PCI option slots:
+                 PCI11, PCI12, PCI13 and PCI14 (64bit) (DS3300)</P
+></LI
+></UL
+></LI
+></UL
+></P
+></LI
+><LI
+><P
+> 6-&#62;Hose number: 0 PCI_0 (32bit PCI); 1 EISA (DS3300)</P
+></LI
+></UL
+></P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x31.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x162.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>What is SRM?</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The Raw Loader</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

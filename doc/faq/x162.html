@@ -1,0 +1,282 @@
+<HTML
+><HEAD
+><TITLE
+>The Raw Loader</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.52"><LINK
+REL="HOME"
+TITLE="SRM Firmware Howto"
+HREF="t1.html"><LINK
+REL="PREVIOUS"
+TITLE="SRM Device Naming"
+HREF="x99.html"><LINK
+REL="NEXT"
+TITLE="The aboot Loader"
+HREF="aboot.html"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>SRM Firmware Howto</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x99.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="aboot.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN162"
+>The Raw Loader</A
+></H1
+><P
+>The sources for this loader can be found in directory
+<TT
+CLASS="LITERAL"
+>arch/alpha/boot</TT
+> of the Linux kernel source
+distribution.  It loads the Linux kernel by reading
+<TT
+CLASS="LITERAL"
+>START_SIZE</TT
+> bytes starting at disk offset
+<TT
+CLASS="LITERAL"
+>BOOT_SIZE+512</TT
+> (also in bytes).  The constants
+<TT
+CLASS="LITERAL"
+>START_SIZE</TT
+> and <TT
+CLASS="LITERAL"
+>BOOT_SIZE</TT
+> are defined in
+<TT
+CLASS="LITERAL"
+>linux/include/asm-alpha/system.h</TT
+>.  <TT
+CLASS="LITERAL"
+>START_SIZE</TT
+>
+must be at least as big as the kernel image (i.e., the size of the
+<TT
+CLASS="LITERAL"
+>.text</TT
+>, <TT
+CLASS="LITERAL"
+>.data</TT
+>, and <TT
+CLASS="LITERAL"
+>.bss</TT
+> segments).  Similarly,
+<TT
+CLASS="LITERAL"
+>BOOT_SIZE</TT
+> must be at least as big as the image of the raw
+bootstrap loader.  Both constants should be an integer multiple of the
+sector size, which is 512 bytes.  The default values are currently 2MB
+for <TT
+CLASS="LITERAL"
+>START_SIZE</TT
+> and 16KB for <TT
+CLASS="LITERAL"
+>BOOT_SIZE</TT
+>.  Note
+that if you want to boot from a 1.44MB floppy disk, you have to reduce
+<TT
+CLASS="LITERAL"
+>START_SIZE</TT
+> to 1400KB and make sure that the kernel you
+want to boot is no bigger than that.</P
+><P
+>To build a raw loader, simply type <TT
+CLASS="LITERAL"
+>make rawboot</TT
+> in the top
+directory of your linux source tree (typically
+<TT
+CLASS="LITERAL"
+>/usr/src/linux</TT
+>).  This should produce the following files in
+<TT
+CLASS="LITERAL"
+>arch/alpha/boot</TT
+>:</P
+><P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><TT
+CLASS="LITERAL"
+>tools/lxboot</TT
+>:</DT
+><DD
+><P
+>The first
+sector on the disk.  It contains the offset and size of
+the next file in the format described above.</P
+></DD
+><DT
+><TT
+CLASS="LITERAL"
+>tools/bootlx</TT
+>:</DT
+><DD
+><P
+>The raw boot loader that
+will load the file below.</P
+></DD
+><DT
+><TT
+CLASS="LITERAL"
+>vmlinux.nh</TT
+>:</DT
+><DD
+><P
+>The raw kernel image consisting of
+the <TT
+CLASS="LITERAL"
+>.text</TT
+>, <TT
+CLASS="LITERAL"
+>.data</TT
+>, and <TT
+CLASS="LITERAL"
+>.bss</TT
+> segments of the
+object file in <TT
+CLASS="LITERAL"
+>/usr/src/linux/vmlinux</TT
+>.  The
+extension <TT
+CLASS="LITERAL"
+>.nh</TT
+> indicates that this file has no object-file
+header.</P
+></DD
+></DL
+></DIV
+></P
+><P
+>The concatenation of these three files should be written to the
+disk from which you want to boot.  For example, to boot from a floppy,
+insert an empty floppy disk in, say, <TT
+CLASS="LITERAL"
+>/dev/fd0</TT
+> and then type:
+
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+># cat tools/lxboot tools/bootlx vmlinux &#62;/dev/fd0</PRE
+></TD
+></TR
+></TABLE
+>&#13;</P
+><P
+>You can then shutdown the system and boot from the floppy by
+issuing the command <TT
+CLASS="LITERAL"
+>boot dva0</TT
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x99.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="t1.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="aboot.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>SRM Device Naming</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The aboot Loader</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

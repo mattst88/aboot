@@ -1,35 +1,30 @@
-This is aboot 0.8. It is still under development and should be
-considered beta-quality. 
-
-New features: 
-* listing directories on isofs works
-* symlinks on isofs work (including ".." in paths)
-* new and (hopefully) improved man pages
-
-Bug fixes: 
-* Crash when booting from a path containing a long filename fixed
-* Failure to boot when kernel was past block 524288 on a ext2 fs fixed
-
-Still todo: 
-* Testing, testing, testing
-
-Good luck and enjoy...
-
--Will Woods <will.woods@compaq.com>
-
-------------------------------------------------------------------
-
-This is release 0.7 of aboot, the Linux/Alpha loader for SRM.
+This is release 0.9 of aboot, the Linux/Alpha loader for SRM.
 
 Aboot is based on the standard Linux/Alpha bootloader, with extensions
 by David Mosberger and Michael Schwingen (prompt for arguments, kernel
-argument mapping using /etc/aboot.conf file).
+argument mapping using /etc/aboot.conf file). It is currently maintained
+by Will Woods.
 
-For a detailed description, see the SRM Firmware HOWTO available at
+For more information about aboot and SRM, see the SRM Firmware HOWTO, in 
+doc/faq/srm.html, or at http://www.alphalinux.org/faq/srm.html
 
-	http://www.azstarnet.com/~axplinux/srm.html
+Good luck and enjoy...
+
+-Will Woods <will.woods@compaq.com>  Oct 25, 2001
 
 ---
+
+New with version 0.9:
+
+ - new and (hopefully) improved man pages
+ - Crash when booting from a path containing a long filename on isofs fixed
+ - listing directories on isofs works
+ - symlinks on isofs work
+ - Failure to boot when kernel was past the 2GB boundary on ext2 fs fixed
+ - cylinder-counting bug in sdisklabel fixed
+
+[Note: there was no (official) version 0.8.]
+
 New with version 0.7:
 
  - aboot now supports an initial ramdisk, which can be loaded from an
@@ -70,7 +65,6 @@ New with version 0.6:
  - swriteboot tries to preserve the boot partition setting from a
    previous aboot installation.
 
-
 New with version 0.5:
 
  - IMPORTANT: e2writeboot now expects a _raw_ file, not an ECOFF
@@ -111,25 +105,19 @@ New with version 0.5:
    should be all you need).  Let me know if you feel strongly about this
    (one way or the other).
 
-
 New with version 0.4:
 
  - abootconf allows to set (or query) the number of the partition that
    aboot will use to lookup /etc/aboot.conf.
-
  - support for net boot added (thanks to Dave Larson <dlarson@cs.arizona.edu>)
-
  - iso9660 filesystem support added (based on Dave Rusling's MILO sources)
 
-
 New with version 0.31:
 
  - e2writeboot is now included in the distribution.
-
  - started with writing man pages for e2writeboot and swriteboot; pretty
    cryptic, I believe, but heck, it's the best there is! :-)
 
-
 New with version 0.3:
 
  - The commandline prompt changed to "aboot>".
@@ -153,7 +141,6 @@ New with version 0.3:
 
  - Booting from floppy disks now works again.
 
-
 New with version 0.2:
 
  - If the kernel commandline consists of a single 'i', aboot prompts for
@@ -172,7 +159,6 @@ New with version 0.2:
    the disk sector after the aboot code (currently, 162).  This kernel
    must be a header-less ("raw") binary without any ECOFF header.
 
-
 New with version 0.1:
 
  - Compressed kernels (using gzip) are supported (faster loading, less
