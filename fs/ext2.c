@@ -6,6 +6,9 @@
  * This file has been ported from the DEC 32-bit Linux version
  * by David Mosberger (davidm@cs.arizona.edu).
  */
+#ifndef TESTING
+#  include <linux/string.h>
+#endif
 #include <linux/stat.h>
 #include <linux/types.h>
 #include <linux/version.h>
