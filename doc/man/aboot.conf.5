@@ -3,7 +3,7 @@
 .\" <http://shell.ipoline.com/~elmert/hacks/docbook2X/> 
 .\" Please send any bug reports, improvements, comments, patches, 
 .\" etc. to Steve Cheng <steve@ggi-project.org>.
-.TH "ABOOT.CONF" "5" "17 Januar 2003" "aboot.conf" ""
+.TH "ABOOT.CONF" "5" "16 Juli 2003" "aboot.conf" ""
 .SH NAME
 aboot.conf \- The configuration file for aboot(8)
 .SH "DESCRIPTION"
@@ -39,6 +39,7 @@ partition. You can change the partition to use with
 0:4/vmlinuz root=/dev/hda5
 1:4/vmlinuz root=/dev/hda5 single
 2:4/vmlinuz.old ro root=/dev/hda5
+3:4/vmlinuz-2.4.9-32 root=/dev/sdc3 initrd=/initrd-2.4.9-32.img console=tty0
 8:6/boot/vmlinuz ro root=/dev/hda6
 .sp
 .fi
@@ -63,7 +64,8 @@ after \fBaboot\fR at the beginning of the hard disk
 you would omit the number, the slash and the kernel name.
 .PP
 Next the name of the partition to mount as \fI/\fR is given.
-Other kernel parameters follow as required.
+Other kernel parameters follow as required. As shown also an initrd can be
+specified.
 .PP
 The contents of this file can be shown before booting if necessary by
 using the interactive

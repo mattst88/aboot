@@ -49,6 +49,7 @@ partition. You can change the partition to use with
 0:4/vmlinuz root=/dev/hda5
 1:4/vmlinuz root=/dev/hda5 single
 2:4/vmlinuz.old ro root=/dev/hda5
+3:4/vmlinuz-2.4.9-32 root=/dev/sdc3 initrd=/initrd-2.4.9-32.img console=tty0
 8:6/boot/vmlinuz ro root=/dev/hda6
 </literallayout>
 </blockquote>
@@ -82,7 +83,8 @@ you would omit the number, the slash and the kernel name.
 
 <para>
 Next the name of the partition to mount as <filename>/</filename> is given.
-Other kernel parameters follow as required.
+Other kernel parameters follow as required. As shown also an initrd can be
+specified.
 </para>
 
 <para>
