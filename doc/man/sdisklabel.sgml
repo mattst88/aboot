@@ -226,7 +226,7 @@ The print command may be placed before or after any other command.
 </para>
 <para>
 In case you do want to leave empty partitions or create labels which
-extend beyond the end of the disk (e.g. when you know 
+extend beyond the end of the disk (e.g., when you know 
 <application>sdisklabel</application> is reporting a wrong size) then
 use can use the <parameter>force</parameter> switch on the command line.
 </para>
