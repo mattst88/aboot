@@ -23,7 +23,7 @@
 #include <linux/a.out.h>
 #include <linux/coff.h>
 #include <linux/param.h>
-#include <linux/string.h>
+#include <string.h>
 
 #ifdef __ELF__
 # include <asm/elf.h>

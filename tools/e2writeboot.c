@@ -64,7 +64,7 @@ main(int argc, char ** argv)
 
     if (argc != 3) {
 	printf("Usage: %s ext2-fs input-file\n", argv[0]);
-	exit(0);
+	exit(1);
     }
 
     strcpy(fsname, argv[1]);
@@ -73,7 +73,7 @@ main(int argc, char ** argv)
 
     /* "Open" the file system */
     if (ext2_init(fsname, O_RDWR) < 0) {
-	exit(0);
+	exit(1);
     }
 
     /* Open the input file */
@@ -81,7 +81,7 @@ main(int argc, char ** argv)
     if (infile < 0) {
 	perror(argv[2]);
 	ext2_close();
-	exit(0);
+	exit(1);
     }
 
     /* Figure out just how much data the input file is going
@@ -117,7 +117,7 @@ main(int argc, char ** argv)
 	    printf("%s: Not a regular file.  Must remove it first.\n", namebuf);
 	    ext2_iput(ip);
 	    ext2_close();
-	    exit(0);
+	    exit(1);
 	}
 
 	printf("Using existing file %s\n", namebuf);
@@ -147,7 +147,7 @@ main(int argc, char ** argv)
 	if(!dip) {
 	    printf("Directory %s does not exist\n", dirname);
 	    ext2_close();
-	    exit(0);
+	    exit(1);
 	}
 
 	printf("Creating new file %s in directory %s\n", filename, dirname);
@@ -158,7 +158,7 @@ main(int argc, char ** argv)
 
 	if(!ip) {
 	    printf("PANIC! ip == NULL\n");
-	    exit(0);
+	    exit(1);
 	}
 
 	/* Create the directory entry */
@@ -198,7 +198,7 @@ main(int argc, char ** argv)
     if(bs_start <= 0) {
 	printf("Cannot allocate blocks for %s... goodbye!\n", argv[2]);
 	ext2_close();
-	exit(0);
+	exit(1);
     }
 
     /* Write what we've got out to the file */
