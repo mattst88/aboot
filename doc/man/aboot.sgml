@@ -45,7 +45,7 @@ In the interactive mode you can use the command h to show your current
 </para>
 <para>
 If you do not want to use the <filename>etc/aboot.conf</filename> as set
-up by <application>abootconf</application> you can explicitly tell 
+up by <application>abootconf</application>(8) you can explicitly tell 
 <application>aboot</application> where to look for <filename>etc/aboot.conf</filename> by prepending the number of the configuration with the proper
 partition, i.e. if your <filename>etc/aboot.conf</filename> is on your
 second partition and you want to boot the entry labeled three you would
@@ -78,6 +78,6 @@ but may be used by others.
 
 <refsect1><title>SEE ALSO</title>
 <para><application>abootconf</application>(8), <filename>aboot.conf</filename>(5),
-<application>swriteboot</application>(8), HP SRM Manual</para>
+<application>swriteboot</application>(8), HP SRM Manual (<ULink URL="http://h18002.www1.hp.com/alphaserver/download/srm_reference.pdf"></ULink>)</para>
 </refsect1>
 </refentry>

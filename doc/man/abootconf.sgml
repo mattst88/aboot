@@ -99,7 +99,7 @@ number).
 </para>
 <para>
 Note that you have to rerun <application>abootconf</application> if you updated
-<application>aboot</application>.
+<application>aboot</application>(8).
 </para>
 <para>
 Strictly speaking <application>abootconf</application> is not necessary as
@@ -136,6 +136,6 @@ This man page was written by Helge Kreutzmann <email>kreutzm@itp.uni-hannover.de
 <para><filename>etc/aboot.conf</filename></para>
 </refsect1>
 <refsect1><title>SEE ALSO</title>
-<para><application>aboot</application>(8), <application>swriteboot</application>(8), <filename>aboot.conf</filename>(5), HP SRM Manual</para>
+<para><application>aboot</application>(8), <application>swriteboot</application>(8), <filename>aboot.conf</filename>(5), HP SRM Manual (<ULink URL="http://h18002.www1.hp.com/alphaserver/download/srm_reference.pdf"></ULink>)</para>
 </refsect1>
 </refentry>
