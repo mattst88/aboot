@@ -14,6 +14,7 @@
 #define BLKGETSIZE _IO(0x12,96)    /* return device size */
 
 int label_modified=0;
+int force=0;
 
 int
 write_disklabel (int fd,struct disklabel *d)
@@ -86,7 +87,7 @@ set_disk_size (int fd)
 		/* fdisk says: "never use hd.cylinders - it is truncated" 
 		   if BLKGETSIZE works we'll calculate our own value for
 		   cylinders in a little bit, but for now, use it anyway */
-		total_disk_size=(heads*sectors*cylinders)/2;
+		total_disk_size=(heads*sectors*cylinders); /* in sectors */ 
 	}
 	
 	r2 = ioctl(fd,BLKGETSIZE, &blocks);
@@ -103,7 +104,7 @@ set_disk_size (int fd)
 	}
 
 	if (r1 == 0 && r2 == 0) {
-		total_disk_size = blocks / 2;
+		total_disk_size = blocks; /* sizes in sectors */
 		cylinders = blocks / (heads * sectors);
 		cylinders /= sectors_per_block;
 	} else if (r1 == 0) {
@@ -112,11 +113,10 @@ set_disk_size (int fd)
 		sectors = blocks / sectors_per_block;
 	}
 	fprintf(stderr,"%d heads, %d sectors, %d cylinders %dK total size\n", 
-		heads, sectors, cylinders, total_disk_size);
+		heads, sectors, cylinders, total_disk_size/2);
 }
 #endif
 
-/* size is in K */
 int
 set_partition (int fd,struct disklabel *d,int num,int offset,int size,int fstype)
 {
@@ -125,11 +125,16 @@ set_partition (int fd,struct disklabel *d,int num,int offset,int size,int fstype
 
 	if(endplace>total_disk_size) {
 		fprintf(stderr,"endplace is %d total_disk_size is %d\n",endplace,total_disk_size);
-		return -1;
+		if (!force) return -1;
+		/* correct the discrepancy */
+		size = total_disk_size-offset;
+		endplace=total_disk_size;
+		fprintf(stderr,"Warning: changing endplace to %d and size to %d\n",endplace,size);
 	}
+
 	if(num>d->d_npartitions) {
-		fprintf(stderr,"Partition not consecutive! You're not allowed to leave empty partitions.\nNext unset partition is %d.\n",d->d_npartitions);
-		return -1;
+		fprintf(stderr,"Partition not consecutive! This would leave empty partitions.\nNext unset partition is %d.\n",d->d_npartitions);
+		if (!force) return -1;
 	}
 	x=overlaplabel(d,offset,endplace,1U<<num);
 	if(x!=-1)
@@ -200,6 +205,10 @@ main (int argc,char **argv)
 		}
 		else if(strcmp(argv[x],"print")==0) {
 			print_disklabel(fd,&d);
+			x++;
+		}
+		else if(strcmp(argv[x],"force")==0) {
+		        force=1;
 			x++;
 		}
 		else {
