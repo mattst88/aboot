@@ -1,0 +1,32 @@
+The author is unkown, it is not David Mosberger-Tang, Jim Paradies, Michael Schwingen
+or Jay Estabrook. I could not locate Bob Manson. An entry in RedHat's bugzilla
+yielded the following notice which I reproduce verbatim here:
+
+https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=71437
+
+--- shadow/71437        Tue Aug 13 13:22:49 2002
++++ shadow/71437.tmp.9824       Thu Aug 15 21:23:45 2002
+@@ -3,8 +3,8 @@
+ Version: 7.1
+ Platform: alpha
+ OS/Version: Linux
+-Status: NEW
+-Resolution:
++Status: CLOSED
++Resolution: WORKSFORME
+ Severity: normal
+ Priority: normal
+ Component: aboot
+@@ -45,3 +45,9 @@
+
+ The reason is that I'd like to know the copyright and I am wrinting the
+ man pages (which can be included in the next RH/Alpha release as well).
+
++------- Additional comments from sopwith@redhat.com 2002-08-15 21:31:59 -------
++I can't track down a Bob Manson (and I cannot find any record of his association
++with Red Hat in the aboot sources), but any work he did on behalf of Red Hat
++would be property of Red Hat, and you can consider all our changes to be release
++under the GPL the same as the rest of the aboot package.
+
+
+Helge Kreutzmann <Helge.Kreutzmann@itp.uni-hannover.de>, September 4th 2002
