@@ -9,11 +9,11 @@ ASFLAGS	= $(CPPFLAGS) -D__ASSEMBLY__ -traditional
 
 ifeq ($(TESTING),)
 libaboot.a: vsprintf.o memcpy.o memset.o string.o _setjmp.o \
-	_longjmp.o  __divqu.o __remqu.o __divlu.o \
+	_longjmp.o isolib.o __divqu.o __remqu.o __divlu.o \
 	__remlu.o
 	ar cru $@ $?
 else
-libaboot.a:
+libaboot.a: isolib.o
 	ar cru $@ $?
 endif
 

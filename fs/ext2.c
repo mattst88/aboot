@@ -6,9 +6,6 @@
  * This file has been ported from the DEC 32-bit Linux version
  * by David Mosberger (davidm@cs.arizona.edu).
  */
-#ifndef TESTING
-#  include <linux/string.h>
-#endif
 #include <linux/stat.h>
 #include <linux/types.h>
 #include <linux/version.h>
@@ -19,9 +16,6 @@
 #  include <linux/ext2_fs.h>
 #  define __KERNEL__
 #  include <linux/fs.h>
-#  ifndef TESTING
-#    include <linux/string.h>
-#  endif
 
 #else /* Linux 2.4.0 or later */
 
@@ -36,6 +30,7 @@
 #include "cons.h"
 #include "disklabel.h"
 #include "utils.h"
+#include "string.h"
 
 #define MAX_OPEN_FILES		5
 

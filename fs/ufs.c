@@ -26,8 +26,14 @@
 /*
  * HISTORY
  * $Log: ufs.c,v $
- * Revision 1.1  2001/10/08 23:03:52  wgwoods
- * Initial revision
+ * Revision 1.2  2003/11/08 00:03:36  wgwoods
+ * Reverted changes from 0.10, merged doc changes
+ *
+ * Revision 1.1.1.1.2.1  2003/03/21 23:32:23  wgwoods
+ * Warning cleanups
+ *
+ * Revision 1.1.1.1  2001/10/08 23:03:52  wgwoods
+ * initial import of CVS source from alphalinux.org, plus a couple bugfixes
  *
  * Revision 1.1.1.1  2000/05/03 03:58:22  dhd
  * Initial import (from 0.7 release)
@@ -49,9 +55,6 @@
  */
 #include <linux/kernel.h>
 #include <asm/stat.h>
-#ifndef TESTING
-#  include <linux/string.h>
-#endif
 
 #include "aboot.h"
 #include "bootfs.h"
@@ -59,6 +62,7 @@
 #include "disklabel.h"
 #include "ufs.h"
 #include "utils.h"
+#include "string.h"
 
 #define MAX_OPEN_FILES	1
 

@@ -36,7 +36,7 @@ CC		= gcc
 TOP		= $(shell pwd)
 ifeq ($(TESTING),)
 CPPFLAGS	= $(CFGDEFS) -I$(TOP)/include -I$(KSRC)/include
-CFLAGS		= $(CPPFLAGS) -D__KERNEL__ -mcpu=ev4 -Os -Wall -fno-builtin -mno-fp-regs -ffixed-8
+CFLAGS		= $(CPPFLAGS) -D__KERNEL__ -Os -Wall -fno-builtin -mno-fp-regs -ffixed-8
 else
 CPPFLAGS	= -DTESTING $(CFGDEFS) -I$(TOP)/include -I$(KSRC)/include
 CFLAGS		= $(CPPFLAGS) -O -g3 -Wall -D__KERNEL__ -ffixed-8
@@ -56,7 +56,7 @@ ASFLAGS		= $(CPPFLAGS)
 	$(CC) $(ASFLAGS) -D__ASSEMBLY__ -traditional -c -o $*.o $<
 
 NET_OBJS = net.o
-DISK_OBJS = disk.o isolib.o fs/ext2.o fs/ufs.o fs/dummy.o fs/iso.o 
+DISK_OBJS = disk.o fs/ext2.o fs/ufs.o fs/dummy.o fs/iso.o
 ifeq ($(TESTING),)
 ABOOT_OBJS = \
 	head.o aboot.o cons.o utils.o \
@@ -107,17 +107,20 @@ aboot:	$(ABOOT_OBJS) $(DISK_OBJS) $(LIBS)
 	$(CC) $(ABOOT_OBJS) $(DISK_OBJS) -o $@ $(LIBS)
 endif
 
-vmlinux.bootp: $(VMLINUXGZ) net_aboot.nh tools/mknetboot
-	tools/mknetboot -v -k $(VMLINUXGZ) -o $@
+vmlinux.bootp: net_aboot.nh $(VMLINUXGZ) net_pad
+	cat net_aboot.nh $(VMLINUXGZ) net_pad > $@
 
 net_aboot.nh: net_aboot tools/objstrip
 	tools/objstrip -vb net_aboot $@
 
-net_aboot: $(ABOOT_OBJS) $(NET_OBJS) $(LIBS)
+net_aboot: $(ABOOT_OBJS) $(ABOOT_OBJS) $(NET_OBJS) $(LIBS)
 	$(LD) $(ABOOT_LDFLAGS) $(ABOOT_OBJS) $(NET_OBJS) -o $@ $(LIBS)
 
+net_pad:
+	dd if=/dev/zero of=$@ bs=512 count=1
+
 clean:	sdisklabel/clean tools/clean lib/clean
-	rm -f aboot abootconf net_aboot net_aboot.nh vmlinux.bootp \
+	rm -f aboot abootconf net_aboot net_aboot.nh net_pad vmlinux.bootp \
 		$(ABOOT_OBJS) $(DISK_OBJS) $(NET_OBJS) bootlx \
 		include/ksize.h vmlinux.nh
 

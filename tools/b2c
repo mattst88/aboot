@@ -1,7 +1,0 @@
-#!/usr/bin/perl
-# b2c: converts a binary file to #include-able C source.
-# usage: b2c variablename < input.bin > output.h
-# Brought to you by the Council for Recreational Abuse of Perl
-print "char ",shift,"[]={"; 
-foreach(split(//,join("",<STDIN>))){printf("%s0x%02x,",$n++%16?"":"\n",ord)}
-print "};\n";

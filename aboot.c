@@ -21,9 +21,6 @@
 
 #include <linux/elf.h>
 #include <linux/kernel.h>
-#ifndef TESTING
-#  include <linux/string.h>
-#endif
 #include <linux/version.h>
 
 #include <asm/console.h>
@@ -32,11 +29,12 @@
 
 #include <alloca.h>
 
-#include <aboot.h>
-#include <config.h>
-#include <cons.h>
-#include <setjmp.h>
-#include <utils.h>
+#include "aboot.h"
+#include "config.h"
+#include "cons.h"
+#include "setjmp.h"
+#include "utils.h"
+#include "string.h"
 
 #ifndef elf_check_arch
 # define aboot_elf_check_arch(e)	1
