@@ -1,3 +1,23 @@
+2002-01-15  Will Woods <will.woods@compaq.com>
+	* lib/isolib.c: moved out of lib/ so we don't build isofs code into
+	  the network bootloader.
+	* net.c: added support for net_aboot+kernel image with optional
+	  ramdisk and embedded kernel command line, based on ideas from 
+	  Soohoon Lee's aboot-bootp patch. 
+	* tools/mknetboot.c: mknetboot is a tool to create bootp images that
+	  the newly-changed net_aboot will understand.
+	* tools/b2h: 2-line perl hack to convert a binary file to a C header
+	  file. Used by mknetboot to #include a copy of net_aboot.
+	* various code cleanups to eliminate gcc warnings
+
+2001-11-14  Will Woods <will.woods@compaq.com>
+	* sdisklabel/sdisklabel.c: fixed my fix to the cylinder counting bug.
+	  oops. also added (currently undocumented) "force" flag, to skip
+	  error checking in sdisklabel.
+
+2001-10-26  Will Woods <will.woods@compaq.com>
+	* Released aboot 0.9. Yay!
+	
 2001-10-25  Will Woods <will.woods@compaq.com>
 	* sdisklabel/sdisklabel.c: fixed cylinder-counting bug
 

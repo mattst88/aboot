@@ -28,8 +28,11 @@
 #include <aboot.h>
 #include <bootfs.h>
 #include <utils.h>
+#include "net.h"
 
 extern char boot_file[256];
+extern char _end;
+char *src = 0; 
 
 void
 dang (void)
@@ -41,12 +44,7 @@ dang (void)
 int
 net_bread (int fd, long blkno, long nblks, char * buf)
 {
-        static char * src = 0;
-	extern char _end;
 	int nbytes;
-
-	if (!src)
-		src = (char *) (((unsigned long) &_end + 511) & ~511);
 
 #ifdef DEBUG
 	printf("net_bread: %p -> %p (%ld blocks at %ld)\n", src, buf,
@@ -71,13 +69,46 @@ struct bootfs netfs = {
 	(int (*)(int, struct stat*))	dang,	/* fstat */
 };
 
+/* prerequisites: src points to the initrd in memory, initrd_size is set */
+long read_initrd() {
+	int nblocks;
+	
+	if (!free_mem_ptr) 
+		free_mem_ptr = memory_end();
+	/* page aligned (downward) */
+	initrd_start = (free_mem_ptr - initrd_size) & ~(PAGE_SIZE-1);
+	/* update free_mem_ptr so malloc() still works */
+	free_mem_ptr = initrd_start;
+
+	nblocks = ALIGN_512(initrd_size) / bfs->blocksize;
+	printf("aboot: loading initrd (%ld bytes/%d blocks) at %#lx\n",
+		initrd_size, nblocks, initrd_start);
+	(*bfs->bread)(-1, 0, nblocks, (char*) initrd_start);
+	return(0);
+}
 
 long
 load_kernel (void)
 {
+	netabootheader_t *header;
+	char *kernel, *initrd;
 	bfs = &netfs;
 
+	header=(netabootheader_t *)ALIGN_512(&_end);
+	kernel=(char *)ALIGN_512(((unsigned long)header)+header->header_size);
+	initrd=(char *)ALIGN_512(((unsigned long)kernel)+header->kernel_size);
+
+	if (header->initrd_size) {
+		src=initrd;
+		initrd_size=header->initrd_size;
+		read_initrd();
+	}
+
+	src=kernel;
+
 	strcpy(boot_file, "network");
+	strcpy(kernel_args, header->command_line);
+	
 	uncompress_kernel(-1);
 
 	memset((char*)bss_start, 0, bss_size);	        /* clear bss */
