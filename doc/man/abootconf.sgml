@@ -40,7 +40,8 @@ relative to the root of the file system in this partition.
 </para>
 <para> 
 <application>abootconf</application> requires the boot device
-(e.g. /dev/hdb, /dev/sda) and the partition
+(e.g. <filename>/dev/hdb</filename>, <filename>/dev/sda</filename>) and the
+partition
 to be used (e.g. 3). Thus if you want to boot from partition E: on your second
 SCSI disk you would enter</para>
 <para>

@@ -3,7 +3,7 @@
 .\" <http://shell.ipoline.com/~elmert/hacks/docbook2X/> 
 .\" Please send any bug reports, improvements, comments, patches, 
 .\" etc. to Steve Cheng <steve@ggi-project.org>.
-.TH "ABOOTCONF" "8" "17 Januar 2003" "abootconf" ""
+.TH "ABOOTCONF" "8" "26 Oktober 2003" "abootconf" ""
 .SH NAME
 abootconf \- Configure the location of the configuration file for the secondary bootloader aboot(8) for Linux/Alpha.
 .SH SYNOPSIS
@@ -23,7 +23,8 @@ in \fIetc/aboot.conf\fR(5)
 relative to the root of the file system in this partition.
 .PP
 \fBabootconf\fR requires the boot device
-(e.g. /dev/hdb, /dev/sda) and the partition
+(e.g. \fI/dev/hdb\fR, \fI/dev/sda\fR) and the
+partition
 to be used (e.g. 3). Thus if you want to boot from partition E: on your second
 SCSI disk you would enter
 .PP
