@@ -39,9 +39,6 @@
 #include <setjmp.h>
 #include <utils.h>
 
-#define PASTE(x)		#x
-#define VERSION(maj,min)	PASTE(maj) "." PASTE(min)
-
 #ifndef elf_check_arch
 # define aboot_elf_check_arch(e)	1
 #else
@@ -221,8 +218,7 @@ main_ (void)
 
 	cons_init();
 
-	printf("aboot: Linux/Alpha SRM bootloader version "
-	       VERSION(ABOOT_MAJOR, ABOOT_MINOR) "\n");
+	printf("aboot: Linux/Alpha SRM bootloader version "ABOOT_VERSION"\n");
 
 	/* don't know how to deal with this yet */
 	if (INIT_HWRPB->pagesize != 8192) {

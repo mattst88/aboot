@@ -585,8 +585,7 @@ get_aboot_options (long dev)
 			/* Otherwise, clear out kernel_args and prompt the user */
 			kernel_args[0] = 0;
 			if (first) {
-				printf("Welcome to aboot %d.%d\n",
-				       ABOOT_MAJOR, ABOOT_MINOR);
+				printf("Welcome to aboot " ABOOT_VERSION "\n");
 				print_help();
 				first = 0;
 			}
