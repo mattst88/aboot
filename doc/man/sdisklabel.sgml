@@ -18,7 +18,7 @@ Create/modify disklabels on Linux/Alpha systems
 <refsynopsisdiv>
  <cmdsynopsis>
    <command>sdisklabel</command>
-     <arg choice="plain">drive</arg>
+     <arg choice="plain">device</arg>
      <group choice="opt"><arg choice="plain">print</arg>
        <arg choice="plain">zero</arg>
        <arg choice="plain">sum</arg>
@@ -26,13 +26,13 @@ Create/modify disklabels on Linux/Alpha systems
  </cmdsynopsis>
  <cmdsynopsis>
    <command>sdisklabel</command>
-     <arg choice="plain">drive</arg>
+     <arg choice="plain">device</arg>
      <arg choice="plain">size</arg>
      <arg choice="plain">partsize</arg>
  </cmdsynopsis>
  <cmdsynopsis>
    <command>sdisklabel</command>
-     <arg choice="plain">drive</arg>
+     <arg choice="plain">device</arg>
      <arg choice="plain">partnum</arg>
      <arg choice="plain">offset</arg>
      <arg choice="plain">size</arg>
