@@ -34,16 +34,21 @@ LOADADDR	= 20000000
 
 ABOOT_LDFLAGS = -static -N -Taboot.lds
 
+ifndef $($(CC))
 CC		= gcc
-TOP		= $(shell pwd)
-ifeq ($(TESTING),)
-CPPFLAGS	= $(CFGDEFS) -I$(TOP)/include
-CFLAGS		= $(CPPFLAGS) -D__KERNEL__ -Os -Wall -fno-builtin -mno-fp-regs -ffixed-8
-else
-CPPFLAGS	= -DTESTING $(CFGDEFS) -I$(TOP)/include
-CFLAGS		= $(CPPFLAGS) -O -g3 -Wall -D__KERNEL__ -ffixed-8
 endif
-ASFLAGS		= $(CPPFLAGS)
+
+TOP		= $(shell pwd)
+
+ifeq ($(TESTING),)
+override CPPFLAGS	+= $(CFGDEFS) -I$(TOP)/include
+override CFLAGS		+= $(CPPFLAGS) -D__KERNEL__ -Os -Wall -fno-builtin -mno-fp-regs -ffixed-8
+else
+override CPPFLAGS	+= -DTESTING $(CFGDEFS) -I$(TOP)/include
+override CFLAGS		+= $(CPPFLAGS) -O -g3 -Wall -D__KERNEL__ -ffixed-8
+endif
+
+override ASFLAGS	+= $(CPPFLAGS)
 
 
 .c.s:
