@@ -1,3 +1,10 @@
+2004-04-08  Will Woods <wgwoods@mac.com>
+	* Change include path (should fix compilation for 2.6 kernels)
+	* Add/fix extra_args patch - allows you to add extra arguments after
+	  the configuration number (e.g. "1 console=ttyS0")
+	* Fix warning about bcopy
+	* Version is now 1.0_pre20040408
+
 2003-12-01  Will Woods <wgwoods@mac.com>
 	* Patch for USB console from Jeff.Wiedemeier@hp.com
 	* Patch to check kernel memory against console memory descriptors, also
