@@ -3,7 +3,7 @@
 .\" <http://shell.ipoline.com/~elmert/hacks/docbook2X/> 
 .\" Please send any bug reports, improvements, comments, patches, 
 .\" etc. to Steve Cheng <steve@ggi-project.org>.
-.TH "SDISKLABEL" "8" "26 Oktober 2003" "sdisklabel" ""
+.TH "SDISKLABEL" "8" "23 November 2003" "sdisklabel" ""
 .SH NAME
 sdisklabel \- Create/modify disklabels on Linux/Alpha systems
 .SH SYNOPSIS
@@ -16,8 +16,8 @@ sdisklabel \- Create/modify disklabels on Linux/Alpha systems
 .SH "COPYRIGHT"
 .PP
 \fBsdisklabel\fR is Copyright (C) by Red Hat Inc. The
-author of this man page tried to trake down the original author, but was
-unable to do so. A final Bugzilla entry with redhat yielded the following
+author of this man page tried to track down the original author, but was
+unable to do so. A final Bugzilla entry with RedHat yielded the following
 reply:
 ``I can't track down a Bob Manson (and I cannot find any record of his association
 with Red Hat in the aboot sources), but any work he did on behalf of Red Hat
@@ -31,7 +31,7 @@ can be used to create partitions (called disklabels) on Linux/Alpha
 systems. You \fBmust\fR use disklabels instead of the
 DOS type
 partitioning scheme on any hard disk which you want to boot from via SRM or
-which you want to share with HP True64.
+which you want to share with HP Tru64.
 If you instead are booting from \fBmilo\fR
 then you \fBmust not\fR use disklabels on your boot hard disk.
 .PP
@@ -83,7 +83,7 @@ from sector offset 512:
 .PP
 The last number is the filesystem type, and is currently 8 for ext2fs
 filesystems. (A different number would be used to specify an
-True 64
+Tru64
 partition, for example).
 .PP
 If all was successful, the program should print out the partition (the
@@ -126,9 +126,9 @@ size is the total # of sectors on the drive.
 use with care.
 .SH "NOTES"
 .PP
-If you want to share the disk with HP True64
+If you want to share the disk with HP Tru64
 (OSF/1) it is recommended to
-use the True64 
+use the Tru64 
 partitioning tools to prepare the disk.
 .PP
 To actually boot from the freshly labeled disk you also need to install
@@ -138,7 +138,7 @@ for details.
 .PP
 The print command may be placed before or after any other command.
 .PP
-In case you do want to leave empty partitions or create lables wich
+In case you do want to leave empty partitions or create labels which
 extend beyond the end of the disk (e.g. when you know 
 \fBsdisklabel\fR is reporting a wrong size) then
 use can use the \fIforce\fR switch on the command line.

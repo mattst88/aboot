@@ -48,8 +48,8 @@ Create/modify disklabels on Linux/Alpha systems
 <refsect1><title>COPYRIGHT</title>
 <para>
 <application>sdisklabel</application> is Copyright (C) by Red Hat Inc. The
-author of this man page tried to trake down the original author, but was
-unable to do so. A final Bugzilla entry with redhat yielded the following
+author of this man page tried to track down the original author, but was
+unable to do so. A final Bugzilla entry with RedHat yielded the following
 reply:
 <quote>
 I can't track down a Bob Manson (and I cannot find any record of his association
@@ -68,7 +68,7 @@ can be used to create partitions (called disklabels) on Linux/Alpha
 systems. You <emphasis>must</emphasis> use disklabels instead of the
 <productname>DOS</productname> type
 partitioning scheme on any hard disk which you want to boot from via SRM or
-which you want to share with <productname>HP True64</productname>.
+which you want to share with <productname>HP Tru64</productname>.
 If you instead are booting from <application>milo</application>
 then you <emphasis>must not</emphasis> use disklabels on your boot hard disk.
 </para>
@@ -148,7 +148,7 @@ sdisklabel <parameter>/dev/sda 0 512 500000 8 print</parameter>
 <para>
 The last number is the filesystem type, and is currently 8 for ext2fs
 filesystems. (A different number would be used to specify an
-<productname>True 64</productname>
+<productname>Tru64</productname>
 partition, for example).
 </para>
 
@@ -210,9 +210,9 @@ use with care.
 </refsect1>
 <refsect1><title>NOTES</title>
 <para>
-If you want to share the disk with <productname>HP True64</productname>
+If you want to share the disk with <productname>HP Tru64</productname>
 (<productname>OSF/1</productname>) it is recommended to
-use the <productname>True64</productname> 
+use the <productname>Tru64</productname> 
 partitioning tools to prepare the disk.
 </para>
 <para>
@@ -225,7 +225,7 @@ for details.
 The print command may be placed before or after any other command.
 </para>
 <para>
-In case you do want to leave empty partitions or create lables wich
+In case you do want to leave empty partitions or create labels which
 extend beyond the end of the disk (e.g. when you know 
 <application>sdisklabel</application> is reporting a wrong size) then
 use can use the <parameter>force</parameter> switch on the command line.
