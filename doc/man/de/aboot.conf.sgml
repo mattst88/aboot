@@ -1,0 +1,108 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="aboot.conf">
+
+<refmeta>
+<refentrytitle>aboot.conf</refentrytitle>
+<manvolnum>5</manvolnum>
+<refmiscinfo>aboot.conf</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>aboot.conf</refname>
+<refpurpose>Die Konfigurationsdatei für <application>aboot</application>(8)
+</refpurpose>
+</refnamediv>
+
+<refsect1><title>BESCHREIBUNG</title>
+<para>
+<indexterm><primary>aboot.conf</primary></indexterm>
+<filename>aboot.conf</filename> enthält eine Liste von Boot-Einstellungen
+für <application>aboot</application>(8). Jede Boot-Einstellung hat eine
+eindeutige Zahl, die am SRM-Prompt angegeben werden kann.
+<indexterm><primary>SRM</primary></indexterm>.
+</para>
+<para>
+<filename>aboot.conf</filename> muß sich in einem Verzeichnis names
+<filename>etc</filename> auf der <emphasis>gleichen Partition</emphasis>
+wie Ihre Kernel befinden, es sei den, Sie geben explizit die Partition
+für Ihre Kernel an (siehe dazu die Ausführungen weiter unten). Falls Sie
+also eine seperate Boot-Partition (namens <filename>/boot</filename>)
+erzeugen, dann sollte <filename>aboot.conf</filename> in
+<filename>/boot/etc/</filename> liegen.
+</para>
+<para>
+Im folgenden Beispiel liegen die Kernel auf einer anderen Partition (hda4)
+als <filename>/</filename> (hda5), während in der fünften Zeile
+<filename>/boot</filename> auf der gleichen Partition (hda6) wie 
+<filename>/</filename> liegt. Daher kann sich <filename>aboot.conf</filename>
+auf einer der drei Partitionen befinden, muß aber <emphasis>immer</emphasis>
+in einem Verzeichnis namens <filename>etc</filename> relativ zur obersten
+Verzeichnisebene auf dieser Partition angelegt sein. Die zu verwendene
+Partition können Sie mittels <application>abootconf</application>(8)
+ändern.
+</para>
+<para><example>
+<title>BEISPIEL <filename>aboot.conf</filename></title>
+<blockquote>
+<literallayout>
+0:4/vmlinuz root=/dev/hda5
+1:4/vmlinuz root=/dev/hda5 single
+2:4/vmlinuz.old ro root=/dev/hda5
+3:4/vmlinuz-2.4.9-32 root=/dev/sdc3 initrd=/initrd-2.4.9-32.img console=tty0
+8:6/boot/vmlinuz ro root=/dev/hda6
+</literallayout>
+</blockquote>
+</example></para>
+<para>
+Die erste Zahl ist ein eindeutige Identifikation für jede Boot-Konfiguration.
+Um eine bestimmte Konfiguration am SRM-Prompt zu booten, geben Sie
+</para>
+<para>
+<command>
+boot <parameter>dka0 -fl "0"</parameter>
+</command>
+</para>
+<para>
+ein, wobei dka0 durch Ihr Boot-Gerät und die 0 durch die zur bootende,
+in <filename>etc/aboot.conf</filename> angegegebene Konfigurationszahl
+ersetzt werden muß.
+</para>
+
+<para>
+Nach dem Doppelpunkt ist die Partition, auf der sich der Kernel befindet,
+angegeben. 1 entspricht der BSD-Partition mit Namen A:, 2 B: und so weiter.
+</para>
+
+<para>
+Nach dem Schrägstrich ist der Name (ggf. inklusive des zugehörigen Pfads)
+des zu bootenden Kernels angegeben. Falls sich Ihr Kernel nicht in einem
+Dateisystem, sondern direkt nach <application>aboot</application>(8) am Anfang
+der Festplatte befindet lassen Sie die Zahl, den Schrägstrich und den
+Kernelnamen weg.
+</para>
+
+<para>
+Als nächstes ist die als <filename>/</filename> zu montierende Partition
+angegeben. Andere benötigte Kernel-Parameter folgen. Wie gezeigt kann auch
+eine initrd angegeben werden.
+</para>
+
+<para>
+Der Inhalt dieser Datei kann vor dem Booten mittels des interaktiven
+Modus -- durch Booten mit dem Paramter "i" -- 
+von <application>aboot</application>(8) und der Angabe von 
+"h" am <application>aboot</application>-Prompt angezeigt werden.
+</para>
+
+</refsect1>
+<refsect1><title>AUTOR</title>
+<para>
+Diese Handbuchseite wurde von Helge Kreutzmann
+<email>kreutzm@itp.uni-hannover.de</email> für das Debian GNU/Linux-Projekt
+geschrieben, sie darf aber auch von anderen verwendet werden.
+</para>
+</refsect1>
+<refsect1><title>SIEHE AUCH</title>
+<para><application>aboot</application>(8), <application>abootconf</application>(8), <application>swriteboot</application>(8), HP SRM Handbuch (<ULink URL="http://h18002.www1.hp.com/alphaserver/download/srm_reference.pdf"></ULink>)
+</refsect1>
+</refentry>

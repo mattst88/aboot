@@ -1,0 +1,89 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="aboot">
+
+<refmeta>
+<refentrytitle>aboot</refentrytitle>
+<manvolnum>8</manvolnum>
+<refmiscinfo>aboot</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>aboot</refname>
+<refpurpose>Der Bootloader (Urlader) der zweiten Stufe auf Linux/Alpha</refpurpose>
+</refnamediv>
+
+<refsect1><title>COPYRIGHT</title>
+<para>
+<application>aboot</application> unterliegt dem Copyright (C) 1996 Linus Torvalds, David Mosberger-Tang und Michael Schwingen
+</para>
+</refsect1>
+
+<refsect1><title>BESCHREIBUNG</title>
+<para>
+<indexterm><primary>aboot</primary></indexterm>
+<application>aboot</application> wird als Bootloader (Urlader) der zweiten
+Stufe benötigt, falls das System via SRM gebootet wird. Er wird normalerweise
+während der Systeminstallation durch
+<application>swriteboot</application>(8) installiert. 
+</para>
+<para>
+Um den Bootprozess zu automatisieren können vordefinierte Boot-Konfigurationen
+in <filename>etc/aboot.conf</filename>(5) eingetragen werden. 
+</para>
+<para>
+<application>aboot</application> kann durch die Angabe von
+</para>
+<para>
+<command>boot <parameter>dka0 -fl "i"</parameter></command>
+</para>
+<para>
+am SRM-Prompt auch interaktiv verwendet werden, wobei dka0 durch das
+verwendete Gerät ersetzt werden muß.
+</para>
+<para>
+Im interaktiven Modus können Sie das Kommand h zur Anzeige der derzeitigen
+<filename>etc/aboot.conf</filename> verwenden, und durch die Angabe der 
+entsprechenden Zahl (oder des kompletten Boot-Kommandos wie bei SRM)
+Linux booten.
+</para>
+<para>
+Falls Sie nicht die von <application>abootconf</application>(8) erstellte
+<filename>etc/aboot.conf</filename> verwenden wollen, können Sie
+<application>aboot</application> explizit angeben, wo es nach der
+<filename>etc/aboot.conf</filename> suchen soll, indem Sie vor die
+Zahl der Konfiguration die passende Partition angeben, d.h. falls
+Ihre <filename>etc/aboot.conf</filename> sich auf Ihrer zweiten Partition
+befindet und Sie den mit 3 benannten Eintrag booten wollen, dann gäben
+Sie an
+</para>
+<para>
+<command>boot <parameter>dqa -fl "2:3"</parameter></command>
+</para>
+<para>
+Beachten Sie, daß dies nur für das Booten von Linux via SRM zutrifft, da
+<ProductName>VMS</ProductName>, <ProductName>Tru64</ProductName>, *BSD und
+<ProductName>Windows NT</ProductName> jeweils über ihren eigenen Bootloader
+für die zweite Stufe verfügen. Desweiteren wird <application>aboot</application>
+nicht benötigt, falls das System mittels <application>milo</application>
+gebootet wird.
+</para>
+</refsect1>
+
+
+<refsect1><title>AUTOR</title>
+<para>
+Diese Handbuchseite wurde von Helge Kreutzmann
+<email>kreutzm@itp.uni-hannover.de</email> für das Debian GNU/Linux-Projekt
+geschrieben, sie darf aber auch von anderen verwendet werden.
+</para>
+</refsect1>
+
+<refsect1><title>DATEIEN</title>
+<para><filename>etc/aboot.conf</filename></para>
+</refsect1>
+
+<refsect1><title>SIEHE AUCH</title>
+<para><application>abootconf</application>(8), <filename>aboot.conf</filename>(5),
+<application>swriteboot</application>(8), HP SRM Handbuch (<ULink URL="http://h18002.www1.hp.com/alphaserver/download/srm_reference.pdf"></ULink>)</para>
+</refsect1>
+</refentry>

@@ -1,0 +1,84 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="srmbootraw">
+
+<refmeta>
+<refentrytitle>srmbootraw</refentrytitle>
+<manvolnum>8</manvolnum>
+<refmiscinfo>srmbootraw</refmiscinfo>
+</refmeta>
+
+<refnamediv Lang="de">
+<refname>srmbootraw</refname>
+<refpurpose>
+Linux/Alpha SRM Bootblock-Ersteller
+</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+ <cmdsynopsis>
+   <command>srmbootraw</command> 
+        <arg choice="plain">boot_gerät</arg>
+        <arg choice="plain">boot_datei</arg>
+   </cmdsynopsis>
+</refsynopsisdiv>
+
+<!--  <refsect1><title>COPYRIGHT</title>
+<para>
+</para>
+</refsect1> -->
+
+<refsect1><title>BESCHREIBUNG</title>
+<para>
+<indexterm><primary>srmbootraw</primary></indexterm>
+Dieses Werkzeug ist ein schneller Hack und soll in seinem derzeitigen
+Zustand nicht lange exisitieren.
+</para>
+
+<para>
+<application>Srmbootraw</application> schreibt das Image aus
+<filename>boot_datei</filename>
+mit vorangestelltem SRM Bootblock unter Beibehaltung des disklabels
+in die ersten Blocks des <filename>boot_geräts</filename>.
+Es ist dazu gedacht, wenn Sie eine kleine rohe, für den Bootloader
+dedizierte Partition am Anfang Ihrer Festplatte haben. Falls Sie diese
+nicht haben, wird <application>srmbootraw</application> ohne Fehlermeldung
+Ihr System unbenutzbar machen.
+</para>
+</refsect1>
+
+<refsect1><title>ARGUMENTE</title>
+<para>
+<variablelist>
+<varlistentry><term><filename>boot_gerät</filename></term>
+<listitem><para>
+Das Gerät von dem Sie planen zu booten, bspw. <filename>/dev/sda</filename>.
+Es muß genug Platz am Anfang sein, um den Bootblock und den Bootloader 
+aufzunehmen.
+</para></listitem></varlistentry>
+<varlistentry><term><filename>boot_datei</filename></term>
+<listitem><para>
+Der Dateiname des Bootloaders.
+</para></listitem></varlistentry>
+</variablelist>
+</refsect1>
+
+<!-- <refsect1><title>FEHLER</title>
+<para>
+</para>
+</refsect1> -->
+
+<refsect1><title>AUTOR</title>
+<para>
+Nikita Schmidt <email>cetus@snowball.ucd.ie</email>
+</para>
+</refsect1>
+<refsect1><title>SIEHE AUCH</title>
+<para>
+<application>aboot</application>(8), 
+<application>mke2fs</application>(8),
+<application>swriteboot</application>(8),
+<application>e2writeboot</application>(8),
+<application>srmbootfat</application>(1)
+</para>
+</refsect1>
+</refentry>

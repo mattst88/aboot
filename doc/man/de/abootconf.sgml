@@ -1,0 +1,146 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="abootconf">
+
+<refmeta>
+<refentrytitle>abootconf</refentrytitle>
+<manvolnum>8</manvolnum>
+<refmiscinfo>abootconf</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>abootconf</refname>
+<refpurpose>
+Konfiguration des Ortes der Konfigurationsdatei für den Bootloader der zweiten Stufe <application>aboot</application>(8) von Linux/Alpha.
+</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+ <cmdsynopsis>
+   <command>abootconf</command> <arg choice="plain">/dev/xxx num</arg>
+ </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1><title>COPYRIGHT</title>
+<para>
+<application>abootconf</application> unterliegt dem  Copyright (C) 1996 Linus Torvalds, David Mosberger-Tang und Michael Schwingen
+</para>
+</refsect1>
+
+<refsect1><title>BESCHREIBUNG</title>
+<para>
+<indexterm><primary>abootconf</primary></indexterm>
+<indexterm><primary>aboot</primary></indexterm>
+<application>abootconf</application> wird zur Änderung der 
+Partition<indexterm><primary>partition</primary></indexterm>, in der der Linux
+Boot-Loader (Urlader) <application>aboot</application>(8) nach seiner
+Konfigurationsdatei schaut, verwendet. Die Konfiguration wird in 
+<filename>etc/aboot.conf</filename>(5) relativ zur Wurzel des Dateisystems
+auf dieser Partition gespeichert.
+</para>
+<para> 
+<application>abootconf</application> benötigt das Boot-Gerät (bspw.
+<filename>/dev/hdb</filename>, <filename>/dev/sda</filename>) und die
+zu verwendende Partition (z.B. 3). Wollen Sie daher von Partition E:
+auf Ihrer zweiten SCSI-Festplatte booten, dann geben Sie</para>
+<para>
+<command>
+abootconf <parameter>/dev/sdb 5</parameter>
+</command>
+</para>
+<para>
+ein.
+</para>
+</refsect1>
+<refsect1><title>HINWEISE</title>
+<para>
+<application>abootconf</application> wird nicht benötigt, wenn Sie Ihr
+alpha-System mittels <application>milo</application> booten.
+</para>
+<para>
+Auf jeder Festplatte kann eine Partition aktiviert werden, die die
+Konfiguration für <application>aboot</application>(8) enthält, welche
+unter <filename>etc/aboot.conf</filename>(5) liegt. Die zu bootende
+Festplatte wird am SRM-Prompt als zweites Argument ausgewählt, also
+beispielsweise
+</para>
+<para>
+<command>
+boot <parameter>dqa</parameter>
+</command>
+</para>
+<para>
+um von der ersten IDE-Festplatte zu booten. Lesen Sie bitte das
+HP SRM-Handbuch und <application>aboot</application>(8) für weitere
+Informationen.
+</para>
+<para>
+<application>aboot</application>(8) kann einen Kernel von einer beliebiegen
+Partition laden und kann soger eine andere Root-Partition verwenden, als die
+zu der <filename>etc/aboot.conf</filename> gehört. Daher sollten Sie
+normalerweise eine <filename>etc/aboot.conf</filename> mit allen Kombinationen
+erstellen und benötigten <application>abootconf</application> außer für
+die Erstinstallation nicht. Sie können dann den gewünschten Linuxkernel über
+die entsprechenden Parameter am SRM-Prompt booten, z.B. um den mit 2
+bezeichneten Eintrag zu booten würden Sie
+</para>
+<para>
+<command>
+boot <parameter>dqa -fl "2"</parameter>
+</command>
+</para>
+<para>
+verwenden. Bitte lesen Sie das HP SRM-Handbuch und 
+<filename>aboot.conf</filename>(5) für weitere Informationen.
+</para>
+<para>
+Um die derzeitigen Einstellungen anzuzeigen, lassen Sie einfach das letzte
+Argument fort (d.h. die Partitionsnummer).
+</para>
+<para>
+Beachten Sie, daß Sie <application>abootconf</application> erneut ausführen
+müssen, wenn Sie <application>aboot</application>(8) aktualisiert haben.
+</para>
+<para>
+Streng genommen wird <application>abootconf</application> nicht benötigt,
+da Sie die Partition, auf der <filename>etc/aboot.conf</filename> liegt
+auf dem SRM-Prompt spezifizieren können, indem Sie den Flags-Parameter mit
+der Partitions-Nummer, gefolgt vom einem Doppelpunkt, einleiten, d.h.
+falls <filename>etc/aboot.conf</filename> auf der vierten Partition liegt
+und Sie den Eintrag mit der Nummer 2 booten wollen, dann könnte Sie am 
+SRM-Prompt auch
+</para>
+<para>
+<command>
+boot <parameter>dqa -fl "4:2"</parameter>
+</command>
+</para>
+<para>
+eingeben.
+</para>
+<para>
+Beachten Sie, daß dies nur auf Linux zutrifft, da 
+<ProductName>VMS</ProductName>, <ProductName>Tru64</ProductName>, *BSD und
+<ProductName>Windows NT</ProductName> jeweils über Ihren eigenen Bootloader
+der zweiten Stufe verfügen. 
+</para>
+<para>
+Beachten Sie desweiteren, daß für das erstmalige Aufsetzen auf der Festplatte
+<application>abootconf</application> ebenfalls nicht mehr benötigt wird, da
+<application>swriteboot</application>(8) über die gesamte Funktionalität
+von <application>abootconf</application> verfügt.
+</para>
+</refsect1>
+<refsect1><title>AUTOR</title>
+<para>
+Diese Handbuchseite wurde von Helge Kreutzmann 
+<email>kreutzm@itp.uni-hannover.de</email> für das Debian GNU/Linux-Projekt
+geschrieben, sie darf aber auch von anderen verwendet werden.
+</para>
+</refsect1>
+<refsect1><title>DATEIEN</title>
+<para><filename>etc/aboot.conf</filename></para>
+</refsect1>
+<refsect1><title>SIEHE AUCH</title>
+<para><application>aboot</application>(8), <application>swriteboot</application>(8), <filename>aboot.conf</filename>(5), HP SRM Handbuch (<ULink URL="http://h18002.www1.hp.com/alphaserver/download/srm_reference.pdf"></ULink>)</para>
+</refsect1>
+</refentry>

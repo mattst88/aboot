@@ -1,0 +1,61 @@
+.\" sdisklabel - Write secondary SRM bootloader to harddisk
+.\"
+.\" Translated to german by Helge Kreutzmann <kreutzm@itp.uni-hannover.de>
+.TH swriteboot 8 "27 Juni 2004" "David Mosberger" ""
+.SH NAME
+swriteboot \- Schreibt sekundären SRM-Boot-Lader auf Festplatte.
+.SH "ÜBERSICHT"
+\fBswriteboot\fP [-v] [-f#] <gerät> <bootlader> [kernel]
+.SH BESCHREIBUNG
+
+\fBswriteboot\fP kann zum Schreiben des sekundären Boot-Laders und --
+optional -- eines Kernels auf die Festplatte verwendet werden. Das
+Ladeprogramm ist so geschrieben, daß es der SRM-Firmware erlaubt, davon
+zu booten (SRM ist die Firmware, die auch zum Booten von \fBHP Tru64\fP,
+\fBOpenVMS\fP und *BSD verwendet wird). Insbesondere ist das Ladeprogramm
+so geschrieben, daß ein physikalisch kontinuierlicher Bereich von Sektoren,
+beginnend bei Sektor 2 belegt wird und das der erste Sektor so aktualisiert
+wird, daß die SRM-Firmware den Boot-Lader finden kann. \fBswriteboot\fP
+kann versagen, falls der Bootstrap-Lader zu groß ist, um in die reservierten
+Sektoren zu passen. Es wird daher empfohlen, die ersten 512 Sektoren
+einer Festplatte für Boot-Zwecke zu reservieren. Dies läßt 256 kB Platz
+für einen sekundären Bootstrap-Lader, was massig ausreichen sollte (derzeit
+ist der \fBaboot\fP(8) Bootstrap-Lader ungefähr 90 kB groß). Reservieren Sie
+mehr, falls Sie dort auch einen Kernel haben wollen - 2 MB sollte in diesem
+Fall ausreichen.
+
+.P
+Das \fI<gerät>\fP-Argument bestimmt das spezielle Gerät auf das die
+\fI<bootlader>\fP-Datei geschrieben werden soll. Die Boot-Lader-Datei
+muß ein »Header-Less«-Image (keine Objekt-Datei) sein, die den rohen
+Inhalt der Text-, Data- und BSS-Sektionen enthält. Ein typisches Kommando
+um SCSI-Platte 0 bootbar mit dem \fIaboot\fP(8)-Lader zu machen wird im
+folgenden gezeigt:
+
+.I »swriteboot /dev/sda bootlx«
+
+.P
+Die \fI-v\fP Option sorgt für etwas ausführlichere Meldungen von
+\fBswriteboot\fP.
+.P
+Die \fI-f#\fP Option teilt \fBswriteboot\fP mit, einen Überlapp des Bootbereichs
+mit der Partition \fI#\fP zu ignorieren.
+.P
+Die \fI-c#\fP Option teilt \fBswriteboot\fP explizit die Boot-Partition mit.
+Falls dieses Argument fehlt, versucht \fBswriteboot\fP falls möglich die
+Boot-Partition automatisch zu erkennen. Beachten Sie, daß Sie die 
+Boot-Partition später ebenfalls mit \fBabootconf\fP(8) setzten können.
+
+.nf
+.SH SIEHE AUCH
+.IR aboot (8) ,
+.IR abootconf (8) ,
+.IR mke2fs (8) ,
+.IR e2writeboot (8)
+.nf
+.SH AUTOREN
+.nf
+Bob Manson <manson@magnus.acs.ohio-state.edu>
+Michael Schwingen <michael@schwingen.org>
+Helge Kreutzmann <kreutzm@itp.uni-hannover.de> (Aktualisierung der Handbuchseite)
+.fi

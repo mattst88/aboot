@@ -1,0 +1,45 @@
+.\" e2writeboot - Write secondary SRM bootloader to ext2 filesystem.
+.\"
+.\" Translated to german by Helge Kreutzmann <kreutzm@itp.uni-hannover.de>
+.TH e2writeboot 8 "27 Juni 2004" "David Mosberger-Tang" ""
+.SH NAME
+e2writeboot \- Schreibt den sekundären Boot-Lader in ein ext2-Dateisystem.
+.SH "ÜBERSICHT"
+\fBe2writeboot\fP <ext2fs> <bootlader>
+.SH BESCHREIBUNG
+
+\fBe2writeboot\fP kann zum Schreiben des sekundären Boot-Laders in ein 
+ext2-formatiertes Dateisystem (normalerweise auf einer Diskette) verwendet
+werden. Der Lader ist so geschrieben, daß die SRM-Firmware von diesem 
+Dateisystem booten kann (SRM ist die Firmware die auch zu Booten von 
+\fBHP Tru64\fP, \fBOpenVMS\fP und *BSD verwendet wird). Insbesondere ist
+der Lader so geschrieben, daß er einen kontinuierlichen Bereich von Sektoren
+belegt und der erste Sektor wird so aktualisiert, daß die SRM-Firmware den
+Boot-Lader finden kann. Der Lader wird immer unter dem Dateinamen 
+\fBlinuxboot\fP gespeichert und falls solch eine Datei bereits existiert, 
+wird diese ohne Rückfrage überschrieben. Dieser Befehl kann fehlschlagen,
+wenn das Dateisystem stark fragmentiert ist. In diesem Fall reformatieren
+Sie das Dateisystem mit \fBmke2fs\fP(8) (dies wird den derzeitigen
+Inhalt des Dateisystems zerstören, daher mit Vorsicht verwenden).
+
+.P
+Das \fI<ext2fs>\fP-Argument spezifiziert das Dateisystem oder spezielle
+Gerät auf das die \fI<bootlader>\fP-Datei geschrieben werden soll. Die
+Boot-Lader-Datei muß eine ECOFF-Objektdatei sein. Ein typischer Befehl,
+um eine Diskette mit dem \fIaboot\fP(8)-Lader zu machen, ist im folgenden
+gezeigt:
+
+.I »e2writeboot /dev/fd0 aboot«
+
+.nf
+.SH SIEHE AUCH
+.IR aboot (8) ,
+.IR mke2fs (8) ,
+.IR swriteboot (8)
+.nf
+.SH AUTOREN
+.nf
+Jim Paradis <paradis@amt.tay1.dec.com>
+Jay Estabrook <Jay.Estabrook@hp.com>
+David Mosberger-Tang <David.Mosberger@acm.org>
+.fi

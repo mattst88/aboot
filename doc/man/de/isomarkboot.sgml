@@ -1,0 +1,92 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="isomarkboot">
+
+<refmeta>
+<refentrytitle>isomarkboot</refentrytitle>
+<manvolnum>8</manvolnum>
+<refmiscinfo>isomarkboot</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>isomarkboot</refname>
+<refpurpose>
+Erzeugt bootbare CD-ROMs für Linux/Alpha-Systeme.
+</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+ <cmdsynopsis>
+   <command>isomarkboot</command> 
+        <arg choice="plain">/dev/xxx</arg>
+        <arg choice="plain">pfad/zu/bootlx</arg>
+        <arg choice="opt">pfad/zu/root.bin</arg>
+   </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1><title>COPYRIGHT</title>
+<para>
+<application>isomarkboot</application> unterliegt dem Copyright (C) 1996 David Mosberger-Tang
+</para>
+</refsect1>
+
+<refsect1><title>BESCHREIBUNG</title>
+<para>
+<indexterm><primary>isomarkboot</primary></indexterm>
+<application>isomarkboot</application>
+befähigt mit <application>mkisofs</application>(8) erstellte oder vom Netz
+heruntergeladene ISO-Images auf Linux/Alpha-Systemen zu booten.
+</para>
+
+<para>
+Zuerst müssen Sie Ihr ISO-Image vorbereiten und über das Loopback-Gerät
+auf <filename>/dev/xxx</filename> (typischerweise 
+<filename>/dev/loop0</filename>) montieren (siehe 
+<application>mount</application>(8) für Details).
+</para>
+
+<para>
+Als nächstes müssen Sie den aboot-Loader (<filename>bootlx</filename> genannt)
+und das RAM-Disk-Bild, das das Wurzelverzeichnisdateisystem enthält,
+welches oft <filename>root.bin</filename> heißt, in Ihrem ISO-Image bestimmen.
+Die Angabe letzterm ist optional, aber oft sinnvoll.
+</para>
+<para>
+Schließlich machen Sie das Image bootbar:
+</para>
+<para>
+<command>
+isomarkboot <parameter>/dev/xxx pfad/zu/bootlx pfad/zu/root.bin</parameter>
+</command>
+</para>
+<para>
+Ein typischer Ort für <filename>bootlx</filename> auf dem Disk-Image ist
+<filename>boot/bootlx</filename>. Die Pfade von <filename>bootlx</filename>
+und <filename>root.bin</filename> sind relativ zur Wurzel des Images. Falls
+Ihr Image nicht montiert ist müssen Sie <filename>/dev/xxx</filename> durch
+dem Pfad zu Ihrem Image ersetzen.
+</para>
+
+</refsect1>
+<refsect1><title>FEHLER</title>
+<para>
+<application>isomarkboot</application> ist auf anderen Architekturen
+(außer Alpha) nicht sehr intensiv getestet, obwohl es (mit kleinen Patchs)
+dort übersetzt. Bitte berichten Sie uns von Ihren Erfahrungen.
+</para>
+</refsect1>
+<refsect1><title>ANMERKUNGEN</title>
+<para>
+<application>isomarkboot</application> ist in der Lage, Symlinks im Image
+zu verarbeiten.
+</para>
+</refsect1>
+<refsect1><title>AUTOR</title>
+<para>
+Diese Handbuchseite wurde von Helge Kreutzmann <email>kreutzm@itp.uni-hannover.de</email> für das Debian GNU/Linux-Projekt geschrieben; sie darf aber auch von
+anderen verwendet werden.
+</refsect1>
+<refsect1><title>SIEHE AUCH</title>
+<para><application>aboot</application>(8), <application>mkisofs</application>(8)
+</para>
+</refsect1>
+</refentry>

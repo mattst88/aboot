@@ -1,0 +1,86 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="srmbootfat">
+
+<refmeta>
+<refentrytitle>srmbootfat</refentrytitle>
+<manvolnum>1</manvolnum>
+<refmiscinfo>srmbootfat</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>srmbootfat</refname>
+<refpurpose>
+Linux/Alpha SRM Boot-Block-Ersteller
+</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+ <cmdsynopsis>
+   <command>srmbootfat</command> 
+        <arg choice="plain">dateisystem_image</arg>
+        <arg choice="plain">boot_datei</arg>
+   </cmdsynopsis>
+</refsynopsisdiv>
+
+<!--  <refsect1><title>COPYRIGHT</title>
+<para>
+</para>
+</refsect1> -->
+
+<refsect1><title>BESCHREIBUNG</title>
+<para>
+<indexterm><primary>srmbootfat</primary></indexterm>
+Dieses Werkzeug ist schnell zusammengestrickt und sollte in seiner
+derzeitigen Form nicht lange existieren.
+</para>
+
+<para>
+<application>Srmbootfat</application> findet die <filename>boot_datei</filename>
+im Wurzelverzeichnis des in der Datei
+<filename>dateisystem_image</filename> gespeicherten
+<acronym>FAT</acronym>-Dateisystems und macht dies bootbar indem es den 
+geeigneten SRM-Boot-Block in diese Dateisystem-Image-Datei schreibt.
+Dies funktioniert nur mit nicht partitionierten Medien (wie beispielsweise
+Disketten), da andernfalls der Boot-Block in die Partitionstabelle geschrieben
+werden müßte, welche sich außerhalb des Dateisystems befindet. Allerdings ist
+eine Festplatte, die ein FAT-Dateisystem enthält, höchstwahrscheinlich mit der
+PC-Partitionstabelle partitioniert, von der SRM sowieso nicht booten kann.
+</para>
+
+<para>
+Der Boot-Lader (<filename>boot_datei</filename>) muß fortlaufend sein, d.h.
+hintereinanderfolgende Blöcke belegen.
+</para>
+</refsect1>
+
+<refsect1><title>ARGUMENTE</title>
+<para>
+<variablelist>
+<varlistentry><term><filename>dateisystem_image</filename></term>
+<listitem><para>
+Der Name der Datei die das FAT-Dateisystem-Image enthält, bspw.
+<filename>/dev/fd0</filename>.
+</para></listitem></varlistentry>
+<varlistentry><term><filename>boot_datei</filename></term>
+<listitem><para>
+Der Dateiname des Boot-Laders.
+</para></listitem></varlistentry>
+</variablelist>
+</refsect1>
+
+<!-- <refsect1><title>FEHLER</title>
+<para>
+</para>
+</refsect1> -->
+
+<refsect1><title>AUTOR</title>
+<para>
+Nikita Schmidt <email>cetus@snowball.ucd.ie</email>
+</para>
+</refsect1>
+<refsect1><title>SIEHE AUCH</title>
+<para>
+<application>aboot</application>(8), <application>mke2fs</application>(8), <application>e2writeboot</application>(8)
+</para>
+</refsect1>
+</refentry>
