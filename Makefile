@@ -23,7 +23,9 @@ VMLINUXGZ	= $(KSRC)/arch/alpha/boot/vmlinux.gz
 root		=
 bindir		= $(root)/sbin
 bootdir		= $(root)/boot
-mandir		= /usr/man
+mandir         = $(root)/usr/share/man
+
+export
 
 #
 # There shouldn't be any need to change anything below this line.
