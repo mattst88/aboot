@@ -1,3 +1,8 @@
+2003-01-14  Will Woods <will.woods@hp.com>
+	* Fixed typos in man pages ("True 64")
+	* Bumped version number to 0.9b
+	* Released 0.9b. Hooray!
+
 2002-09-18  Will Woods <will.woods@hp.com>
 	* branched the 0.9 tree to add bugfixes
 	* fixed some compilation errors with newer gcc/glibc versions
