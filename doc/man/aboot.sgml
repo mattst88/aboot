@@ -39,7 +39,7 @@ in <filename>etc/aboot.conf</filename>(5).
 at the SRM-Prompt where dka0 has to be replaced by the device used. 
 </para>
 <para>
-In the interactive mode you can use the command h to show your current
+In the interactive mode you can use the command l to show your current
 <filename>etc/aboot.conf</filename> and then the appropriate number
 (or a complete boot command as in SRM) to boot Linux.
 </para>

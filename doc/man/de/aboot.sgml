@@ -41,7 +41,7 @@ am SRM-Prompt auch interaktiv verwendet werden, wobei dka0 durch das
 verwendete Gerät ersetzt werden muß.
 </para>
 <para>
-Im interaktiven Modus können Sie das Kommand h zur Anzeige der derzeitigen
+Im interaktiven Modus können Sie das Kommand l zur Anzeige der derzeitigen
 <filename>etc/aboot.conf</filename> verwenden, und durch die Angabe der 
 entsprechenden Zahl (oder des kompletten Boot-Kommandos wie bei SRM)
 Linux booten.
