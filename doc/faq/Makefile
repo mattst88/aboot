@@ -1,8 +1,8 @@
-all-html : t1.html
+all-html : SRM-HOWTO/index.html
 
 clean :
-	rm -f *.html
+	rm -rf SRM-HOWTO 
 
-t1.html : SRM-HOWTO.sgml
-	    docbook2html SRM-HOWTO.sgml
+SRM-HOWTO/index.html : SRM-HOWTO.sgml
+	            sgmltools --backend=html SRM-HOWTO.sgml
 
