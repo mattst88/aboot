@@ -3,16 +3,26 @@
 .\" <http://shell.ipoline.com/~elmert/hacks/docbook2X/> 
 .\" Please send any bug reports, improvements, comments, patches, 
 .\" etc. to Steve Cheng <steve@ggi-project.org>.
-.TH "SDISKLABEL" "8" "17 Januar 2003" "sdisklabel" ""
+.TH "SDISKLABEL" "8" "26 Oktober 2003" "sdisklabel" ""
 .SH NAME
 sdisklabel \- Create/modify disklabels on Linux/Alpha systems
-.SH "SYNOPSIS"
+.SH SYNOPSIS
+.sp
+\fBsdisklabel\fR \fBdrive\fR [ \fB print zero sum\fR ] 
+.sp
+\fBsdisklabel\fR \fBdrive\fR \fBsize\fR \fBpartsize\fR
+.sp
+\fBsdisklabel\fR \fBdrive\fR \fBpartnum\fR \fBoffset\fR \fBsize\fR \fBparttype\fR
+.SH "COPYRIGHT"
 .PP
-sdisklabel \fIdrive [print|zero|sum]\fR
-.PP
-sdisklabel \fIdrive size partsize\fR
-.PP
-sdisklabel \fIdrive partnum offset size parttype\fR
+\fBsdisklabel\fR is Copyright (C) by Red Hat Inc. The
+author of this man page tried to trake down the original author, but was
+unable to do so. A final Bugzilla entry with redhat yielded the following
+reply:
+``I can't track down a Bob Manson (and I cannot find any record of his association
+with Red Hat in the aboot sources), but any work he did on behalf of Red Hat
+would be property of Red Hat, and you can consider all our changes to be release
+under the GPL the same as the rest of the aboot package.''
 .SH "DESCRIPTIONS"
 .PP
 
@@ -55,7 +65,7 @@ This zeros out your disk label. Only do this if you really want to
 zero your disk label. It just does it; it doesn't ask, or warn, or
 anything.
 .PP
-The program also probably printed out the size of your disk in Kb. If
+The program also probably printed out the size of your disk in kb. If
 it was wrong, you now get to use the "\fIsize xxx\fR"
 option along with the
 rest of these commands. The size isn't critical, it's just used to try
@@ -66,7 +76,7 @@ start from 0, as you
 have to leave room for the boot loader and other stuff. 256K (or 512
 sectors) will be enough.
 .PP
-Let's pretend that you want to make a 250000 Kb partition starting
+Let's pretend that you want to make a 250000 kb partition starting
 from sector offset 512:
 .PP
 \fBsdisklabel \fI/dev/sda 0 512 500000 8 print\fB\fR
@@ -97,7 +107,7 @@ partition 0: type 8, starts sector 512, size 500000
 .sp
 .PP
 You can then add the next partition, which would be partition 1.
-To add a second partition that is 200000 Kb long, you'd run
+To add a second partition that is 200000 kb long, you'd run
 .PP
 \fBsdisklabel \fI/dev/sda 1 512256 400000 8 print\fB\fR
 .PP

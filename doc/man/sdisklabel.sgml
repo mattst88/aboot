@@ -15,7 +15,7 @@ Create/modify disklabels on Linux/Alpha systems
 </refnamediv>
 
 <!-- This is the proper SGML way, but somehow doesn't work here -->
-<!-- <refsynopsisdiv>
+<refsynopsisdiv>
  <cmdsynopsis>
    <command>sdisklabel</command>
      <arg choice="plain">drive</arg>
@@ -38,18 +38,27 @@ Create/modify disklabels on Linux/Alpha systems
      <arg choice="plain">size</arg>
      <arg choice="plain">parttype</arg>
  </cmdsynopsis>
-</refsynopsisdiv> -->
-<refsect1><title>SYNOPSIS</title>
+</refsynopsisdiv>
+<!-- <refsect1><title>SYNOPSIS</title>
 <para>sdisklabel <parameter>drive [print|zero|sum]</parameter></para>
 <para>sdisklabel <parameter>drive size partsize</parameter></para>
 <para>sdisklabel <parameter>drive partnum offset size parttype</parameter></para>
-</refsect1>
-
-<!-- <refsect1><title>COPYRIGHT</title>
-<para>
-<application>sdisklabel</application> is Copyright (C) 
-</para>
 </refsect1> -->
+
+<refsect1><title>COPYRIGHT</title>
+<para>
+<application>sdisklabel</application> is Copyright (C) by Red Hat Inc. The
+author of this man page tried to trake down the original author, but was
+unable to do so. A final Bugzilla entry with redhat yielded the following
+reply:
+<quote>
+I can't track down a Bob Manson (and I cannot find any record of his association
+with Red Hat in the aboot sources), but any work he did on behalf of Red Hat
+would be property of Red Hat, and you can consider all our changes to be release
+under the GPL the same as the rest of the aboot package.</quote>
+
+</para>
+</refsect1>
 
 <refsect1><title>DESCRIPTIONS</title>
 <para>
@@ -111,7 +120,7 @@ anything.
 </para>
 
 <para>
-The program also probably printed out the size of your disk in Kb. If
+The program also probably printed out the size of your disk in kb. If
 it was wrong, you now get to use the "<parameter>size xxx</parameter>"
 option along with the
 rest of these commands. The size isn't critical, it's just used to try
@@ -126,7 +135,7 @@ sectors) will be enough.
 </para>
 
 <para>
-Let's pretend that you want to make a 250000 Kb partition starting
+Let's pretend that you want to make a 250000 kb partition starting
 from sector offset 512:
 </para>
 
@@ -165,7 +174,7 @@ partition 0: type 8, starts sector 512, size 500000
 
 <para>
 You can then add the next partition, which would be partition 1.
-To add a second partition that is 200000 Kb long, you'd run
+To add a second partition that is 200000 kb long, you'd run
 </para>
 
 <para>
