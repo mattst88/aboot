@@ -46,7 +46,7 @@ First you have to prepare your ISO image and mount it loopback on
 
 <para>
 Next you need to locate the aboot-loader (called <filename>bootlx</filename>)
-and the ram disk image containing the root file system (the latter is optional
+and the RAM-disk image containing the root file system (the latter is optional
 but usually sensible to specify) which is often called 
 <filename>root.bin</filename> within your ISO image.
 </para>
@@ -60,7 +60,7 @@ isomarkboot <parameter>/dev/xxx path/to/bootlx path/to/root.bin</parameter>
 </para>
 <para>
 A typical location of <filename>bootlx</filename> on the disk image is
-<filename>boot/bootlx</filename>. The path of <filename>bootlx</filename>
+<filename>boot/bootlx</filename>. The paths of <filename>bootlx</filename>
 and <filename>root.bin</filename> are relative to the root of the image. If
 your image is not mounted you have to replace <filename>/dev/xxx</filename>
 with the path to the image.
@@ -74,9 +74,9 @@ Finally you have to burn the CD using e.g.
 </refsect1>
 <refsect1><title>BUGS</title>
 <para>
-<application>isomarkboot</application> is currently only available on 
-Linux/Alpha systems though it can be compiled and used with minor
-modifications on other platforms as well.
+<application>isomarkboot</application> is not heavily tested on
+architectures other than Linux/Alpha, though it compiles (with
+slight patches). Please report bugs if you experience them.
 </para>
 </refsect1>
 <refsect1><title>NOTES</title>
