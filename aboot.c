@@ -21,7 +21,6 @@
 
 #include <linux/elf.h>
 #include <linux/kernel.h>
-#include <linux/mm.h>
 #ifndef TESTING
 #  include <linux/string.h>
 #endif

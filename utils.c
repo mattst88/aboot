@@ -1,13 +1,8 @@
 #include <linux/kernel.h>
 #include <linux/string.h>
-#include <linux/mm.h>
 
 #include <asm/hwrpb.h>
-#include <asm/pgtable.h>
 #include <linux/version.h>
-#if LINUX_VERSION_CODE >= KERNEL_VERSION (2, 3, 0)
-#include <asm/pgalloc.h>
-#endif
 #include <asm/system.h>
 
 #include <stdarg.h>
@@ -141,7 +136,7 @@ void pal_init(void)
 	printf(" version %ld.%ld\n", (rev >> 8) & 0xff, rev & 0xff);
 	/* remove the old virtual page-table mapping */
 	L1[1] = 0;
-	flush_tlb_all();
+	tbia();
 }
 
 

@@ -51,7 +51,7 @@ net_bread (int fd, long blkno, long nblks, char * buf)
 #ifdef DEBUG
 	printf("net_bread: %p -> %p (%ld blocks at %ld)\n", src, buf,
 	       nblks, blkno);
-#else
+#endif
 	nbytes = bfs->blocksize * nblks;
 
         memcpy(buf, src, nbytes);
@@ -75,8 +75,6 @@ struct bootfs netfs = {
 long
 load_kernel (void)
 {
-	long nbytes;
-
 	bfs = &netfs;
 
 	strcpy(boot_file, "network");
