@@ -26,8 +26,8 @@
 /*
  * HISTORY
  * $Log: ufs.c,v $
- * Revision 1.1  2001/10/08 23:03:52  wgwoods
- * Initial revision
+ * Revision 1.1.1.1  2001/10/08 23:03:52  wgwoods
+ * initial import of CVS source from alphalinux.org, plus a couple bugfixes
  *
  * Revision 1.1.1.1  2000/05/03 03:58:22  dhd
  * Initial import (from 0.7 release)
