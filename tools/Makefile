@@ -1,7 +1,9 @@
-CC	= gcc
-CFLAGS	= -g -O2 -Wall -I. -I../include $(CPPFLAGS)
-LDFLAGS	= -g
-PGMS	= e2writeboot isomarkboot abootconf elfencap objstrip
+ifndef ($(CC))
+CC = gcc
+endif
+
+override CFLAGS += -g -O2 -Wall -I. -I../include $(CPPFLAGS)
+override PGMS += e2writeboot isomarkboot abootconf elfencap objstrip
 
 EXEC_PREFIX = /usr
 
