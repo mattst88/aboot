@@ -1,0 +1,28 @@
+These are my suggestions regarding the man pages for aboot, abootconf
+and etc/aboot.conf.
+
+The man page for aboot is rather brief. There are propably several things
+which could be mentioned there.
+
+I also included the man pages for e2writeboot (from the aboot 7a tar ball)
+and swriteboot (from the debian aboot-package). Since I have no experience
+with these programmes I left them (almost) untouched.
+
+Is it correct that the example in swriteboot talks about e2writeboot ?
+
+Maybe the list of authors has to be updated ?
+
+The man pages I created are in sgml as well as in nroff-format. I would
+appreciate all comments/patches regarding the contents relative to the sgml-
+file if possible. 
+
+The layout given is the one provided by the docbook dtd.[1]
+
+Please mail your comments to
+Helge Kreutzmann <kreutzm@itp.uni-hannover.de>
+
+Thanks.
+
+[1] I am aware that the visual appareance might vary slightly from distribution
+    to distribution, e.g. the appereance I create under PLD Linux is slightly
+    different then the one I create under Debian GNU/Linux.

@@ -1,0 +1,133 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="abootconf">
+
+<refmeta>
+<refentrytitle>abootconf</refentrytitle>
+<manvolnum>8</manvolnum>
+<refmiscinfo>abootconf</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>abootconf</refname>
+<refpurpose>
+Configure the location of the configuration file for the secondary boot loader
+<application>aboot</application>(8) for Linux/Alpha.
+</refpurpose>
+</refnamediv>
+
+<refsect1><title>SYNOPSIS</title>
+<para>abootconf <parameter>/dev/xxx num</parameter></para>
+</refsect1> 
+
+<refsect1><title>COPYRIGHT</title>
+<para>
+<application>abootconf</application> is Copyright (C) 1996 Linus Torvalds, David Mosberger and Michael Schwingen
+</para>
+</refsect1>
+
+<refsect1><title>DESCRIPTIONS</title>
+<para>
+<indexterm><primary>abootconf</primary></indexterm>
+<application>abootconf</application> is used to change the partition<indexterm><primary>partition
+</primary></indexterm>
+the alpha Linux boot loader <application>aboot</application>(8)
+<indexterm><primary>aboot</primary></indexterm>
+looks for its configuration file in. The configuration file is stored
+in <filename>etc/aboot.conf</filename>(5)
+relative to the root of the filesystem in this partition.
+</para>
+<para> 
+<application>abootconf</application> requires the boot device
+(e.g. /dev/hdb, /dev/sda) and the partition
+to be used (e.g. 3). Thus if you want to boot from partition E: on your second
+SCSI disk you would enter</para>
+<para>
+<command>
+abootconf <parameter>/dev/sdb 5</parameter>
+</command>
+</para>
+</refsect1>
+<refsect1><title>NOTES</title>
+<para>
+<application>abootconf</application> is not needed if you are booting
+your alpha system via <application>milo</application>. 
+</para>
+<para>
+For each disk one partition can be activated to contain the configuration
+for <application>aboot</application>(8) which is located in
+<filename>etc/aboot.conf</filename>(5).
+The disk chosen to boot from is selected at
+the SRM prompt as the second argument, e.g.
+</para>
+<para>
+<command>
+boot <parameter>dqa</parameter>
+</command>
+</para>
+<para>
+to boot from your first ide hard disk. See the Compaq SRM-Manual and
+<application>aboot</application>(8)
+for details.
+</para>
+<para>
+<application>aboot</application>(8) can load a kernel from an
+arbitrary partition and can even use a different
+root partition than the one <filename>etc/aboot.conf</filename>
+belongs to. Hence you would usually
+set up one <filename>etc/aboot.conf</filename> with all combinations and
+would not require <application>abootconf</application> except for initial
+set up. You can then
+boot the requested
+Linux kernel by giving the appropriate flags at the SRM prompt, e.g. to boot
+the entry labeled 2 you would use
+</para>
+<para>
+<command>
+boot <parameter>dqa -fl "2"</parameter>
+</command>
+</para>
+<para>
+See the Compaq SRM manual and <filename>aboot.conf</filename>(5)
+for details.
+</para>
+<para>
+To show the current setting simply omit the last argument (i.e. the partition
+number).
+</para>
+<para>
+Note that you have to rerun <application>abootconf</application> if you updated
+<application>aboot</application>.
+</para>
+<para>
+Strictly speaking <application>abootconf</application> is not necessary as
+you can specify the partition which <filename>etc/aboot.conf</filename>
+resides on at the SRM-Prompt by prepending the partition number and a colon
+in the flags-parameter, i.e. if <filename>etc/aboot.conf</filename>
+resided on the fourth partition and you want to boot the entry labeled 2
+you could also issue
+</para>
+<para>
+<command>
+boot <parameter>dqa -fl "4:2"</parameter>
+</command>
+</para>
+<para>
+at the SRM prompt.
+</para>
+<para>
+Note that this applies to Linux only as <ProductName>VMS</ProductName>, <ProductName>True64</ProductName>, *BSD and
+<ProductName>Windows NT</ProductName> each have their own secondary boot loader.
+</para>
+</refsect1>
+<refsect1><title>AUTHOR</title>
+<para>
+This man page was written by Helge Kreutzmann <email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project.
+</para>
+</refsect1>
+<refsect1><title>FILES</title>
+<para><filename>etc/aboot.conf</filename></para>
+</refsect1>
+<refsect1><title>SEE ALSO</title>
+<para><application>aboot</application>(8), <application>swriteboot</application>(8), <filename>aboot.conf</filename>(5), Compaq SRM Manual</para>
+</refsect1>
+</refentry>

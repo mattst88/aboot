@@ -1,0 +1,82 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="aboot">
+
+<refmeta>
+<refentrytitle>aboot</refentrytitle>
+<manvolnum>8</manvolnum>
+<refmiscinfo>aboot</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>aboot</refname>
+<refpurpose>The secondary boot loader for Linux/Alpha</refpurpose>
+</refnamediv>
+
+<refsect1><title>COPYRIGHT</title>
+<para>
+<application>aboot</application> is Copyright (C) 1996 Linus Torvalds, David Mosberger and Michael Schwingen (??)
+</para>
+</refsect1>
+
+<refsect1><title>DESCRIPTION</title>
+<para>
+<indexterm><primary>aboot</primary></indexterm>
+<application>aboot</application> is the secondary boot loader needed if
+the Linux/Alpha system is booted via SRM. It is usually installed during
+system installation by <application>swriteboot</application>(8). 
+</para>
+<para>
+To automate the booting process predefined boot configurations can be stored
+in <filename>etc/aboot.conf</filename>(5). 
+</para>
+<para>
+<application>aboot</application> can also be used interactively by issuing
+</para>
+<para>
+<command>boot <parameter>dka0 -fl "i"</parameter></command>
+</para>
+<para>
+at the SRM-Prompt where dka0 has to be replaced by the device used. 
+</para>
+<para>
+In the interactive mode you can use the command h to show your current
+<filename>etc/aboot.conf</filename> and then the appropriate number
+(or a complete boot command as in SRM) to boot Linux.
+</para>
+<para>
+If you do not want to use the <filename>etc/aboot.conf</filename> as set
+up by <application>abootconf</application> you can explicitly tell 
+<application>aboot</application> where to look for <filename>etc/aboot.conf</filename> by prepending the number of the configuration with the proper
+partition, i.e. if your <filename>etc/aboot.conf</filename> is on your
+second partition and you want to boot the entry labled three you would
+issue
+</para>
+<para>
+<command>boot <parameter>dqa -fl "2:3"</parameter></command>
+</para>
+<para>
+Note that this applies to Linux booting via SRM only as
+<ProductName>VMS</ProductName>, <ProductName>True64</ProductName>, *BSD and
+<ProductName>Windows NT</ProductName> each have their own secondary boot loader.
+Furthermore <application>aboot</application> is also not needed if the system is booted via
+<application>milo</application>.
+</para>
+</refsect1>
+
+
+<refsect1><title>AUTHOR</title>
+<para>
+This man page was written by Helge Kreutzmann
+<email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project.
+</para>
+</refsect1>
+
+<refsect1><title>FILES</title>
+<para><filename>etc/aboot.conf</filename></para>
+</refsect1>
+
+<refsect1><title>SEE ALSO</title>
+<para><application>abootconf</application>(8), <filename>aboot.conf</filename>(5),
+<application>swriteboot</application>(8), Compaq SRM Manual</para>
+</refsect1>
+</refentry>

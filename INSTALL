@@ -1,0 +1,11 @@
+Thu Jun 27 03:23:08 1996
+
+- Edit Makefile and include/config.h to suite your needs.  For most
+  purposes, the distributed version should work fine.  Note that
+  the CONFIG_FILE_PARTITION macro is still present like in earlier
+  version, but since aboot-0.5 allows you to select a partition via
+  the boot-commandline, the value for that macro is not as critical
+  anymore. Users of certain versions of gcc (2.96 and later?) 
+  may need to add '-ffreestanding' flag to CFLAGS, in the Makefile.
+
+- Type "make".

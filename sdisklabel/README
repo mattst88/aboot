@@ -1,0 +1,105 @@
+These are sources and binaries for a Linux/Alpha boot file installer
+and disk partitioner. They're horrible, and should be destroyed.
+We're going to assume you don't have OSF/1, but want to use your hard
+drive. If you have OSF/1, what are you doing in here??!?!?!!?
+
+The program also assumes you have a SCSI disk with 512-byte sectors,
+tho it should work fine on an IDE drive as well.  All sizes are
+specified on the command line in sectors.
+
+There are 8 partitions in total, and are numbered from 0 to 7.
+Partitions have to be added sequentially, as this program won't let
+you leave empty partitions unlike many BSD disklabel programs.
+
+First off, if you have an invalid disk label (you've never run this
+program before) you get to do
+
+	sdisklabel /dev/sda zero
+
+(/dev/sda is the device you're partitioning, substitute as
+appropriate).
+
+This zeros out your disk label. Only do this if you really want to
+zero your disk label. It just does it; it doesn't ask, or warn, or
+anything.
+
+The program also probably printed out the size of your disk in K. If
+it was wrong, you now get to use the "size xxx" option along with the
+rest of these commands. The size isn't critical, it's just used to try
+and make sure you don't go past the end of the disk.
+
+Next, add your first partition. This *doesn't* start from 0, as you
+have to leave room for the boot loader and other stuff. 256K (or 512
+sectors) will be enough.
+
+Let's pretend that you want to make a 250000K partition starting
+from sector offset 512:
+
+	sdisklabel /dev/sda 0 512 500000 8 print
+
+The last number is the filesystem type, and is currently 8 for ext2fs
+filesystems. (A different number would be used to specify an OSF/1
+partition, for example).
+
+If all was successful, the program should print out the partition (the
+last keyword, "print", specifies that it should print the partition
+after modifying it with the previous command), and you should see
+something like
+----------------------------------------------------------------
+I think your disk is 528870K total size.
+If I'm wrong, override the size with the 'size num' option
+
+partition 0: type 8, starts sector 512, size 500000
+----------------------------------------------------------------
+
+We can then add the next partition, which would be partition 1.
+To add a second partition that is 200000K long, we'd run
+	sdisklabel /dev/sda 1 512256 400000 8 print
+And both partitions would then be printed out.
+
+If for some reason the size got determined incorrectly, we'd do
+instead
+
+	sdisklabel /dev/sda size 528870 0 512 400000 8 print
+
+The size option should come immediately after the device name, and the
+size is the total # of sectors on the drive.
+
+That wasn't too bad, was it? The program doesn't do enough error
+checking, but it should work OK if you don't try to abuse it.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Adding a bootstrap to the HD
+
+This isn't exactly trivial, and should be done immediately after
+setting up the partitions (but not before...). I can't be held
+responsible if the bootstrap writer wipes your drive-it does hardly
+any error checking, tho it tries to make sure that you're not going to
+wipe out any partitions before it starts writing.
+
+The program basically writes a raw binary image (*not* an a.out format file)
+to the disk starting from sector 2. This can be generated from an executable
+by using the arch/alpha/linux/tools/build program found in the kernel
+distribution, or the similar program in the aboot distributiion. So to
+install the bootloader in bootlx, assuming you've partitioned your disk (and
+left enough blank space between the start of the disk and the first
+partition to hold the bootloader):
+
+	swriteboot /dev/sda bootlx
+
+When using aboot, you can also append a kernel image by using
+        
+        swriteboot /dev/sda bootlx vmlinux.gz
+
+If you invoke swriteboot with the '-v' option, it will be a bit more
+verbose.
+
+If you have to partition your disk with a program that does not allow to
+leave a blank (unpartitiones) space at the beginning for the bootloader,
+create a partition of the desired size instead. swriteboot will complain
+that the desired boot area overlaps with that partition, so you must use
+
+        swriteboot -f# ...
+
+where # is the partition number to force overwriting this area.

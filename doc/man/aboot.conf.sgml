@@ -1,0 +1,86 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="aboot.conf">
+
+<refmeta>
+<refentrytitle>aboot.conf</refentrytitle>
+<manvolnum>5</manvolnum>
+<refmiscinfo>aboot.conf</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>aboot.conf</refname>
+<refpurpose>The configuration file for <application>aboot</application>(8)
+</refpurpose>
+</refnamediv>
+
+<!-- <refsect1><title>SYNOPSIS</title>
+<para>configuration file for boot options (aboot)</para>
+</refsect1> -->
+
+<refsect1><title>DESCRIPTION</title>
+<para>
+<indexterm><primary>aboot.conf</primary></indexterm>
+<filename>aboot.conf</filename> contains a list of boot settings
+for <application>aboot</application>(8). Each boot setting
+has a unique number which can be supplied at the SRM-Prompt.
+<indexterm><primary>SRM</primary></indexterm>.
+</para>
+<para><example>
+<title>Example <filename>aboot.conf</filename></title>
+<blockquote>
+<literallayout>
+0:4/vmlinuz root=/dev/hda5
+1:4/vmlinuz root=/dev/hda5 single
+2:4/vmlinuz.old ro root=/dev/hda5
+8:6/boot/vmlinuz ro root=/dev/hda8
+</literallayout>
+</blockquote>
+</example></para>
+<para>
+The first number is a unique identifier for each boot configuration.
+To boot a certain configuration at the SRM-Prompt you would issue
+</para>
+<para>
+<command>
+boot <parameter>dka0 -fl "0"</parameter>
+</command>
+</para>
+<para>
+where dka0 has to be replaced by your boot device and the boot configuration
+(0 in this case) can be replaced by any defined in 
+<filename>etc/aboot.conf</filename>.
+</para>
+<para>
+After the colon the number of the partition the kernel resides on is given. 1
+corresponds to A:, 2 to B: and so on. 
+</para>
+<para>
+After the slash the name of the kernel to boot is given, including a possible
+path. If your kernel does not reside on a filesystem but is located directly
+after aboot at the beginning of the hard disk you would omit the number, the
+slash and the kernel name.
+</para>
+
+<para>
+Next the name of the partition to mount as / is given. Other kernel
+parameters follow as required.
+</para>
+
+<para>
+The contents of this file can be shown before booting if necessary by
+using the interactive
+mode of <application>aboot</application>(8) (booting with the flag "i")
+and then issuing "h" at the <application>aboot</application>-prompt.
+</para>
+
+</refsect1>
+<refsect1><title>AUTHOR</title>
+<para>
+This man page was written by Helge Kreutzmann
+<email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project.
+</para>
+</refsect1>
+<refsect1><title>SEE ALSO</title>
+<para><application>aboot</application>(8), <application>abootconf</application>(8), <application>swriteboot</application>(8), Compaq SRM Manual</para>
+</refsect1>
+</refentry>
