@@ -127,6 +127,7 @@ first_block (const char *buf, long blocksize)
 			       i, chunks[i].addr, chunks[i].offset, chunks[i].size);
 #endif
 
+#ifndef TESTING
 			status = check_memory(chunks[i].addr, chunks[i].size);
 			if (status) {
 				printf("aboot: Can't load kernel.\n"
@@ -140,6 +141,7 @@ first_block (const char *buf, long blocksize)
 					  "Busy (Reserved)");
 				return -1;
 			}
+#endif
 		}
 		bss_start = (char *) (phdrs[elf->e_phnum - 1].p_vaddr +
 				      phdrs[elf->e_phnum - 1].p_filesz);
