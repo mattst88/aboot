@@ -1,4 +1,4 @@
-all:  srmbootraw.8 aboot.8 aboot.conf.5 abootconf.8 isomarkboot.1 sdisklabel.8  srmbootfat.1
+all:  srmbootraw.8 aboot.8 aboot.conf.5 abootconf.8 isomarkboot.1 sdisklabel.8  srmbootfat.1 netabootwrap.1
 
 aboot.8: aboot.sgml
 	nsgmls aboot.sgml | sgmlspl docbook2man-de-spec.pl
@@ -12,6 +12,9 @@ abootconf.8: abootconf.sgml
 isomarkboot.1: isomarkboot.sgml
 	nsgmls isomarkboot.sgml | sgmlspl docbook2man-de-spec.pl
 
+netabootwrap.1: netabootwrap.sgml
+	nsgmls netabootwrap.sgml | sgmlspl docbook2man-de-spec.pl
+
 sdisklabel.8: sdisklabel.sgml
 	nsgmls sdisklabel.sgml | sgmlspl docbook2man-de-spec.pl
 
@@ -23,7 +26,7 @@ srmbootraw.8: srmbootraw.sgml
 
 
 clean :
-	rm -f *.html srmbootraw.8 srmbootfat.1 sdisklabel.8 isomarkboot.8 abootconf.8 aboot.conf.5 aboot.8 manpage.links manpage.log manpage.refs
+	rm -f *.html srmbootraw.8 srmbootfat.1 sdisklabel.8 isomarkboot.8 abootconf.8 aboot.conf.5 aboot.8 netabootwrap.1 manpage.links manpage.log manpage.refs
 	rm -rf SRM-HOWTO 
 
 

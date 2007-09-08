@@ -1,0 +1,107 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="netabootwrap">
+
+<refmeta>
+<refentrytitle>netabootwrap</refentrytitle>
+<manvolnum>1</manvolnum>
+<refmiscinfo>netabootwrap</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>netabootwrap</refname>
+<refpurpose>
+erzeugt netzbootbare Images für Linux/Alpha
+</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+ <cmdsynopsis>
+   <command>netabootwrap</command> 
+        <arg choice="opt">-t netboot.img</arg>
+        <arg choice="opt">-k vmlinux.gz</arg>
+	<arg choice="opt">-i initrd.gz</arg>
+	<arg choice="opt">-a "einige Kernelparameter"</arg>
+   </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1><title>COPYRIGHT</title>
+<para>
+<application>netabootwrap</application> ist (c) 2000 von Soohoon Lee 
+<email>soohoon.lee@api-networks.com</email>
+</para>
+</refsect1>
+
+<refsect1><title>BESCHREIBUNG</title>
+<para>
+<indexterm><primary>netabootwrap</primary></indexterm>
+<application>netabootwrap</application> fügt <filename>net_aboot</filename>,
+den Kernel und die initrd Images zusammen, um ein netzbootbares Image für
+Linux/Alpha-Systeme zu erstellen.
+<filename>net_aboot.nh</filename> ist nicht funktionstüchtig, aber
+<application>netabootwrap</application> hat die volle Funktionalität.
+Ohne Optionen schaut es nach <filename>vmlinux.gz</filename>
+und baut <filename>netboot.img</filename>, das ist <filename>net_aboot</filename>
++ <filename>vmlinux.gz</filename>.
+</para>
+
+<para>
+<variablelist>
+<varlistentry><term>-t dateiname</term>
+<listitem><para>
+Setzt den Dateinamen des zu erzeugenden Netboot-Images, standardmäßig ist dies
+<filename>netboot.img</filename>. Diese Datei wird überschrieben falls sie
+existiert.
+</para></listitem></varlistentry>
+<varlistentry><term>-k dateiname</term>
+<listitem><para>
+Setzt den Dateinamen des Kernel-Images, standardmäßig ist dies
+<filename>vmlinux.gz</filename>
+</para></listitem></varlistentry>
+<varlistentry><term>-i dateiname</term>
+<listitem><para>
+Setzt den Dateinamen des anfänglichen RAM-Disk-Images, standardmäßig ist dies <filename>initrd.gz</filename>
+</para></listitem></varlistentry>
+<varlistentry><term>-a "einige Kernelparameter"</term>
+<listitem><para>
+Stellt weitere Kerneloptionen bereit, z.B. -a "root=/dev/sda1 single"
+</variablelist>
+</para>
+
+</refsect1>
+
+<!-- <refsect1><title>FEHLER</title>
+<para>
+</para>
+
+</refsect1> -->
+
+<refsect1><title>HINWEISE</title>
+<para>
+Um das Image zu verwenden, benötigen Sie einen
+<application>tftpd</application>(8)- und einen <application>dhcp</application>(8)- 
+oder <application>bootpd</application>(8)-Server.
+Weitere Details finden Sie im SRM-HOWTO:
+(<ULink URL="http://www.alphalinux.org/faq/srm.html"></ULink> oder in
+<filename>/usr/share/doc/aboot/SRM-HOWTO/</filename> auf Debian GNU/Linux-Systemen (und möglicherweise auch anderen))
+</para>
+
+</refsect1>
+
+<refsect1><title>AUTOR</title>
+<para>
+Diese Handbuchseite wurde von Helge Kreutzmann
+<email>debian@helgefjell.de</email> für das Debian GNU/Linux-Projekt geschrieben. Sie darf auch
+von anderen verwendet werden.
+</para>
+</refsect1>
+<refsect1><title>SIEHE AUCH</title>
+<para>
+<application>tftpd</application>(8),
+<application>dhcpd</application>(8),
+<application>bootpd</application>(8),
+<application>aboot</application>(8),
+SRM-HOWTO in <filename>/usr/share/doc/aboot/SRM-HOWTO/</filename> oder <ULink URL="http://www.alphalinux.org/faq/srm.html"></ULink>,
+HP SRM Manual (<ULink URL="http://h18002.www1.hp.com/alphaserver/download/srm_reference.pdf"></ULink>)
+</para>
+</refsect1>
+</refentry>
