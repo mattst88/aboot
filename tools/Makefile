@@ -10,7 +10,7 @@ EXEC_PREFIX = /usr
 all:	$(PGMS)
 
 install:	$(PGMS)
-	install -s -c -o root -g root -m 755 $(PGMS) $(EXEC_PREFIX)/bin
+	install -c -o root -g root -m 755 $(PGMS) $(EXEC_PREFIX)/bin
 
 clean:
 	rm -f *~ *.o *.a core $(PGMS)

@@ -104,10 +104,10 @@ install-man-gz:
 install: tools/abootconf tools/e2writeboot tools/isomarkboot \
 	sdisklabel/swriteboot install-man
 	install -d $(bindir) $(bootdir)
-	install -c -s tools/abootconf $(bindir)
-	install -c -s tools/e2writeboot $(bindir)
-	install -c -s tools/isomarkboot $(bindir)
-	install -c -s sdisklabel/swriteboot $(bindir)
+	install -c tools/abootconf $(bindir)
+	install -c tools/e2writeboot $(bindir)
+	install -c tools/isomarkboot $(bindir)
+	install -c sdisklabel/swriteboot $(bindir)
 	install -c bootlx $(bootdir)
 
 installondisk:	bootlx sdisklabel/swriteboot
