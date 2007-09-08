@@ -1,3 +1,17 @@
+2007-09-08  Helge Kreutzmann <debian@helgefjell.de>
+        * Minor fixes in German man pages (abootconf.sgml, aboot.sgml)
+	* Man pages for isomarkboot belongs in section 1, minor fixes in 
+	  German version
+	* Add srmbootfat originally from milo, taken from
+	  http://www.suse.de/~stepan/source/milo-2.2-18.tar.bz2
+	  This has been used by Debian for several years without bug reports
+	  already
+	* Add netabootwrap to creat bootable images (taken from the Debian
+	  package, where it has been used for years already)
+	* Add build rules for english man pages
+        * Add comments in source for tools/isomarkboot
+	* Do not strip binaries by default
+
 2004-04-08  Will Woods <wgwoods@mac.com>
 	* Change include path (should fix compilation for 2.6 kernels)
 	* Add/fix extra_args patch - allows you to add extra arguments after
