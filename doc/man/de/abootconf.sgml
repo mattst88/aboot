@@ -22,7 +22,7 @@ Konfiguration des Ortes der Konfigurationsdatei für den Bootloader der zweiten S
 
 <refsect1><title>COPYRIGHT</title>
 <para>
-<application>abootconf</application> unterliegt dem  Copyright (C) 1996 Linus Torvalds, David Mosberger-Tang und Michael Schwingen
+<application>abootconf</application> unterliegt dem Copyright (C) 1996 Linus Torvalds, David Mosberger-Tang und Michael Schwingen
 </para>
 </refsect1>
 
