@@ -1,0 +1,6 @@
+The contents of this diretory are taken from the milo source
+which can be found at http://www.suse.de/~stepan/source/milo-2.2-18.tar.bz2
+This site is no longer present.
+
+Additional patches to srmbootfat have been applied; also the man pages are
+improved in respect to the upstream version.

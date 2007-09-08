@@ -1,0 +1,84 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="srmbootraw">
+
+<refmeta>
+<refentrytitle>srmbootraw</refentrytitle>
+<manvolnum>8</manvolnum>
+<refmiscinfo>srmbootraw</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>srmbootraw</refname>
+<refpurpose>
+Linux/Alpha SRM boot block composer
+</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+ <cmdsynopsis>
+   <command>srmbootraw</command> 
+        <arg choice="plain">boot_device</arg>
+        <arg choice="plain">boot_file</arg>
+   </cmdsynopsis>
+</refsynopsisdiv>
+
+<!--  <refsect1><title>COPYRIGHT</title>
+<para>
+</para>
+</refsect1> -->
+
+<refsect1><title>DESCRIPTIONS</title>
+<para>
+<indexterm><primary>srmbootraw</primary></indexterm>
+This tool is a quick hack and is not supposed to exist in its present
+state for long.
+</para>
+
+<para>
+<application>Srmbootraw</application> writes the image from
+<filename>boot_file</filename>
+preceded by the appropriate SRM boot block into the first blocks of
+<filename>boot_device</filename>, preserving the disklabel.
+It is intended to be used when you have a small raw
+partition at the beginning of your hard drive, dedicated for the bootloader.
+If you don't, <filename>srmbootraw</filename>
+will silently render your file system(s) unusable.
+</para>
+</refsect1>
+
+<refsect1><title>ARGUMENTS</title>
+<para>
+<variablelist>
+<varlistentry><term><filename>boot_device</filename></term>
+<listitem><para>
+The device you intend to boot from, e.g. <filename>/dev/sda</filename>.
+It must have enough room
+at the beginning to hold the boot block and the bootloader.
+</para></listitem></varlistentry>
+<varlistentry><term><filename>boot_file</filename></term>
+<listitem><para>
+The file name of the bootloader.
+</para></listitem></varlistentry>
+</variablelist>
+</refsect1>
+
+<!-- <refsect1><title>BUGS</title>
+<para>
+</para>
+</refsect1> -->
+
+<refsect1><title>AUTHOR</title>
+<para>
+Nikita Schmidt <email>cetus@snowball.ucd.ie</email>
+</para>
+</refsect1>
+<refsect1><title>SEE ALSO</title>
+<para>
+<application>aboot</application>(8), 
+<application>mke2fs</application>(8),
+<application>swriteboot</application>(8),
+<application>e2writeboot</application>(8),
+<application>srmbootfat</application>(1)
+</para>
+</refsect1>
+</refentry>

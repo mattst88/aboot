@@ -1,0 +1,85 @@
+<!DOCTYPE RefEntry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<refentry id="srmbootfat">
+
+<refmeta>
+<refentrytitle>srmbootfat</refentrytitle>
+<manvolnum>1</manvolnum>
+<refmiscinfo>srmbootfat</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>srmbootfat</refname>
+<refpurpose>
+Linux/Alpha SRM boot block composer
+</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+ <cmdsynopsis>
+   <command>srmbootfat</command> 
+        <arg choice="plain">filesystem_image</arg>
+        <arg choice="plain">boot_file</arg>
+   </cmdsynopsis>
+</refsynopsisdiv>
+
+<!--  <refsect1><title>COPYRIGHT</title>
+<para>
+</para>
+</refsect1> -->
+
+<refsect1><title>DESCRIPTIONS</title>
+<para>
+<indexterm><primary>srmbootfat</primary></indexterm>
+This tool is a quick hack and is not supposed to exist in its present
+state for long.
+</para>
+
+<para>
+<application>Srmbootfat</application> finds <filename>boot_file</filename>
+in the root directory of the <acronym>FAT</acronym> file system stored in file
+<filename>filesystem_image</filename>
+and makes it bootable by writing the appropriate SRM boot block into the
+file system image file.  This will work only on unpartitioned disks (such as
+floppies), because otherwise the boot block would need to be written into the
+partition table, which is outside the file system.  However, a hard drive
+containing a FAT file system would most probably be partitioned using the PC
+partition table, which SRM cannot boot from anyway.
+</para>
+
+<para>
+The bootloader (<filename>boot_file</filename>)
+must be contiguous, i.e. occupy consecutive blocks.
+</para>
+</refsect1>
+
+<refsect1><title>ARGUMENTS</title>
+<para>
+<variablelist>
+<varlistentry><term><filename>filesystem_image</filename></term>
+<listitem><para>
+The name of the file containing a FAT file system image, e.g.
+<filename>/dev/fd0</filename>.
+</para></listitem></varlistentry>
+<varlistentry><term><filename>boot_file</filename></term>
+<listitem><para>
+The file name of the bootloader.
+</para></listitem></varlistentry>
+</variablelist>
+</refsect1>
+
+<!-- <refsect1><title>BUGS</title>
+<para>
+</para>
+</refsect1> -->
+
+<refsect1><title>AUTHOR</title>
+<para>
+Nikita Schmidt <email>cetus@snowball.ucd.ie</email>
+</para>
+</refsect1>
+<refsect1><title>SEE ALSO</title>
+<para>
+<application>aboot</application>(8), <application>mke2fs</application>(8), <application>e2writeboot</application>(8)
+</para>
+</refsect1>
+</refentry>
