@@ -1,4 +1,4 @@
-all:  srmbootraw.8 aboot.8 aboot.conf.5 abootconf.8 isomarkboot.8 sdisklabel.8  srmbootfat.1
+all:  srmbootraw.8 aboot.8 aboot.conf.5 abootconf.8 isomarkboot.1 sdisklabel.8  srmbootfat.1
 
 aboot.8: aboot.sgml
 	nsgmls aboot.sgml | sgmlspl docbook2man-de-spec.pl
@@ -9,7 +9,7 @@ aboot.conf.5: aboot.conf.sgml
 abootconf.8: abootconf.sgml
 	nsgmls abootconf.sgml | sgmlspl docbook2man-de-spec.pl
 
-isomarkboot.8: isomarkboot.sgml
+isomarkboot.1: isomarkboot.sgml
 	nsgmls isomarkboot.sgml | sgmlspl docbook2man-de-spec.pl
 
 sdisklabel.8: sdisklabel.sgml

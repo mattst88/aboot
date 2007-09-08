@@ -3,7 +3,7 @@
 
 <refmeta>
 <refentrytitle>isomarkboot</refentrytitle>
-<manvolnum>8</manvolnum>
+<manvolnum>1</manvolnum>
 <refmiscinfo>isomarkboot</refmiscinfo>
 </refmeta>
 
@@ -46,7 +46,7 @@ auf <filename>/dev/xxx</filename> (typischerweise
 
 <para>
 Als nächstes müssen Sie den aboot-Loader (<filename>bootlx</filename> genannt)
-und das RAM-Disk-Bild, das das Wurzelverzeichnisdateisystem enthält,
+und das RAM-Disk-Image, das das Wurzelverzeichnisdateisystem enthält,
 welches oft <filename>root.bin</filename> heißt, in Ihrem ISO-Image bestimmen.
 Die Angabe letzterm ist optional, aber oft sinnvoll.
 </para>
@@ -70,7 +70,7 @@ dem Pfad zu Ihrem Image ersetzen.
 <refsect1><title>FEHLER</title>
 <para>
 <application>isomarkboot</application> ist auf anderen Architekturen
-(außer Alpha) nicht sehr intensiv getestet, obwohl es (mit kleinen Patchs)
+(außer Alpha) nicht sehr intensiv getestet, obwohl es (mit kleinen Patches)
 dort übersetzt. Bitte berichten Sie uns von Ihren Erfahrungen.
 </para>
 </refsect1>
