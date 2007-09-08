@@ -96,7 +96,7 @@ and then issuing "h" at the <application>aboot</application>-prompt.
 <refsect1><title>AUTHOR</title>
 <para>
 This man page was written by Helge Kreutzmann
-<email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project but
+<email>debian@helgefjell.de</email> for the Debian GNU/Linux project but
 may be used by others.
 </para>
 </refsect1>
