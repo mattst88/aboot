@@ -145,9 +145,9 @@ main (int argc, char ** argv)
 	}
 
 	strcpy((char *) sector, "Linux/Alpha aboot for ISO filesystem.");
-	write_64 ((unsigned char *) &sector[60], aboot_size /  512);
-	write_64 ((unsigned char *) &sector[61], aboot_pos /  512);
-	write_64 ((unsigned char *) &sector[62], 0);
+	write_64 ((unsigned char *) &sector[60], aboot_size /  512);/* sector count */
+	write_64 ((unsigned char *) &sector[61], aboot_pos /  512); /* starting LBM */
+	write_64 ((unsigned char *) &sector[62], 0);                /* flags */
 
 	/* update checksum: */
 	sum = 0;
