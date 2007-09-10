@@ -27,6 +27,7 @@
 #include "bootfs.h"
 #include "utils.h"
 #include "string.h"
+#include "netwrap.h"
 
 extern char boot_file[256];
 
@@ -36,16 +37,15 @@ dang (void)
 	printf("aboot: oops, unimplemented net-bfs function called!\n");
 }
 
+extern char _end;
+static char *src = 0;
+static char *kern_src=0, *ird_src=0;
+static int  header_size=0, kern_size=0, ird_size=0;
 
 int
 net_bread (int fd, long blkno, long nblks, char * buf)
 {
-        static char * src = 0;
-	extern char _end;
 	int nbytes;
-
-	if (!src)
-		src = (char *) (((unsigned long) &_end + 511) & ~511);
 
 #ifdef DEBUG
 	printf("net_bread: %p -> %p (%ld blocks at %ld)\n", src, buf,
@@ -70,16 +70,71 @@ struct bootfs netfs = {
 	(int (*)(int, struct stat*))	dang,	/* fstat */
 };
 
+long
+read_initrd()
+{
+	int nblocks, nread;
+
+	/* put it as high up in memory as possible */
+	initrd_start = free_mem_ptr - align_pagesize(ird_size);
+	initrd_size = ird_size;
+	/* update free_mem_ptr so malloc() still works */
+	free_mem_ptr = initrd_start;
+#ifdef DEBUG
+	printf("memory_end %x %x\n", free_mem_ptr, initrd_start);
+#endif
+
+	nblocks = align_512(ird_size)/ 512;
+	printf("aboot: loading initrd (%d bytes/%d blocks) at %#lx\n",
+	        ird_size, nblocks, initrd_start);
+	nread = (*bfs->bread)(-1, 0, nblocks, (char*) initrd_start);
+	return 0;
+}
+
+
 
 long
 load_kernel (void)
 {
+	struct header *header;
 	bfs = &netfs;
 
+	header =  (struct header *)align_512( (unsigned long)&_end );
+	header_size = header->header_size;
+	kern_src = (char *)align_512((unsigned long)header + header_size);
+	kern_size = header->kern_size;
+	ird_src = (char *)align_512((unsigned long)kern_src + kern_size);
+	ird_size = header->ird_size;
+
+	if (!free_mem_ptr)
+		free_mem_ptr = memory_end();
+	free_mem_ptr = free_mem_ptr & ~(PAGE_SIZE-1);
+
+#ifdef DEBUG
+	printf("head %x %x kernel %x %x, initrd %x %x \n", header, header_size, kern_src, kern_size, ird_src, ird_size);
+#endif
+
+	if (ird_size) {
+		src = ird_src;
+		if (read_initrd() < 0) {
+			return -1;
+		}
+	}
+
 	strcpy(boot_file, "network");
+
+	//Move kernel to safe place before uncompression
+	src = (char*)free_mem_ptr - align_pagesize(kern_size);
+	free_mem_ptr = (unsigned long)src;
+	memcpy(src, kern_src, kern_size);
+
 	uncompress_kernel(-1);
 
 	memset((char*)bss_start, 0, bss_size);	        /* clear bss */
+
+	if (!kernel_args[0] && header->boot_arg[0]) { //have argument?
+		strncpy(kernel_args, header->boot_arg, header_size - sizeof(int)*3);
+	}
 
 	while (kernel_args[0] == 'i' && !kernel_args[1]) {
 	    printf("Enter kernel arguments:\n");
