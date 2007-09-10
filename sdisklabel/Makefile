@@ -1,16 +1,15 @@
 ifndef ($(CC))
-CC = gcc -O2
+CC 	= gcc
 endif
+override CFLAGS += -g -O2 -I../include -Wall $(CPPFLAGS)
 
-override CFLAGS += -I../include -Wall $(CPPFLAGS)
-
-all: sdisklabel swriteboot
+all:	sdisklabel swriteboot
 
 sdisklabel: sdisklabel.o library.o
-	$(CC) $(LDFLAGS) sdisklabel.o library.o -o sdisklabel
+	$(CC) $(LDFLAGS) $(CFLAGS) sdisklabel.o library.o -o sdisklabel
 
 swriteboot: swriteboot.o library.o
-	$(CC) $(LDFLAGS) swriteboot.o library.o -o swriteboot
+	$(CC) $(LDFLAGS) $(CFLAGS) swriteboot.o library.o -o swriteboot
 
 clean:
 	rm -f sdisklabel swriteboot *.o
