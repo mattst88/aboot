@@ -42,7 +42,7 @@ TOP		= $(shell pwd)
 
 ifeq ($(TESTING),)
 override CPPFLAGS	+= $(CFGDEFS) -I$(TOP)/include
-override CFLAGS		+= $(CPPFLAGS) -D__KERNEL__ -Os -Wall -fno-builtin -mno-fp-regs -ffixed-8
+override CFLAGS		+= $(CPPFLAGS) -D__KERNEL__ -Os -Wall -Wcast-align -fno-builtin -fno-builtin-printf -mno-fp-regs -ffixed-8
 else
 override CPPFLAGS	+= -DTESTING $(CFGDEFS) -I$(TOP)/include
 override CFLAGS		+= $(CPPFLAGS) -O -g3 -Wall -D__KERNEL__ -ffixed-8
