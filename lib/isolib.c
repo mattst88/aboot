@@ -8,8 +8,8 @@
  */
 #include <linux/kernel.h>
 #include <linux/config.h>
-#include <linux/types.h>
 #include <linux/stat.h>
+#include <linux/types.h>
 #include <linux/kdev_t.h>
 #include <asm/page.h>
 
@@ -617,6 +617,7 @@ iso_follow_link(struct iso_inode *from, const char *basename)
 {
 	struct inode_table_entry *itp = (struct inode_table_entry *)from;
 	struct iso_inode *root = iso_iget(root_inode);
+	/* HK: iso_iget expects an "int" but root_inode is "long" ?? */
 	struct iso_inode *result = NULL;
 	char *linkto;
 	
@@ -758,10 +759,14 @@ iso_read_super (void *data, int silent)
 	if (high_sierra) {
 		rootp = (struct iso_directory_record *)
 			h_pri->root_directory_record;
+#if 0
+//See http://www.y-adagio.com/public/standards/iso_cdromr/sect_1.htm
+//Section 4.16 and 4.17 for explanation why this check is invalid
 		if (isonum_723 (h_pri->volume_set_size) != 1) {
 			printf("Multi-volume disks not (yet) supported.\n");
 			return -1;
 		};
+#endif
 		sb.s_nzones = isonum_733 (h_pri->volume_space_size);
 		sb.s_log_zone_size = 
 			isonum_723 (h_pri->logical_block_size);
@@ -769,10 +774,14 @@ iso_read_super (void *data, int silent)
 	} else {
 		rootp = (struct iso_directory_record *)
 			pri->root_directory_record;
+#if 0
+//See http://www.y-adagio.com/public/standards/iso_cdromr/sect_1.htm
+//Section 4.16 and 4.17 for explanation why this check is invalid
 		if (isonum_723 (pri->volume_set_size) != 1) {
 			printf("Multi-volume disks not (yet) supported.\n");
 			return -1;
 		}
+#endif
 		sb.s_nzones = isonum_733 (pri->volume_space_size);
 		sb.s_log_zone_size = isonum_723 (pri->logical_block_size);
 		sb.s_max_size = isonum_733(pri->volume_space_size);
@@ -829,6 +838,7 @@ iso_read_super (void *data, int silent)
 
 	/* return successfully */
 	root_inode = isonum_733 (rootp->extent) << sb.s_log_zone_size;
+	/* HK: isonum_733 returns an "int" but root_inode is a long ? */
 	return 0;
 }
 
@@ -852,6 +862,7 @@ iso_open (const char *filename)
 
 	/* get the root directory */
 	root = iso_iget(root_inode);
+/* HK: iso_iget expects an "int" but root_inode is "long" ?? */
 	if (!root) {
 		printf("iso9660: get root inode failed\n");
 		return -1;
