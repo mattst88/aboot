@@ -4,7 +4,7 @@
  * initial bootloader stuff..
  */
 
-#include <asm/system.h>
+#include "pal.h"
 
 #include <config.h>
 

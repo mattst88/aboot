@@ -4,7 +4,7 @@
  *
  * Michael Schwingen (rincewind@discworld.oche.de).
  */
-#include <asm/system.h>
+#include "system.h"
 
 #include <config.h>
 #include <aboot.h>

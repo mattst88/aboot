@@ -3,7 +3,7 @@
 
 #include <stdarg.h>
 
-#include <asm/hwrpb.h>
+#include "hwrpb.h"
 
 #include <setjmp.h>
 

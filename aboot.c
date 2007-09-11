@@ -24,8 +24,8 @@
 #include <linux/version.h>
 
 #include <asm/console.h>
-#include <asm/hwrpb.h>
-#include <asm/system.h>
+#include "hwrpb.h"
+#include "system.h"
 
 #include <alloca.h>
 #include <errno.h>

@@ -3,8 +3,8 @@
 #include <linux/kernel.h>
 
 #include <asm/console.h>
-#include <asm/hwrpb.h>
-#include <asm/system.h>
+#include "hwrpb.h"
+#include "system.h"
 
 #include "aboot.h"
 #include "cons.h"
@@ -20,7 +20,6 @@
 #endif
 
 long cons_dev;			/* console device */
-extern long int dispatch();	/* Need the full 64 bit return here...*/
 
 long
 cons_puts(const char *str, long len)

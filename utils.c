@@ -1,15 +1,16 @@
 #include <linux/kernel.h>
 
-#include <asm/hwrpb.h>
+#include "hwrpb.h"
 #include <linux/version.h>
-#include <asm/system.h>
+#include "system.h"
+
+#include "string.h"
 
 #include <stdarg.h>
 #include <errno.h>
 
 #include "aboot.h"
 #include "cons.h"
-#include "string.h"
 
 
 unsigned long free_mem_ptr = 0;

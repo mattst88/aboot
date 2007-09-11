@@ -7,7 +7,6 @@
  * open and read files... but that's all we need 8-)
  */
 #include <linux/kernel.h>
-#include <linux/config.h>
 #include <linux/stat.h>
 #include <linux/types.h>
 #include <linux/kdev_t.h>

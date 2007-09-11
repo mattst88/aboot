@@ -1,11 +1,7 @@
 #ifndef utils_h
 #define utils_h
 
-#ifdef __alpha__
-#include <asm/hwrpb.h>
-#else
 #include "hwrpb.h"
-#endif
 
 #ifdef TESTING
 #define pal_init()

@@ -19,7 +19,7 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 #include <asm/console.h>
-#include <asm/system.h>
+#include "system.h"
 
 #include "config.h"
 #include "cons.h"

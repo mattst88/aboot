@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <asm/system.h>
+#include "system.h"
 #include <disklabel.h>
 #include <config.h>
 #include "library.h"

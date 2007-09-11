@@ -2,7 +2,7 @@
  * Copyright (c) 1995	David Mosberger (davidm@cs.arizona.edu)
  */
 #include <setjmp.h>
-#include <asm/system.h>
+#include "system.h"
 
 	.extern	printf
 

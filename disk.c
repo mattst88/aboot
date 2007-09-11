@@ -35,7 +35,7 @@
 
 #include <linux/elf.h>
 #include <asm/console.h>
-#include <asm/system.h>
+#include "system.h"
 #include <asm/elf.h>
 
 extern struct bootfs ext2fs;
