@@ -6,7 +6,11 @@ override CPPFLAGS += -D__KERNEL__ -I../include
 override ASFLAGS += $(CPPFLAGS) -D__ASSEMBLY__ -traditional
 
 ifeq ($(TESTING),)
+ifeq ($(FOREIGN),"yes")
+override CFLAGS	+= -Os -Wall -fno-builtin
+else
 override CFLAGS += -Os -Wall -mno-fp-regs -fno-builtin
+endif
 else
 override CFLAGS += -Os -g3 -Wall
 endif
