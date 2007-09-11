@@ -17,16 +17,8 @@
 #  define __KERNEL__
 #  include <linux/fs.h>
 
-#elif LINUX_VERSION_CODE < KERNEL_VERSION(2,6,0)
+#else /* Linux 2.4.0 or later */
 
-#  undef __KERNEL__
-#  include <linux/ext2_fs.h>
-#  include <linux/fs.h>
-#  define __KERNEL__
-
-#else
-
-#  include <linux/audit.h>
 #  undef __KERNEL__
 #  include <linux/ext2_fs.h>
 #  include <linux/fs.h>
