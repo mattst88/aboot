@@ -1,3 +1,22 @@
+2007-09-11  Helge Kreutzmann <debian@helgefjell.de>
+        * Remove audit.h from fs/ext2, unused, and simplify kernel version
+	  handling
+	* Fix misunderstanding about multi volume ISO images, c.f.
+	  http://www.y-adagio.com/public/standards/iso_cdromr/sect_1.htm
+	  (used since 2004 for Debian)
+	* Support TESTING for isomarkboot on non-alpha architectures
+	* Add -Wcast-align and -fno-builtin-printf to main CFLAGS (from Debian)
+	* Using kernel headers directly is depreceated and also not necessary.
+	  Use only "published" interfaces from linux-libc-dev and import a local
+	  copy of the missing asm-alpha/pal.h and asm-alpha/system.h from the 
+	  kernel sources for use by head.S and aboot.c.
+	  This patch is taken from the Debian version, c.f.
+	  http://bugs.debian.org/437296 for details.
+	* Adjust headers to make lib/isolib.c portable (tested for i386 on
+	  Debian)
+        * Allow booting kernels >= 2.6.23rc1. Patch from Richard Henderson
+	  via Debian.
+
 2007-09-08  Helge Kreutzmann <debian@helgefjell.de>
         * Minor fixes in German man pages (abootconf.sgml, aboot.sgml)
 	* Man pages for isomarkboot belongs in section 1, minor fixes in 
