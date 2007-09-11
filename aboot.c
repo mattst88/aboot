@@ -19,14 +19,13 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <linux/elf.h>
 #include <linux/kernel.h>
 #include <linux/version.h>
-
 #include <asm/console.h>
 #include "hwrpb.h"
 #include "system.h"
 
+#include <elf.h>
 #include <alloca.h>
 #include <errno.h>
 
@@ -36,16 +35,6 @@
 #include "setjmp.h"
 #include "utils.h"
 #include "string.h"
-
-#ifndef elf_check_arch
-# define aboot_elf_check_arch(e)	1
-#else
-# if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
-#  define aboot_elf_check_arch(e)        elf_check_arch(e)
-# else
-#  define aboot_elf_check_arch(e)        elf_check_arch(e->e_machine)
-# endif
-#endif
 
 struct bootfs *	bfs = 0;		/* filesystem to boot from */
 char *		dest_addr = 0;
@@ -83,77 +72,101 @@ static unsigned long entry_addr = START_ADDR;
 long
 first_block (const char *buf, long blocksize)
 {
-	struct elfhdr *elf;
-	struct elf_phdr *phdrs;
+	Elf64_Ehdr *elf;
+	Elf64_Phdr *phdrs;
+	int i, j;
 
-	elf  = (struct elfhdr *) buf;
+	elf  = (Elf64_Ehdr *) buf;
 	
-	if (elf->e_ident[0] == 0x7f
-	    && strncmp(elf->e_ident + 1, "ELF", 3) == 0)
+	if (elf->e_ident[0] != 0x7f
+	    || elf->e_ident[1] != 'E'
+	    || elf->e_ident[2] != 'L'
+	    || elf->e_ident[3] != 'F')
 	{
-		int i;
-		/* looks like an ELF binary: */
-		if (elf->e_type != ET_EXEC) {
-			printf("aboot: not an executable ELF file\n");
-			return -1;
-		}
-		if (!aboot_elf_check_arch(elf)) {
-			printf("aboot: ELF executable not for this machine\n");
-			return -1;
-		}
-		if (elf->e_phoff + elf->e_phnum * sizeof(*phdrs) > (unsigned) blocksize) {
-			printf("aboot: "
-			       "ELF program headers not in first block (%ld)\n",
-			       (long) elf->e_phoff);
-			return -1;
-		}
-		phdrs = (struct elf_phdr *) (buf + elf->e_phoff);
-		chunks = malloc(sizeof(struct segment) * elf->e_phnum);
-		nchunks = elf->e_phnum;
-		start_addr = phdrs[0].p_vaddr; /* assume they are sorted */
-		entry_addr = elf->e_entry;
-#ifdef DEBUG
-		printf("aboot: %d program headers, start address %#lx, entry %#lx\n",
-		       nchunks, start_addr, entry_addr);
-#endif
-		for (i = 0; i < elf->e_phnum; ++i) {
-			int status;
-
-			chunks[i].addr   = phdrs[i].p_vaddr;
-			chunks[i].offset = phdrs[i].p_offset;
-			chunks[i].size   = phdrs[i].p_filesz;
-#ifdef DEBUG
-			printf("aboot: segment %d vaddr %#lx offset %#lx size %#lx\n",
-			       i, chunks[i].addr, chunks[i].offset, chunks[i].size);
-#endif
-
-#ifndef TESTING
-			status = check_memory(chunks[i].addr, chunks[i].size);
-			if (status) {
-				printf("aboot: Can't load kernel.\n"
-				       "  Memory at %lx - %lx (chunk %i) "
-				         "is %s\n",
-				       chunks[i].addr,
-				       chunks[i].addr + chunks[i].size - 1,
-				       i,
-				       (status == -ENOMEM) ?
-				          "Not Found" :
-					  "Busy (Reserved)");
-				return -1;
-			}
-#endif
-		}
-		bss_start = (char *) (phdrs[elf->e_phnum - 1].p_vaddr +
-				      phdrs[elf->e_phnum - 1].p_filesz);
-		bss_size = (phdrs[elf->e_phnum - 1].p_memsz -
-			    phdrs[elf->e_phnum - 1].p_filesz);
-#ifdef DEBUG
-		printf("aboot: bss at 0x%p, size %#lx\n", bss_start, bss_size);
-#endif
-	} else {
 		/* Fail silently, it might be a compressed file */
 		return -1;
 	}
+	if (elf->e_ident[EI_CLASS] != ELFCLASS64
+	    || elf->e_ident[EI_DATA] != ELFDATA2LSB
+	    || elf->e_machine != EM_ALPHA)
+	{
+		printf("aboot: ELF executable not for this machine\n");
+		return -1;
+	}
+
+	/* Looks like an ELF binary. */
+	if (elf->e_type != ET_EXEC) {
+		printf("aboot: not an executable ELF file\n");
+		return -1;
+	}
+
+	if (elf->e_phoff + elf->e_phnum * sizeof(*phdrs) > (unsigned) blocksize)
+	{
+		printf("aboot: "
+		       "ELF program headers not in first block (%ld)\n",
+		       (long) elf->e_phoff);
+		return -1;
+	}
+
+	phdrs = (struct elf_phdr *) (buf + elf->e_phoff);
+	chunks = malloc(sizeof(struct segment) * elf->e_phnum);
+	start_addr = phdrs[0].p_vaddr; /* assume they are sorted */
+	entry_addr = elf->e_entry;
+
+#ifdef DEBUG
+	printf("aboot: %d program headers, start address %#lx, entry %#lx\n",
+	       elf->e_phnum, start_addr, entry_addr);
+#endif
+
+	for (i = j = 0; i < elf->e_phnum; ++i) {
+		int status;
+
+		if (phdrs[i].p_type != PT_LOAD)
+			continue;
+
+		chunks[j].addr   = phdrs[i].p_vaddr;
+		chunks[j].offset = phdrs[i].p_offset;
+		chunks[j].size   = phdrs[i].p_filesz;
+
+#ifdef DEBUG
+		printf("aboot: PHDR %d vaddr %#lx offset %#lx size %#lx\n",
+		       i, chunks[j].addr, chunks[j].offset, chunks[j].size);
+#endif
+
+#ifndef TESTING
+		status = check_memory(chunks[j].addr, chunks[j].size);
+		if (status) {
+			printf("aboot: Can't load kernel.\n"
+			       "  Memory at %lx - %lx (PHDR %i) "
+			         "is %s\n",
+			       chunks[j].addr,
+			       chunks[j].addr + chunks[j].size - 1,
+			       i,
+			       (status == -ENOMEM) ?
+			          "Not Found" :
+				  "Busy (Reserved)");
+			return -1;
+		}
+#endif
+
+		if (phdrs[i].p_memsz > phdrs[i].p_filesz) {
+			if (bss_size > 0) {
+				printf("aboot: Can't load kernel.\n"
+				       "  Multiple BSS segments"
+				       " (PHDR %d)\n", i);
+				return -1;
+			}
+			bss_start = (char *) (phdrs[i].p_vaddr +
+				              phdrs[i].p_filesz);
+			bss_size = (phdrs[i].p_memsz - phdrs[i].p_filesz);
+		}
+
+		j++;
+	}
+	nchunks = j;
+#ifdef DEBUG
+	printf("aboot: bss at 0x%p, size %#lx\n", bss_start, bss_size);
+#endif
 
 	return 0;
 }
