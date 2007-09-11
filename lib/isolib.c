@@ -6,11 +6,8 @@
  * functionality to the Linux bootstrapper.  All we can do is
  * open and read files... but that's all we need 8-)
  */
-#include <linux/kernel.h>
 #include <linux/stat.h>
-#include <linux/types.h>
-#include <linux/kdev_t.h>
-#include <asm/page.h>
+#include <sys/types.h>
 
 #include "string.h"
 #include "iso.h"
