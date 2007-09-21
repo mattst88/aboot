@@ -1,3 +1,6 @@
+2007-09-21  Helge Kreutzmann <debian@helgefjell.de>
+	* Update my e-mail address in the man pages
+
 2007-09-11  Helge Kreutzmann <debian@helgefjell.de>
         * Remove audit.h from fs/ext2, unused, and simplify kernel version
 	  handling

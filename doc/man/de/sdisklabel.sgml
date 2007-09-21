@@ -232,7 +232,7 @@ verwenden.
 </refsect1>
 <refsect1><title>AUTOR</title>
 <para>
-Diese Handbuchseite wurde von Helge Kreutzmann <email>kreutzm@itp.uni-hannover.de</email>
+Diese Handbuchseite wurde von Helge Kreutzmann <email>debian@helgefjell.de</email>
 für das Debian GNU/Linux-Projekt geschrieben; Sie kann aber von 
 anderen verwendet werden. Sie basiert wesentlich auf der bei den
 <application>sdisklabel</application>-Quellen mitgelieferten

@@ -233,7 +233,7 @@ use can use the <parameter>force</parameter> switch on the command line.
 </refsect1>
 <refsect1><title>AUTHOR</title>
 <para>
-This man page was written by Helge Kreutzmann <email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project but may be used by others. It is
+This man page was written by Helge Kreutzmann <email>debian@helgefjell.de</email> for the Debian GNU/Linux project but may be used by others. It is
 heavily based on the <filename>README</filename> provided along with the
 <application>sdisklabel</application> source.
 </para>

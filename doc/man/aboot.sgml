@@ -67,7 +67,7 @@ Furthermore <application>aboot</application> is also not needed if the system is
 <refsect1><title>AUTHOR</title>
 <para>
 This man page was written by Helge Kreutzmann
-<email>kreutzm@itp.uni-hannover.de</email> for the Debian GNU/Linux project
+<email>debian@helgefjell.de</email> for the Debian GNU/Linux project
 but may be used by others.
 </para>
 </refsect1>
