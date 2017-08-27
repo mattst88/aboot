@@ -10,8 +10,6 @@
 #include "gzip.h"
 #define slide window
 
-#include <linux/types.h>
-
 extern void *malloc(size_t size);
 extern void free(void *ptr);
 

@@ -7,7 +7,6 @@
  * by David Mosberger (davidm@cs.arizona.edu).
  */
 #include <sys/stat.h>
-#include <linux/types.h>
 #include <ext2fs/ext2_fs.h>
 
 #include "bootfs.h"

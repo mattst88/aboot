@@ -33,7 +33,6 @@
 #include "utils.h"
 #include <string.h>
 
-#include <linux/elf.h>
 #include <asm/console.h>
 #include "system.h"
 

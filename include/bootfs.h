@@ -1,7 +1,6 @@
 #ifndef boot_fs_h
 #define boot_fs_h
 
-#include <linux/types.h>
 #include <sys/stat.h>
 
 struct bootfs {

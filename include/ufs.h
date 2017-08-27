@@ -65,8 +65,6 @@
 /*
  * Common definitions for Berkeley Fast File System.
  */
-#include <linux/types.h>
-
 #define DEV_BSIZE	512
 
 #ifndef NBBY
