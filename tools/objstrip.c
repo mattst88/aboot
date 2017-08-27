@@ -7,14 +7,15 @@
  */
 /*
  * Converts an ECOFF or ELF object file into a bootable file.  The
- * object file must be a OMAGIC file (i.e., data and bss follow immediatly
+ * object file must be a OMAGIC file (i.e., data and bss follow immediately
  * behind the text).  See DEC "Assembly Language Programmer's Guide"
  * documentation for details.  The SRM boot process is documented in
  * the Alpha AXP Architecture Reference Manual, Second Edition by
  * Richard L. Sites and Richard T. Witek.
  */
-#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #include <sys/fcntl.h>
@@ -24,17 +25,11 @@
 #include <linux/a.out.h>
 #include <linux/coff.h>
 #include <linux/param.h>
-#include <string.h>
-
 #ifdef __ELF__
-# include <asm/elf.h>
 # include <linux/elf.h>
-# include <linux/version.h>
-# if LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,0)
-#  define aboot_elf_check_arch(e)        elf_check_arch(e)
-# else
-#  define aboot_elf_check_arch(e)        elf_check_arch(e->e_machine)
-# endif
+# define elfhdr elf64_hdr
+# define elf_phdr elf64_phdr
+# define elf_check_arch(x) ((x)->e_machine == EM_ALPHA)
 #endif
 
 /* bootfile size must be multiple of BLOCK_SIZE: */
@@ -43,7 +38,7 @@
 const char * prog_name;
 
 
-void
+static void
 usage (void)
 {
     fprintf(stderr,
@@ -101,7 +96,7 @@ main (int argc, char *argv[])
     ofd = 1;
     if (i < argc) {
 	ofd = open(argv[i++], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (fd == -1) {
+	if (ofd == -1) {
 	    perror("open");
 	    exit(1);
 	}
@@ -152,13 +147,13 @@ main (int argc, char *argv[])
 #ifdef __ELF__
     elf = (struct elfhdr *) buf;
 
-    if (elf->e_ident[0] == 0x7f && strncmp(elf->e_ident + 1, "ELF", 3) == 0) {
+    if (elf->e_ident[0] == 0x7f && strncmp((char *)elf->e_ident + 1, "ELF", 3) == 0) {
 	if (elf->e_type != ET_EXEC) {
 	    fprintf(stderr, "%s: %s is not an ELF executable\n",
 		    prog_name, inname);
 	    exit(1);
 	}
-	if (!aboot_elf_check_arch(elf)) {
+	if (!elf_check_arch(elf)) {
 	    fprintf(stderr, "%s: is not for this processor (e_machine=%d)\n",
 		    prog_name, elf->e_machine);
 	    exit(1);
