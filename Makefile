@@ -34,10 +34,6 @@ LOADADDR	= 20000000
 
 ABOOT_LDFLAGS = -static -N -Taboot.lds
 
-ifndef $($(CC))
-CC		= gcc
-endif
-
 TOP		= $(shell pwd)
 
 ifeq ($(TESTING),)

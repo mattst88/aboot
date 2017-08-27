@@ -1,6 +1,3 @@
-ifndef ($(CC))
-CC 	= gcc
-endif
 override CFLAGS += -g -O2 -I../include -Wall $(CPPFLAGS)
 
 all:	sdisklabel swriteboot

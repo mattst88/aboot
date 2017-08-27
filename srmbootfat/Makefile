@@ -1,6 +1,3 @@
-ifndef ($(CC))
-CC	= gcc
-endif
 override CFLAGS	+= -O2 -g -pipe -Wall
 #override LDFLAGS	+= -s
 SBINDIR	= ../bin
