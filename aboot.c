@@ -20,7 +20,6 @@
  */
 
 #include <linux/kernel.h>
-#include <linux/version.h>
 #include <asm/console.h>
 #include "hwrpb.h"
 #include "system.h"

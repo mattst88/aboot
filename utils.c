@@ -1,7 +1,6 @@
 #include <linux/kernel.h>
 
 #include "hwrpb.h"
-#include <linux/version.h>
 #include "system.h"
 
 #include <string.h>

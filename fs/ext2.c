@@ -8,7 +8,6 @@
  */
 #include <sys/stat.h>
 #include <linux/types.h>
-#include <linux/version.h>
 #include <ext2fs/ext2_fs.h>
 
 #include "bootfs.h"
