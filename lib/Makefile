@@ -1,4 +1,4 @@
-override CPPFLAGS += -D__KERNEL__ -I../include
+override CPPFLAGS += -I../include
 override ASFLAGS += $(CPPFLAGS) -D__ASSEMBLY__ -traditional
 
 ifeq ($(TESTING),)
