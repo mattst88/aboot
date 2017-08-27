@@ -54,7 +54,6 @@
  *	(davidm@cs.arizona.edu)
  */
 #include <linux/kernel.h>
-#include <asm/stat.h>
 
 #include "aboot.h"
 #include "bootfs.h"

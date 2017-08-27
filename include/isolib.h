@@ -7,8 +7,6 @@
 # define fd_set kernel_fd_set
 #endif
 
-#include <asm/stat.h>
-
 extern int  iso_read_super (void * data, int quiet);
 extern int  iso_open (const char * filename);
 extern int  iso_bread (int fd, long blkno, long nblks, char * buffer);
