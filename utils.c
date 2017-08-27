@@ -4,7 +4,7 @@
 #include <linux/version.h>
 #include "system.h"
 
-#include "string.h"
+#include <string.h>
 
 #include <stdarg.h>
 #include <errno.h>

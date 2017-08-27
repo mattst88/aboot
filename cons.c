@@ -9,7 +9,7 @@
 #include "aboot.h"
 #include "cons.h"
 #include "utils.h"
-#include "string.h"
+#include <string.h>
 
 #ifndef CCB_OPEN_CONSOLE	/* new callback w/ ARM v4 */
 # define CCB_OPEN_CONSOLE 0x07

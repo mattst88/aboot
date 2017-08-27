@@ -34,7 +34,7 @@
 #include "cons.h"
 #include "setjmp.h"
 #include "utils.h"
-#include "string.h"
+#include <string.h>
 
 struct bootfs *	bfs = 0;		/* filesystem to boot from */
 char *		dest_addr = 0;

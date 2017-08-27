@@ -62,7 +62,7 @@
 #include "disklabel.h"
 #include "ufs.h"
 #include "utils.h"
-#include "string.h"
+#include <string.h>
 
 #define MAX_OPEN_FILES	1
 

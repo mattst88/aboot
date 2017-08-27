@@ -30,7 +30,7 @@
 #include "cons.h"
 #include "disklabel.h"
 #include "utils.h"
-#include "string.h"
+#include <string.h>
 
 #define MAX_OPEN_FILES		5
 

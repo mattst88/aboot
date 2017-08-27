@@ -6,7 +6,7 @@
 #ifndef GZIP_H
 #define GZIP_H
 
-#include "string.h"
+#include <string.h>
 
 #define memzero(s, n)     memset ((s), 0, (n))
 

@@ -26,7 +26,7 @@
 #include "aboot.h"
 #include "bootfs.h"
 #include "utils.h"
-#include "string.h"
+#include <string.h>
 #include "netwrap.h"
 
 extern char boot_file[256];
