@@ -11,7 +11,7 @@
  * These are buggy as well..
  */
  
-#include <linux/types.h>
+#include <sys/types.h>
 
 char * ___strtok = NULL;
 

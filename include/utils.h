@@ -1,6 +1,8 @@
 #ifndef utils_h
 #define utils_h
 
+#include <sys/types.h>
+
 #include "hwrpb.h"
 
 #ifdef TESTING

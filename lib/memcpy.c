@@ -3,7 +3,7 @@
  *
  *  Copyright (c) 1995  David Mosberger (davidm@cs.arizona.edu)
  */
-#include <linux/types.h>
+#include <sys/types.h>
 
 /*
  * Booting is I/O bound so rather than a time-optimized, we want

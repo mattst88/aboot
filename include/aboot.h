@@ -2,6 +2,7 @@
 #define aboot_h
 
 #include <stdarg.h>
+#include <sys/types.h>
 
 #include "hwrpb.h"
 
