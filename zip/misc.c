@@ -11,8 +11,6 @@
  */
 #include <linux/kernel.h>
 
-#include <asm/page.h>
-
 #include "aboot.h"
 #include "bootfs.h"
 #include "setjmp.h"
