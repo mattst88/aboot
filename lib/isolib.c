@@ -6,7 +6,7 @@
  * functionality to the Linux bootstrapper.  All we can do is
  * open and read files... but that's all we need 8-)
  */
-#include <linux/stat.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 
 #include <string.h>
