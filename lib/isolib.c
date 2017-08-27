@@ -904,7 +904,7 @@ iso_map (int fd, long block)
 	return iso_bmap(&inode_table[fd].inode, block) * sb.s_blocksize;
 }
 
-#include <linux/stat.h>
+#include <sys/stat.h>
 int
 iso_fstat (int fd, struct stat * buf)
 {

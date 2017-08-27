@@ -6,7 +6,7 @@
  * This file has been ported from the DEC 32-bit Linux version
  * by David Mosberger (davidm@cs.arizona.edu).
  */
-#include <linux/stat.h>
+#include <sys/stat.h>
 #include <linux/types.h>
 #include <linux/version.h>
 #include <ext2fs/ext2_fs.h>
@@ -518,7 +518,6 @@ static int ext2_fstat(int fd, struct stat* buf)
 	/* fill in relevant fields */
 	buf->st_ino = inode_table[fd].inumber;
 	buf->st_mode = ip->i_mode;
-	buf->st_flags = ip->i_flags;
 	buf->st_nlink = ip->i_links_count;
 	buf->st_uid = ip->i_uid;
 	buf->st_gid = ip->i_gid;
