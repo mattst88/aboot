@@ -1,7 +1,5 @@
 #include <alloca.h>
 
-#include <linux/kernel.h>
-
 #include <asm/console.h>
 #include "hwrpb.h"
 #include "system.h"

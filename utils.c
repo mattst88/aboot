@@ -1,5 +1,3 @@
-#include <linux/kernel.h>
-
 #include "hwrpb.h"
 #include "system.h"
 

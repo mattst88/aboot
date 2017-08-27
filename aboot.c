@@ -19,7 +19,6 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <linux/kernel.h>
 #include <asm/console.h>
 #include "hwrpb.h"
 #include "system.h"

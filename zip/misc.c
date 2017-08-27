@@ -9,8 +9,6 @@
  *
  * Adapted to Linux/Alpha boot by David Mosberger (davidm@cs.arizona.edu).
  */
-#include <linux/kernel.h>
-
 #include "aboot.h"
 #include "bootfs.h"
 #include "setjmp.h"
