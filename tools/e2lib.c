@@ -16,6 +16,7 @@
 
 #include <bio.h>
 #include <e2lib.h>
+#include <ext2fs/ext2_fs.h>
 
 
 #define		MAX_OPEN_FILES		8 
@@ -73,9 +74,9 @@ ext2_swap_sb (struct ext2_super_block *sb)
     sb->s_free_inodes_count = swap32(sb->s_free_inodes_count);
     sb->s_first_data_block = swap32(sb->s_first_data_block);
     sb->s_log_block_size = swap32(sb->s_log_block_size);
-    sb->s_log_frag_size = swap32(sb->s_log_frag_size);
+    sb->s_log_cluster_size = swap32(sb->s_log_cluster_size);
     sb->s_blocks_per_group = swap32(sb->s_blocks_per_group);
-    sb->s_frags_per_group = swap32(sb->s_frags_per_group);
+    sb->s_clusters_per_group = swap32(sb->s_clusters_per_group);
     sb->s_inodes_per_group = swap32(sb->s_inodes_per_group);
     sb->s_mtime = swap32(sb->s_mtime);
     sb->s_wtime = swap32(sb->s_wtime);
@@ -84,7 +85,7 @@ ext2_swap_sb (struct ext2_super_block *sb)
     sb->s_magic = swap16(sb->s_magic);
     sb->s_state = swap16(sb->s_state);
     sb->s_errors = swap16(sb->s_errors);
-    sb->s_pad = swap16(sb->s_pad);
+    sb->s_minor_rev_level = swap16(sb->s_minor_rev_level);
     sb->s_lastcheck = swap32(sb->s_lastcheck);
     sb->s_checkinterval = swap32(sb->s_checkinterval);
 }
@@ -98,7 +99,7 @@ ext2_swap_gd (struct ext2_group_desc *gd)
 	gd->bg_free_blocks_count = swap16(gd->bg_free_blocks_count);
 	gd->bg_free_inodes_count = swap16(gd->bg_free_inodes_count);
 	gd->bg_used_dirs_count = swap16(gd->bg_used_dirs_count);
-	gd->bg_pad = swap16(gd->bg_pad);
+	gd->bg_flags = swap16(gd->bg_flags);
 }
 
 void
@@ -117,15 +118,14 @@ ext2_swap_inode (struct ext2_inode *ip)
     ip->i_links_count = swap16(ip->i_links_count);
     ip->i_blocks = swap32(ip->i_blocks);
     ip->i_flags = swap32(ip->i_flags);
-    ip->i_reserved1 = swap32(ip->i_reserved1);
+    ip->osd1.linux1.l_i_version = swap32(ip->osd1.linux1.l_i_version);
     for(i = 0; i < EXT2_N_BLOCKS; i++) {
 	ip->i_block[i] = swap32(ip->i_block[i]);
     }
-    ip->i_version = swap32(ip->i_version);
+    ip->i_generation = swap32(ip->i_generation);
     ip->i_file_acl = swap32(ip->i_file_acl);
     ip->i_dir_acl = swap32(ip->i_dir_acl);
     ip->i_faddr = swap32(ip->i_faddr);
-    ip->i_pad1 = swap16(ip->i_pad1);
 }
 
 
@@ -172,13 +172,13 @@ ext2_init (char * name, int access)
 	return(-1);
     }
 
-    if((sb.s_magic != EXT2_SUPER_MAGIC) && (sb.s_magic != EXT2_SUPER_BIGMAGIC)) {
+    if((sb.s_magic != EXT2_SUPER_MAGIC) && (sb.s_magic != swap16(EXT2_SUPER_MAGIC))) {
 	fprintf(stderr, "ext2 bad magic 0x%x\n", sb.s_magic);
 	close(fd);
 	return(-1);
     }
 
-    if(sb.s_magic == EXT2_SUPER_BIGMAGIC) {
+    if(sb.s_magic == swap32(EXT2_SUPER_MAGIC)) {
 	big_endian = 1;
 
 	/* Byte-swap the fields in the superblock... */

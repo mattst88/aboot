@@ -9,22 +9,7 @@
 #include <linux/stat.h>
 #include <linux/types.h>
 #include <linux/version.h>
-
-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,4,0)
-
-#  undef __KERNEL__
-#  include <linux/ext2_fs.h>
-#  define __KERNEL__
-#  include <linux/fs.h>
-
-#else /* Linux 2.4.0 or later */
-
-#  undef __KERNEL__
-#  include <linux/ext2_fs.h>
-#  include <linux/fs.h>
-#  define __KERNEL__
-
-#endif
+#include <ext2fs/ext2_fs.h>
 
 #include "bootfs.h"
 #include "cons.h"

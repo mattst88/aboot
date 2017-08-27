@@ -19,6 +19,7 @@
 #include <sys/stat.h>
 
 #include <e2lib.h>
+#include <ext2fs/ext2_fs.h>
 
 #if defined(__linux__)
 # include <sys/types.h>
@@ -180,14 +181,15 @@ main(int argc, char ** argv)
 	ip->i_links_count = 1;
 	ip->i_blocks = 0;
 	ip->i_flags = 0;	/* Nothing special */
+	ip->osd1.linux1.l_i_version = 0;
 	for(i = 0; i < EXT2_N_BLOCKS; i++) {
 	    ip->i_block[i] = 0;
 	}
-	ip->i_version = 0;
+	ip->i_generation = 0;
 	ip->i_file_acl = 0;
-	ip->i_frag = 0;
-	ip->i_fsize = 0;
-	ip->i_reserved1 = ip->i_pad1 = ip->i_reserved2[0] = 0;
+	ip->osd2.linux2.l_i_blocks_hi = 0;
+	ip->osd2.linux2.l_i_uid_high = 0;
+	ip->osd2.linux2.l_i_gid_high = 0;
 
     }
 
