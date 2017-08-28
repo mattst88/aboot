@@ -36,7 +36,7 @@ fixmagic (int fd,struct disklabel *d)
 	d->d_magic2=DISKLABELMAGIC;
 	d->d_type=DTYPE_SCSI;
 	d->d_secsize=512;
-	strcpy(d->d_typename,"SCSI");
+	memcpy(d->d_typename, "SCSI", 5);
 }
 
 void

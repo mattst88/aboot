@@ -482,7 +482,7 @@ iso_find_entry (struct iso_inode *dir, const char *name, int namelen,
 		  if (dlen) {
 		    strcpy(de->name, retname);
 		  } else {
-		    dlen = isonum_711(de->name_len);
+		    dlen = isonum_711((char *) de->name_len);
 		    if(sb.s_mapping == 'n') {
 		      for (i = 0; i < dlen; i++) {
 			c = de->name[i];
@@ -1040,7 +1040,7 @@ char *iso_readdir_i(int fd, int rewind) {
 	 * Everything's cool, let's get the filename. 
 	 * First we need to figure out the length. 
 	 */
-	name_len = isonum_711(dirent->name_len);
+	name_len = isonum_711((char *) dirent->name_len);
 #ifdef DEBUG_ISO
 	if (name_len==0) printf("dirent->name_len = 0, skipping.\n");
 #endif
@@ -1182,7 +1182,7 @@ int get_rock_ridge_filename(struct iso_directory_record * de,
   if (!sb.s_rock) return 0;
   *retname = '\0';
 
-  len = sizeof(struct iso_directory_record) + isonum_711(de->name_len);
+  len = sizeof(struct iso_directory_record) + isonum_711((char *) de->name_len);
   if (len & 1) len++;
   chr = ((unsigned char *) de) + len;
   len = *((unsigned char *) de) - len;

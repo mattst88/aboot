@@ -185,7 +185,7 @@ fill_inbuf(void)
 	}
 
 	nblocks = INBUFSIZ / bfs->blocksize;
-	nread = (*bfs->bread)(input_fd, block_number, nblocks, inbuf);
+	nread = (*bfs->bread)(input_fd, block_number, nblocks, (char *) inbuf);
 #ifdef DEBUG
 	printf("read %ld blocks of %d, got %ld\n", nblocks, bfs->blocksize,
 	       nread);
@@ -233,7 +233,8 @@ flush_window(void)
 	while (chunk < nchunks) {
 		/* position within the current segment */
 		ssize_t chunk_offset = file_offset - chunks[chunk].offset;
-		unsigned char *dest = (char *) chunks[chunk].addr + chunk_offset;
+		unsigned char *dest =
+			(unsigned char *) chunks[chunk].addr + chunk_offset;
 		ssize_t to_copy;
 		unsigned char *src = window;
 

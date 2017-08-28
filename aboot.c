@@ -68,7 +68,7 @@ static unsigned long entry_addr = START_ADDR;
  * the relevant header information.
  */
 long
-first_block (const char *buf, long blocksize)
+first_block (const unsigned char *buf, long blocksize)
 {
 	Elf64_Ehdr *elf;
 	Elf64_Phdr *phdrs;

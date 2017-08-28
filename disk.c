@@ -62,7 +62,7 @@ int
 load_raw (long dev)
 {
 	extern char _end;
-	char *buf;
+	unsigned char *buf;
 	long aboot_size = &_end - (char *) BOOT_ADDR;
 	long ksect = (aboot_size + SECT_SIZE - 1) / SECT_SIZE + BOOT_SECTOR;
 	long nread;
@@ -117,7 +117,7 @@ load_uncompressed (int fd)
 	buf = malloc(bfs->blocksize);
 
 	/* read ELF headers: */
-	nread = (*bfs->bread)(fd, 0, 1, buf);
+	nread = (*bfs->bread)(fd, 0, 1, (char *) buf);
 	if (nread != bfs->blocksize) {
 		printf("aboot: read returned %ld instead of %ld bytes\n",
 		       nread, sizeof(buf));

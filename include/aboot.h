@@ -34,7 +34,7 @@ extern unsigned long	initrd_start, initrd_size;
 /* page size is in the INIT_HWRPB */
 extern unsigned long	page_offset, page_shift;
 
-extern long		first_block (const char *buf, long blocksize);
+extern long		first_block (const unsigned char *buf, long blocksize);
 extern unsigned long	switch_to_osf_pal (unsigned long nr,
 					   struct pcb_struct *pcb_va,
 					   struct pcb_struct *pcb_pa,
