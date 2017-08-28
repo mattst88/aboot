@@ -106,7 +106,7 @@ first_block (const char *buf, long blocksize)
 		return -1;
 	}
 
-	phdrs = (struct elf_phdr *) (buf + elf->e_phoff);
+	phdrs = (Elf64_Phdr *) (buf + elf->e_phoff);
 	chunks = malloc(sizeof(struct segment) * elf->e_phnum);
 	start_addr = phdrs[0].p_vaddr; /* assume they are sorted */
 	entry_addr = elf->e_entry;
