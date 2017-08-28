@@ -38,7 +38,7 @@ TOP		= $(shell pwd)
 
 ifeq ($(TESTING),)
 override CPPFLAGS	+= $(CFGDEFS) -U_FORTIFY_SOURCE -I$(TOP)/include
-override CFLAGS		+= $(CPPFLAGS) -Os -Wall -Wcast-align -ffreestanding -mno-fp-regs -ffixed-8
+override CFLAGS		+= $(CPPFLAGS) -Os -Wall -ffreestanding -mno-fp-regs -ffixed-8
 else
 override CPPFLAGS	+= -DTESTING $(CFGDEFS) -U_FORTIFY_SOURCE -I$(TOP)/include
 override CFLAGS		+= $(CPPFLAGS) -O -g3 -Wall -ffixed-8
