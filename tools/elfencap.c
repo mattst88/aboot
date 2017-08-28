@@ -16,8 +16,8 @@ main (int argc, char ** argv)
     char buf[8192];
     struct stat st;
     struct {
-	struct elfhdr	ehdr;
-	struct elf_phdr	phdr;
+	struct elf64_hdr  ehdr;
+	struct elf64_phdr phdr;
     } h;
 
     ifd = open(argv[1], O_RDONLY);
@@ -34,12 +34,12 @@ main (int argc, char ** argv)
     memset(&h, 0, sizeof(h));
 
     h.ehdr.e_ident[0] = 0x7f;
-    strcpy(h.ehdr.e_ident + 1, "ELF");
-    h.ehdr.e_ident[EI_CLASS]	= ELF_CLASS;
-    h.ehdr.e_ident[EI_DATA]	= ELF_DATA;
+    memcpy(&h.ehdr.e_ident[1], "ELF", 4);
+    h.ehdr.e_ident[EI_CLASS]	= ELFCLASS64;
+    h.ehdr.e_ident[EI_DATA]	= ELFDATA2LSB;
     h.ehdr.e_ident[EI_VERSION]	= EV_CURRENT;
     h.ehdr.e_type		= ET_EXEC;
-    h.ehdr.e_machine		= ELF_ARCH;
+    h.ehdr.e_machine		= EM_ALPHA;
     h.ehdr.e_version		= EV_CURRENT;
     h.ehdr.e_entry		= 0xfffffc0000310000;
     h.ehdr.e_phnum		= 1;
