@@ -1,0 +1,11 @@
+*.a
+*.o
+aboot
+bootlx
+sdisklabel/sdisklabel
+sdisklabel/swriteboot
+tools/abootconf
+tools/e2writeboot
+tools/elfencap
+tools/isomarkboot
+tools/objstrip
