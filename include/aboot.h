@@ -42,6 +42,8 @@ extern unsigned long	switch_to_osf_pal (unsigned long nr,
 					   unsigned long *kstk);
 extern int		uncompress_kernel (int fd);
 extern int		vsprintf (char *, const char *, va_list);
+unsigned long		simple_strtoul(const char *cp, char **endp,
+				       unsigned int base);
 extern void		run_kernel (unsigned long entry, unsigned long stack)
 			__attribute__((noreturn));
 
