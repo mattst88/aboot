@@ -205,7 +205,6 @@ static void ext2_iput(struct ext2_inode *ip)
  */
 static int ext2_blkno(struct ext2_inode *ip, int blkoff)
 {
-	unsigned int *lp;
 	unsigned int *ilp;
 	unsigned int *dlp;
 	int blkno;
@@ -215,7 +214,6 @@ static int ext2_blkno(struct ext2_inode *ip, int blkoff)
 
 	ilp = (unsigned int *)iblkbuf;
 	dlp = (unsigned int *)diblkbuf;
-	lp = (unsigned int *)blkbuf;
 
 	/* If it's a direct block, it's easy! */
 	if (blkoff <= directlim) {
