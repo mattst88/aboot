@@ -1,5 +1,3 @@
-#include <alloca.h>
-
 #include <asm/console.h>
 #include "hwrpb.h"
 #include "system.h"
@@ -79,7 +77,7 @@ cons_getenv(long index, char *envval, long maxlen)
 	 * allocated on the stack (which guaranteed to by 8 byte
 	 * aligned).
 	 */
-	char * tmp = alloca(maxlen);
+	char tmp[maxlen];
 	long len;
 
 	len = dispatch(CCB_GET_ENV, index, tmp, maxlen - 1);

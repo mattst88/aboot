@@ -24,7 +24,6 @@
 #include "system.h"
 
 #include <elf.h>
-#include <alloca.h>
 #include <errno.h>
 
 #include "aboot.h"
