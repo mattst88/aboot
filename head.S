@@ -19,8 +19,7 @@ __start:
 	.quad	0,0,0,0,0,0,0,0
 1:	br	$27,2f
 2:	ldgp	$29,0($27)
-	lda	$27,main_
-	jsr	$26,($27),main_
+	bsr     $26,main_       !samegp
 	call_pal PAL_halt
 	.end __start
 

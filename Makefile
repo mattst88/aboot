@@ -32,14 +32,14 @@ export
 #
 LOADADDR	= 20000000
 
-ABOOT_LDFLAGS = -static -N -Taboot.lds
+ABOOT_LDFLAGS = -static -N -Taboot.lds --relax
 
 ifeq ($(TESTING),)
 override CPPFLAGS	+= $(CFGDEFS) -U_FORTIFY_SOURCE -Iinclude
-override CFLAGS		+= $(CPPFLAGS) -Os -Wall -ffreestanding -mno-fp-regs -ffixed-8
+override CFLAGS		+= $(CPPFLAGS) -Os -Wall -ffreestanding -mno-fp-regs -msmall-data -msmall-text
 else
 override CPPFLAGS	+= -DTESTING $(CFGDEFS) -U_FORTIFY_SOURCE -Iinclude
-override CFLAGS		+= $(CPPFLAGS) -O -g3 -Wall -ffixed-8
+override CFLAGS		+= $(CPPFLAGS) -O -g3 -Wall
 endif
 
 override ASFLAGS	+= $(CPPFLAGS)
