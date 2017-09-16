@@ -472,7 +472,13 @@ ufs_fstat(int fd, struct stat* buf)
 }
 
 struct bootfs ufs = {
-	FS_BSDFFS, 0,
-	ufs_mount,
-	ufs_open,  ufs_bread,  ufs_close, ufs_readdir, ufs_fstat
+	.fs_type = FS_BSDFFS,
+	.blocksize = 0,
+
+	.mount   = ufs_mount,
+	.open    = ufs_open,
+	.bread   = ufs_bread,
+	.close   = ufs_close,
+	.readdir = ufs_readdir,
+	.fstat   = ufs_fstat,
 };

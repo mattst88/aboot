@@ -14,17 +14,6 @@
 
 #define BLOCKSIZE (16*SECT_SIZE)
 
-static int dummy_mount(long cons_dev, long p_offset, long quiet);
-static int dummy_bread(int fd, long blkno, long nblks, char *buffer);
-static int dummy_open(const char *filename);
-static void dummy_close(int fd);
-
-struct bootfs dummyfs = {
-	0, BLOCKSIZE,
-	dummy_mount,
-	dummy_open,  dummy_bread,  dummy_close
-};
-
 static long dev = -1;
 
 
@@ -78,3 +67,13 @@ static int dummy_open(const char *filename)
 static void dummy_close(int fd)
 {
 }
+
+struct bootfs dummyfs = {
+	.fs_type = 0,
+	.blocksize = BLOCKSIZE,
+
+	.mount = dummy_mount,
+	.open  = dummy_open,
+	.bread = dummy_bread,
+	.close = dummy_close,
+};

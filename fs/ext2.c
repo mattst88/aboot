@@ -596,10 +596,14 @@ static void ext2_close(int fd)
 		ext2_iput(&inode_table[fd].inode);
 }
 
-
 struct bootfs ext2fs = {
-	FS_EXT2, 0,
-	ext2_mount,
-	ext2_open,  ext2_bread,  ext2_close,
-	ext2_readdir, ext2_fstat
+	.fs_type = FS_EXT2,
+	.blocksize = 0,
+
+	.mount   = ext2_mount,
+	.open    = ext2_open,
+	.bread   = ext2_bread,
+	.close   = ext2_close,
+	.readdir = ext2_readdir,
+	.fstat   = ext2_fstat,
 };

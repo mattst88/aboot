@@ -49,12 +49,13 @@ iso_readdir(int fd, int rewind)
 }
 
 const struct bootfs iso = {
-  -1,	/* isofs is not partitioned */
-  1024,	/* block size */
-  iso_mount,
-  iso_open,
-  iso_bread,
-  iso_close,
-  iso_readdir,
-  iso_fstat
+	.fs_type = -1, /* isofs is not partitioned */
+	.blocksize = 1024,
+
+	.mount   = iso_mount,
+	.open    = iso_open,
+	.bread   = iso_bread,
+	.close   = iso_close,
+	.readdir = iso_readdir,
+	.fstat   = iso_fstat,
 };

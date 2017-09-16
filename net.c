@@ -61,13 +61,15 @@ net_bread (int fd, long blkno, long nblks, char * buf)
 
 
 struct bootfs netfs = {
-	-1, 512,
-	(int (*)(long, long, long))	dang,	/* mount */
-	(int (*)(const char *))		dang,	/* open */
-	net_bread,				/* bread */
-	(void (*)(int fd))		dang,	/* close */
-	(const char* (*)(int, int))	dang,	/* readdir */
-	(int (*)(int, struct stat*))	dang,	/* fstat */
+	.fs_type = -1,
+	.blocksize = 512,
+
+	.mount   = (int (*)(long, long, long))	dang,
+	.open    = (int (*)(const char *))	dang,
+	.bread   = net_bread,
+	.close   = (void (*)(int fd))		dang,
+	.readdir = (const char* (*)(int, int))	dang,
+	.fstat   = (int (*)(int, struct stat*))	dang,
 };
 
 long
