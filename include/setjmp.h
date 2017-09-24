@@ -58,8 +58,8 @@
 
 typedef long	jmp_buf[JBLEN];
 
-extern void	_longjmp (jmp_buf, int);
-extern int	_setjmp (jmp_buf);
+void	_longjmp(jmp_buf, int);
+int	_setjmp(jmp_buf);
 
 #endif /* LANGUAGE_ASSEMBLY */
 #endif /* _setjmp_h */

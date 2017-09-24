@@ -10,8 +10,8 @@
 #include "gzip.h"
 #define slide window
 
-extern void *malloc(size_t size);
-extern void free(void *ptr);
+void *malloc(size_t size);
+void free(void *ptr);
 
 #if 0
 #define DEBG(x)		{register long sp asm("30"); \

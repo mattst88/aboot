@@ -3,7 +3,7 @@
 
 extern long cons_dev;		/* console device */
 
-extern long dispatch(long proc, ...);
+long dispatch(long proc, ...);
 
 #ifdef TESTING
 #define STRINGIFY(sym) #sym
@@ -17,16 +17,16 @@ extern long dispatch(long proc, ...);
 #define cons_open_console()
 #define cons_close_console()
 #else
-extern void cons_init (void);
-extern long cons_getenv (long index, char *envval, long maxlen);
-extern long cons_puts (const char *str, long len);
-extern long cons_open (const char *devname);
-extern long cons_close (long dev);
-extern long cons_read (long dev, void *buf, long count, long offset);
-extern void cons_putchar(char c);
-extern int cons_getchar(void);
-extern void cons_open_console(void);
-extern void cons_close_console(void);
+void cons_init(void);
+long cons_getenv(long index, char *envval, long maxlen);
+long cons_puts(const char *str, long len);
+long cons_open(const char *devname);
+long cons_close(long dev);
+long cons_read(long dev, void *buf, long count, long offset);
+void cons_putchar(char c);
+int cons_getchar(void);
+void cons_open_console(void);
+void cons_close_console(void);
 #endif
 
 /* this isn't in the kernel for some reason */

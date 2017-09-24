@@ -129,7 +129,7 @@ struct el_common_EV6_mcheck {
 	unsigned long PCTX;
 };
 
-extern void halt(void) __attribute__((noreturn));
+void halt(void) __attribute__((noreturn));
 #define __halt() __asm__ __volatile__ ("call_pal %0 #halt" : : "i" (PAL_halt))
 
 #define switch_to(P,N,L)						 \
@@ -139,7 +139,7 @@ extern void halt(void) __attribute__((noreturn));
   } while (0)
 
 struct task_struct;
-extern struct task_struct *alpha_switch_to(unsigned long, struct task_struct*);
+struct task_struct *alpha_switch_to(unsigned long, struct task_struct *);
 
 /*
  * On SMP systems, when the scheduler does migration-cost autodetection,

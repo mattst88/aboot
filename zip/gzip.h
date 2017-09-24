@@ -81,16 +81,16 @@ extern unsigned outcnt; /* bytes in output buffer */
 #define LG(p) ((unsigned long)(SH(p)) | ((unsigned long)(SH((p)+2)) << 16))
 
 /* in unzip.c */
-extern void unzip (int in, int out);
+void unzip(int in, int out);
 
 /* in misc.c: */
-extern unsigned long updcrc (unsigned char *s, unsigned n);
-extern void clear_bufs (void);
-extern int  fill_inbuf (void);
-extern void flush_window (void);
-extern void unzip_error (char *m);
+unsigned long updcrc(unsigned char *s, unsigned n);
+void clear_bufs(void);
+int  fill_inbuf(void);
+void flush_window(void);
+void unzip_error(char *m);
 
 /* in inflate.c */
-extern int inflate (void);
+int inflate(void);
 
 #endif /* GZIP_H */
