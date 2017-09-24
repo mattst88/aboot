@@ -6,7 +6,7 @@
 struct bootfs {
 	int	fs_type;
 	int	blocksize;
-	
+
 	int	(*mount)(long dev, long partition_start, long quiet);
 
 	int	(*open)(const char *filename);

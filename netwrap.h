@@ -1,8 +1,8 @@
 struct header {
 	int header_size;
 	int kern_size;
-	int ird_size; 
-	char boot_arg[200]; 
+	int ird_size;
+	char boot_arg[200];
 } ;
 
 unsigned long align_pagesize(unsigned long v)

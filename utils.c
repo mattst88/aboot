@@ -61,7 +61,7 @@ struct pcb_struct *find_pa(unsigned long *vptb, struct pcb_struct *pcb)
 	result <<= 13;
 	result |= address & 0x1fff;
 	return (struct pcb_struct *) result;
-}	
+}
 
 /*
  * This function moves into OSF/1 pal-code, and has a temporary
@@ -146,14 +146,14 @@ int check_memory(unsigned long start, unsigned long size)
 	int i;
 
 	/*
-	 * Get the physical address start. 
+	 * Get the physical address start.
 	 * If 43-bit superpage is being used (VA<63:41> = 0x7ffffe)
 	 * then the "correct" translation across all implementations is to
 	 * sign extend the VA from bit 40. Othewise, assume it's already a
 	 * physical address.
 	 */
 	phys_start = start;
-	if (((long)phys_start >> 41) == -2) 
+	if (((long)phys_start >> 41) == -2)
 		phys_start = (long)((start) << (64-41)) >> (64-41);
 	start_pfn = phys_start >> PAGE_SHIFT;
 	end_pfn = (phys_start + size - 1) >> PAGE_SHIFT;
@@ -161,13 +161,13 @@ int check_memory(unsigned long start, unsigned long size)
 	memdesc = (struct memdesc_struct *)
 	    (INIT_HWRPB->mddt_offset + (unsigned long) INIT_HWRPB);
 	for (cluster = memdesc->cluster, i = 0;
-	     i < memdesc->numclusters; 
+	     i < memdesc->numclusters;
 	     i++, cluster++) {
 		if ((cluster->start_pfn > end_pfn) ||
 		    ((cluster->start_pfn + cluster->numpages) <= start_pfn))
 			continue;	/* no overlap */
 
-		/* 
+		/*
 		 * This cluster overlaps the memory we're checking, check
 		 * the usage:
 		 * 	bit 0 is console/PAL reserved
@@ -180,7 +180,7 @@ int check_memory(unsigned long start, unsigned long size)
 		/*
 		 * It's not reserved, take it out of what we're checking
 		 */
-		if (cluster->start_pfn <= end_pfn) 
+		if (cluster->start_pfn <= end_pfn)
 			end_pfn = cluster->start_pfn - 1;
 		if ((cluster->start_pfn + cluster->numpages) > start_pfn)
 			start_pfn = cluster->start_pfn + cluster->numpages;

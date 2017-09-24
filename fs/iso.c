@@ -1,4 +1,4 @@
-/* 
+/*
  * This code is based on the ISO filesystem support in MILO (by
  * Dave Rusling).
  *
@@ -29,9 +29,9 @@ iso_dev_read (void * buf, long offset, long size)
 static int
 iso_mount (long cons_dev, long p_offset, long quiet)
 {
-#ifdef DEBUG_ISO 
+#ifdef DEBUG_ISO
 	printf("iso_mount() called\n");
-#endif	
+#endif
 	cd_device = cons_dev;
 	/*
 	 * Read the super block (this determines the file system type
@@ -43,7 +43,7 @@ iso_mount (long cons_dev, long p_offset, long quiet)
 static const char *
 iso_readdir(int fd, int rewind)
 {
-	return iso_readdir_i(fd,rewind); 
+	return iso_readdir_i(fd,rewind);
 }
 
 const struct bootfs iso = {

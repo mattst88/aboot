@@ -73,7 +73,7 @@ typedef struct oldboot_t {
 	unsigned char serial[4];       	/* 39 serial number */
 	char label[11];			/* 43 disk label */
 	char fat_type[8];		/* 54 FAT type */
-			
+
 	unsigned char res_2m;		/* 62 reserved by 2M */
 	unsigned char CheckSum;		/* 63 2M checksum (not used) */
 	unsigned char fmt_2mf;		/* 64 2MF format version */
@@ -115,7 +115,7 @@ extern struct OldDos_t {
 	unsigned int tracks;
 	unsigned int sectors;
 	unsigned int heads;
-	
+
 	unsigned int dir_len;
 	unsigned int cluster_size;
 	unsigned int fat_len;

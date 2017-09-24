@@ -92,7 +92,7 @@ load_raw (long dev)
 		dest = malloc(chunks[i].size);
 #else
 		dest = (char *) chunks[i].addr;
-#endif		      
+#endif
 
 		nread = cons_read(dev, dest, chunks[i].size,
 				  chunks[i].offset + ksect * SECT_SIZE);
@@ -125,7 +125,7 @@ load_uncompressed (int fd)
 #ifdef DEBUG
 	{
 		int i,j,c;
-	
+
 		for(i = 0; i < 16; i++) {
 			for (j = 0; j < 16; j++)
 				printf("%02X ", buf[j+16*i]);
@@ -154,7 +154,7 @@ load_uncompressed (int fd)
 		dest = malloc(nblocks * bfs->blocksize);
 #else
 		dest = (char *) chunks[i].addr;
-#endif		      
+#endif
 
 		nread = (*bfs->bread)(fd, chunks[i].offset / bfs->blocksize,
 				      nblocks, dest);
@@ -359,7 +359,7 @@ list_directory (const struct bootfs *fs, char *dir)
 		printf("%s: directory not found\n", dir);
 		return;
 	}
-	
+
 	while ((ent = (*fs->readdir)(fd, !rewind++))) {
 		printf("%s\n", ent);
 	}
@@ -545,7 +545,7 @@ get_aboot_options (long dev)
 		printf("partition:preset = %ld:%c\n", config_file_partition,
 		       preset);
 #endif
-	} else if (kernel_args[0] 
+	} else if (kernel_args[0]
 		   && (kernel_args[1] == '\0' || kernel_args[1] == ' '))  {
 		/* Single character option, for Jensen and friends -
                    this is either a preconfigured entry in
@@ -596,7 +596,7 @@ get_aboot_options (long dev)
 				preset = 0;
 				continue;
 			}
-			
+
 			/* Otherwise, clear out kernel_args and prompt the user */
 			kernel_args[0] = 0;
 			if (first) {
@@ -730,7 +730,7 @@ get_aboot_options (long dev)
 			if (strncmp(p, "initrd=", 7) == 0)
 				break;
 		} while (*p++);
-		
+
 		if (*p) {
 			char *a = p + 7; /* argument */
 			char *e = strchr (a, ' ');

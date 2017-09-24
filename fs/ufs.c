@@ -1,25 +1,25 @@
-/* 
+/*
  * Mach Operating System
  * Copyright (c) 1993 Carnegie Mellon University
  * All Rights Reserved.
- * 
+ *
  * Permission to use, copy, modify and distribute this software and its
  * documentation is hereby granted, provided that both the copyright
  * notice and this permission notice appear in all copies of the
  * software, derivative works or modified versions, and any portions
  * thereof, and that both notices appear in supporting documentation.
- * 
+ *
  * CARNEGIE MELLON ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS"
  * CONDITION.  CARNEGIE MELLON DISCLAIMS ANY LIABILITY OF ANY KIND FOR
  * ANY DAMAGES WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
- * 
+ *
  * Carnegie Mellon requests users of this software to return to
- * 
+ *
  *  Software Distribution Coordinator  or  Software.Distribution@CS.CMU.EDU
  *  School of Computer Science
  *  Carnegie Mellon University
  *  Pittsburgh PA 15213-3890
- * 
+ *
  * any improvements or extensions that they make and grant Carnegie Mellon
  * the rights to redistribute these changes.
  */
@@ -41,7 +41,7 @@
  * Revision 2.2  93/02/05  08:01:36  danner
  * 	Adapted for alpha.
  * 	[93/02/04            af]
- * 
+ *
  */
 /*
  *	File: ufs.c
@@ -191,7 +191,7 @@ static daddr_t block_map(struct file *fp, daddr_t file_block)
 			fp->f_blk[level] = malloc(fs->fs_bsize);
 			if (cons_read(dev, fp->f_blk[level], fs->fs_bsize,
 				      offset)
-			    != fs->fs_bsize) 
+			    != fs->fs_bsize)
 			{
 				printf("ufs_block_map: read error\n");
 				return -1;
@@ -340,7 +340,7 @@ static int ufs_open(const char *path)
 	int nlinks = 0;
 	struct file *fp;
 	static char namebuf[MAXPATHLEN+1];
-	
+
 	if (!path || !*path) {
 		return -1;
 	}

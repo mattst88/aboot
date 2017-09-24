@@ -45,7 +45,7 @@ wrent:
 	.align 3
 	.globl wrkgp
 	.ent wrkgp
-wrkgp:	
+wrkgp:
 	.prologue 0
 	call_pal PAL_wrkgp
 	ret ($26)
@@ -54,7 +54,7 @@ wrkgp:
 	.align 3
 	.globl tbi
 	.ent tbi
-tbi:	
+tbi:
 	.prologue 0
         call_pal PAL_tbi
         ret     ($26)
@@ -114,7 +114,7 @@ __do_swppal:
 	.align 3
 	.globl dispatch
 	.ent dispatch
-dispatch:	
+dispatch:
 	.prologue 0
 	subq	$30,80,$30
 	stq	$26,0($30)
@@ -157,7 +157,7 @@ dispatch:
 	.align 3
 	.globl halt
 	.ent halt
-halt:	
+halt:
 	.prologue 0
 	call_pal PAL_halt
 	.end halt

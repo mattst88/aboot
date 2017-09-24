@@ -18,7 +18,7 @@ int read_configured_partition(int disk_fd, char* buf)
 {
   u_int64_t bootsize, bootsect, bootpart = 0;
   long *p = (long *) buf;
-  
+
   if(lseek(disk_fd,60*8,SEEK_SET)<0) {
     perror("lseek on disk");
     exit(1);
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
    extern int optind;
    extern char *optarg;
    char *bootfile=0, *device=0, *kernel=0;
-   
+
    while ((c=getopt(argc,argv,"f:c:v?"))!=EOF)
      switch(c)
      {
@@ -83,7 +83,7 @@ int main(int argc, char **argv)
        default:
          err=1;
          break;
-     }  
+     }
 
   if(optind<argc)
     device=argv[optind++];
@@ -91,14 +91,14 @@ int main(int argc, char **argv)
     bootfile=argv[optind++];
   if(optind<argc)
     kernel=argv[optind++];
-    
+
   if(!bootfile || !device || err)
   {
       fprintf(stderr, "Usage: %s [-f[1-8]] [-c[1-8]] [-v] disk bootfile [kernel]\n",
 	      argv[0]);
       exit(1);
    }
-  
+
    disk_fd=open(device,O_RDWR);
    file_fd=open(bootfile,O_RDONLY);
    if(disk_fd<0) {
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
       perror("open bootfile");
       exit(1);
    }
-   
+
    if(kernel)
    {
      kernel_fd=open(kernel,O_RDONLY);

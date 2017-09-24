@@ -31,7 +31,7 @@ cons_puts(const char *str, long len)
 			unsigned v_err   : 1;
 		} s;
 	} ccb_sts;
-	
+
 	for (remaining = len; remaining; remaining -= written) {
 		ccb_sts.l_sts = dispatch(CCB_PUTS, cons_dev, str, remaining);
 		if (!ccb_sts.s.v_err) {

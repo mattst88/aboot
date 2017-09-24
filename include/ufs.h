@@ -14,28 +14,28 @@
  * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
-/* 
+/*
  * Mach Operating System
  * Copyright (c) 1993 Carnegie Mellon University
  * All Rights Reserved.
- * 
+ *
  * Permission to use, copy, modify and distribute this software and its
  * documentation is hereby granted, provided that both the copyright
  * notice and this permission notice appear in all copies of the
  * software, derivative works or modified versions, and any portions
  * thereof, and that both notices appear in supporting documentation.
- * 
+ *
  * CARNEGIE MELLON ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS"
  * CONDITION.  CARNEGIE MELLON DISCLAIMS ANY LIABILITY OF ANY KIND FOR
  * ANY DAMAGES WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
- * 
+ *
  * Carnegie Mellon requests users of this software to return to
- * 
+ *
  *  Software Distribution Coordinator  or  Software.Distribution@CS.CMU.EDU
  *  School of Computer Science
  *  Carnegie Mellon University
  *  Pittsburgh PA 15213-3890
- * 
+ *
  * any improvements or extensions that they make and grant Carnegie Mellon
  * the rights to redistribute these changes.
  */
@@ -51,15 +51,15 @@
  * Revision 2.3  93/03/09  10:49:48  danner
  * 	Make damn sure we get sys/types.h from the right place.
  * 	[93/03/05            af]
- * 
+ *
  * Revision 2.2  93/02/05  08:01:43  danner
  * 	Adapted for alpha.
  * 	[93/02/04            af]
- * 
+ *
  * Revision 2.2  90/08/27  21:45:05  dbg
  * 	Created.
  * 	[90/07/16            dbg]
- * 
+ *
  */
 
 /*
@@ -144,7 +144,7 @@
 
 /*
  * Addresses stored in inodes are capable of addressing fragments
- * of `blocks'. File system blocks of at most size MAXBSIZE can 
+ * of `blocks'. File system blocks of at most size MAXBSIZE can
  * be optionally broken into 2, 4, or 8 pieces, each of which is
  * addressable; these pieces may be DEV_BSIZE, or some multiple of
  * a DEV_BSIZE unit.
@@ -182,7 +182,7 @@
 
 /*
  * The path name on which the file system is mounted is maintained
- * in fs_fsmnt. MAXMNTLEN defines the amount of space allocated in 
+ * in fs_fsmnt. MAXMNTLEN defines the amount of space allocated in
  * the super block for this name.
  * The limit on the amount of summary information per file system
  * is defined by MAXCSBUFS. It is currently parameterized for a

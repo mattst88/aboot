@@ -66,7 +66,7 @@ static int ext2_mount(long cons_dev, long p_offset, long quiet)
 	}
 	/* clear the root inode pointer (very important!) */
 	root_inode = NULL;
-	
+
 	/* read in the first superblock */
 	sb_offset = sb_block * EXT2_MIN_BLOCK_SIZE;
 	if (cons_read(dev, &sb, sizeof(sb), partition_offset + sb_offset)
@@ -75,7 +75,7 @@ static int ext2_mount(long cons_dev, long p_offset, long quiet)
 		printf("ext2 sb read failed\n");
 		return -1;
 	}
-	
+
 	if (sb.s_magic != EXT2_SUPER_MAGIC) {
 		if (!quiet) {
 			printf("ext2_init: bad magic 0x%x\n", sb.s_magic);
@@ -154,13 +154,13 @@ static struct ext2_inode *ext2_iget(int ino)
 #ifdef DEBUG_EXT2
 	printf("ext2_iget: reading %ld bytes at offset %ld "
 	       "(%ld + (%d * %d) + ((%d) %% %d) * %d) "
-	       "(inode %d -> table %d)\n", 
+	       "(inode %d -> table %d)\n",
 	       sizeof(struct ext2_inode), offset, partition_offset,
 	       gds[group].bg_inode_table, ext2fs.blocksize,
 	       ino - 1, EXT2_INODES_PER_GROUP(&sb), EXT2_INODE_SIZE(&sb),
 	       ino, (int) (itp - inode_table));
 #endif
-	if (cons_read(dev, ip, sizeof(struct ext2_inode), offset) 
+	if (cons_read(dev, ip, sizeof(struct ext2_inode), offset)
 	    != sizeof(struct ext2_inode))
 	{
 		printf("ext2_iget: read error\n");
@@ -274,7 +274,7 @@ static int ext2_blkno(struct ext2_inode *ip, int blkoff)
 		}
 
 		/* Read the indirect block */
-    
+
 		if (cached_iblkno != iblkno) {
 			offset = partition_offset + (long) iblkno * (long) ext2fs.blocksize;
 			if (cons_read(dev, iblkbuf, ext2fs.blocksize, offset)
@@ -493,7 +493,7 @@ static struct ext2_inode *ext2_namei(const char *name)
 			printf("ext2_namei: looping\n");
 #endif
 		}
-	
+
 #ifdef DEBUG_EXT2
 		printf("ext2_namei: next_ino = %d\n", next_ino);
 #endif
@@ -560,7 +560,7 @@ static const char * ext2_readdir(int fd, int rewind)
 	if (ent) {
 		ent->name[ent->name_len] = '\0';
 		return ent->name;
-	} else { 
+	} else {
 		return NULL;
 	}
 }

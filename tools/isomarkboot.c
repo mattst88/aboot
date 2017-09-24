@@ -123,7 +123,7 @@ main (int argc, char ** argv)
 		iso_fstat(aboot_fd, &buf);
 		aboot_size = buf.st_size;
 	}
-		
+
 	aboot_pos = iso_map (aboot_fd, 0);
 
 	printf("%s: %s is at offset %ld and is %lu bytes long\n",
@@ -190,7 +190,7 @@ main (int argc, char ** argv)
 		       prog_name, argv[3], rootbin_pos, buf.st_size);
 	}
 
-        
+
 	if (lseek(disk, 16*2048, SEEK_SET) != 16*2048) {
 		perror("lseek");
 		return -1;
@@ -218,13 +218,13 @@ main (int argc, char ** argv)
             exit(1);
         }
         sprintf(root_start,"ROOT START=%ld        ",rootbin_pos/2048);
-        printf("writing %s in application_data of first volume descriptor\n", root_start); 
+        printf("writing %s in application_data of first volume descriptor\n", root_start);
         memcpy(vol_desc.application_data,root_start,strlen(root_start));
 	if (lseek(disk, 16*2048, SEEK_SET) != 16*2048) {
 		perror("lseek");
 		return -1;
 	}
-        
+
 	nbytes = write(disk, &vol_desc, sizeof(vol_desc));
 	if (nbytes != sizeof(vol_desc)) {
           if ((long) nbytes < 0) {
@@ -234,6 +234,6 @@ main (int argc, char ** argv)
 		}
 		exit(1);
 	}
-        
+
 	return 0;
 }

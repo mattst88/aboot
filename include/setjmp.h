@@ -1,10 +1,10 @@
 /*
  * @COPYRIGHT@
- * 
+ *
  * x-kernel v3.2
- * 
+ *
  * Copyright (c) 1993,1991,1990  Arizona Board of Regents
- * 
+ *
  * @COPYRIGHT@
  *
  * $RCSfile: setjmp.h,v $

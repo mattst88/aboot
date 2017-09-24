@@ -95,7 +95,7 @@ bread(int blkno, void * blkbuf)
     /* If the buffer is dirty, we need to write it out... */
     if(buflist[lowcount_buf].dirty) {
 #ifdef BIO_DEBUG
-	printf("bread: recycling dirty buffer %d for block %d\n", 
+	printf("bread: recycling dirty buffer %d for block %d\n",
 			lowcount_buf, buflist[lowcount_buf].blkno);
 #endif
 	lseek(bio_fd, buflist[lowcount_buf].blkno * bio_blocksize, 0);
@@ -156,7 +156,7 @@ bwrite(int blkno, void * blkbuf)
     /* If the buffer is dirty, we need to write it out... */
     if(buflist[lowcount_buf].dirty) {
 #ifdef BIO_DEBUG
-	printf("bwrite: recycling dirty buffer %d for block %d\n", 
+	printf("bwrite: recycling dirty buffer %d for block %d\n",
 			lowcount_buf, buflist[lowcount_buf].blkno);
 #endif
 	lseek(bio_fd, buflist[lowcount_buf].blkno * bio_blocksize, 0);

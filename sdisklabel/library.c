@@ -70,7 +70,7 @@ int overlaplabel(struct disklabel *d,int offset,int endplace,unsigned force) {
       if((force & (1U << x)) == 0) {
 	 int part_offset=d->d_partitions[x].p_offset;
 	 int part_end=d->d_partitions[x].p_offset+d->d_partitions[x].p_size;
-	 if(part_end>0 && does_overlap(part_offset,part_end,offset,endplace)) 
+	 if(part_end>0 && does_overlap(part_offset,part_end,offset,endplace))
 	    return x;
       }
    }

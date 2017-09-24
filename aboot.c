@@ -74,7 +74,7 @@ is_loadable_elf(const unsigned char *buf, long blocksize)
 	int i, j;
 
 	elf  = (Elf64_Ehdr *) buf;
-	
+
 	if (elf->e_ident[0] != 0x7f
 	    || elf->e_ident[1] != 'E'
 	    || elf->e_ident[2] != 'L'

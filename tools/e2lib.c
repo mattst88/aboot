@@ -20,9 +20,9 @@
 #include <ext2fs/ext2_fs.h>
 
 
-#define		MAX_OPEN_FILES		8 
+#define		MAX_OPEN_FILES		8
 
-int				fd = -1; 
+int				fd = -1;
 struct ext2_super_block		sb;
 struct ext2_group_desc		*gds;
 int				ngroups = 0;
@@ -114,7 +114,7 @@ ext2_swap_inode (struct ext2_inode *ip)
 
 
 /* Initialize an ext2 filesystem; this is sort-of the same idea as
- * "mounting" it.  Read in the relevant control structures and 
+ * "mounting" it.  Read in the relevant control structures and
  * make them available to the user.  Returns 0 if successful, -1 on
  * failure.
  */
@@ -130,7 +130,7 @@ ext2_init (char * name, int access)
     }
 
     if((access != O_RDONLY) && (access != O_RDWR)) {
-	fprintf(stderr, 
+	fprintf(stderr,
 		"ext2_init: Access must be O_RDONLY or O_RDWR, not %d\n",
 		access);
 	return(-1);
@@ -169,7 +169,7 @@ ext2_init (char * name, int access)
     }
 
     if(sb.s_first_data_block != 1) {
-	fprintf(stderr, 
+	fprintf(stderr,
 	    "Brain-damaged utils can't deal with a filesystem\nwhere s_first_data_block != 1.\nRe-initialize the filesystem\n");
 	close(fd);
 	return(-1);
@@ -212,13 +212,13 @@ ext2_init (char * name, int access)
 
     if(verbose) {
 	printf("Initialized filesystem %s\n", filename);
-	printf("  %d blocks (%dKb), %d free (%dKb)\n", 
+	printf("  %d blocks (%dKb), %d free (%dKb)\n",
 		sb.s_blocks_count, (sb.s_blocks_count * blocksize)/1024,
-		sb.s_free_blocks_count, 
+		sb.s_free_blocks_count,
 		(sb.s_free_blocks_count * blocksize)/1024);
-	printf("  %d inodes,  %d free\n", 
+	printf("  %d inodes,  %d free\n",
 		sb.s_inodes_count, sb.s_free_inodes_count);
-	printf("  %d groups, %d blocks/group\n", 
+	printf("  %d groups, %d blocks/group\n",
 			ngroups, sb.s_blocks_per_group);
     }
 
@@ -299,7 +299,7 @@ ext2_close (void)
     }
 }
 
-	
+
 
 /* Read the specified inode from the disk and return it to the user.
  * Returns NULL if the inode can't be read...
@@ -453,7 +453,7 @@ clear_bit (unsigned int *addr, int bitno)
 	addr[bitno/BITS_PER_LONG] = bswap_32(lwval);
     }
     else {
-        addr[bitno / BITS_PER_LONG] &= 
+        addr[bitno / BITS_PER_LONG] &=
 			~((unsigned int)(1 << (bitno % BITS_PER_LONG)));
     }
 }
@@ -479,7 +479,7 @@ ext2_balloc (void)
 	    bread(gds[i].bg_block_bitmap, blockmap);
 	    blk = find_first_zero_bit(blockmap, sb.s_blocks_per_group);
 	    if (blk == 0 || blk == sb.s_blocks_per_group) {
-		fprintf(stderr, 
+		fprintf(stderr,
 			"group %d has %d blocks free but none in bitmap?\n",
 			i, gds[i].bg_free_blocks_count);
 		continue;
@@ -574,7 +574,7 @@ ext2_contiguous_balloc (int nblocks)
 		    break;
 	        }
 
-	        for(lastlong = firstlong; lastlong < longs_per_group; 
+	        for(lastlong = firstlong; lastlong < longs_per_group;
 							lastlong++) {
 		    if(blockmap[lastlong] != 0) break;
 	        }
@@ -584,7 +584,7 @@ ext2_contiguous_balloc (int nblocks)
 		}
 	    } while((lastlong-firstlong) < longs_needed);
 
-	    /* If we got all the way through the block map, 
+	    /* If we got all the way through the block map,
 	     * try another group.
 	     */
 	    if(firstlong == longs_per_group) {
@@ -599,7 +599,7 @@ ext2_contiguous_balloc (int nblocks)
 	    for(j = 0; j < nblocks; j++) {
 		set_bit(blockmap, blk+j);
 	    }
-	  
+
 	    bwrite(gds[i].bg_block_bitmap, blockmap);
 	    gds[i].bg_free_blocks_count -= nblocks;
 	    sb.s_free_blocks_count -= nblocks;
@@ -618,12 +618,12 @@ ext2_contiguous_balloc (int nblocks)
     }
     return(0);
 }
-    
 
-/* Pre-allocate contiguous blocks to the specified inode.  Note that the 
+
+/* Pre-allocate contiguous blocks to the specified inode.  Note that the
  * DATA blocks must be contiguous; indirect blocks can come from anywhere.
  * This is for the benefit of the bootstrap loader.
- * If successful, this routine returns the block number of the first 
+ * If successful, this routine returns the block number of the first
  * data block of the file.  Otherwise, it returns -1.
  */
 int
@@ -639,7 +639,7 @@ ext2_fill_contiguous (struct ext2_inode * ip, int nblocks)
      * here.  We shouldn't need more than this anyway!
      */
     if(nblocks > ind1lim) {
-	fprintf(stderr, 
+	fprintf(stderr,
 	  "ext2_fill_contiguous: file size too big (%d); cannot exceed %d\n",
 	  nblocks, ind1lim);
 	return(-1);
@@ -649,7 +649,7 @@ ext2_fill_contiguous (struct ext2_inode * ip, int nblocks)
     firstblock = ext2_contiguous_balloc(nblocks);
 
     if(firstblock == 0) {
-	fprintf(stderr, 
+	fprintf(stderr,
           "ext2_fill_contiguous: Cannot allocate %d contiguous blocks\n", nblocks);
 	return(-1);
     }
@@ -729,7 +729,7 @@ ext2_ialloc (void)
 
 	    ino = find_first_zero_bit(inodemap, sb.s_inodes_per_group);
 	    if (ino == 0 || (unsigned) ino == sb.s_inodes_per_group) {
-		fprintf(stderr, 
+		fprintf(stderr,
 			"group %d has %d inodes free but none in bitmap?\n",
 			i, gds[i].bg_free_inodes_count);
 		continue;
@@ -831,7 +831,7 @@ ext2_blkno (struct ext2_inode *ip, int blkoff, int allocate)
 
 	/* Read the indirect block */
 	bread(iblkno, blkbuf);
-	
+
 	if(big_endian) {
 	    blkno = bswap_32(lp[blkoff-(directlim+1)]);
 	}
@@ -915,11 +915,11 @@ ext2_blkno (struct ext2_inode *ip, int blkoff, int allocate)
 	if(iblkno == 0) {
 	    return(0);
 	}
-	    
+
 
 	/* Read the indirect block */
 	bread(iblkno, blkbuf);
-	
+
 	/* Find the block itself. */
 	blkno = lp[(blkoff-(ind1lim+1)) % ptrs_per_blk];
 	if(big_endian) {
@@ -1012,7 +1012,7 @@ ext2_seek_and_read (struct ext2_inode *ip, int offset, char *buffer, int count)
     blkoffset = offset % blocksize;
 
     while(bytesleft > 0) {
-	iosize = ((blocksize-blkoffset) > bytesleft) ? 
+	iosize = ((blocksize-blkoffset) > bytesleft) ?
 				bytesleft : (blocksize-blkoffset);
 	if((blkoffset == 0) && (iosize == blocksize)) {
 	    ext2_bread(ip, blkno, bufptr);
@@ -1048,7 +1048,7 @@ ext2_seek_and_write (struct ext2_inode *ip, int offset, char *buffer, int count)
     blkoffset = offset % blocksize;
 
     while(bytesleft > 0) {
-	iosize = ((blocksize-blkoffset) > bytesleft) ? 
+	iosize = ((blocksize-blkoffset) > bytesleft) ?
 				bytesleft : (blocksize-blkoffset);
 	if((blkoffset == 0) && (iosize == blocksize)) {
 	    ext2_bwrite(ip, blkno, bufptr);
@@ -1139,7 +1139,7 @@ ext2_namei (char *name)
 	 * component string...
 	 */
 	dir_inode = ext2_iget(next_ino);
-	
+
 	component = strtok(NULL, "/");
     }
 
@@ -1150,7 +1150,7 @@ ext2_namei (char *name)
 }
 
 /* Create a new entry in the specified directory with the specified
- * name/inumber pair.  This routine ASSUMES that the specified 
+ * name/inumber pair.  This routine ASSUMES that the specified
  * entry does not already exist!  Therefore, we MUST use namei
  * first to try and find the entry...
  */
@@ -1191,8 +1191,8 @@ ext2_mknod (struct ext2_inode *dip, char * name, int ino)
 	    /* If this entry is in use, see if it has space at the end
 	     * to hold the new entry anyway...
 	     */
-	    if((dp_inode != 0) && 
-		((dp_reclen - EXT2_DIR_REC_LEN(dp_namelen)) 
+	    if((dp_inode != 0) &&
+		((dp_reclen - EXT2_DIR_REC_LEN(dp_namelen))
 					>= EXT2_DIR_REC_LEN(namelen))) {
 
 		new_reclen = dp_reclen - EXT2_DIR_REC_LEN(dp_namelen);
@@ -1205,7 +1205,7 @@ ext2_mknod (struct ext2_inode *dip, char * name, int ino)
 		    dp_reclen = EXT2_DIR_REC_LEN(dp->name_len);
 		}
 		dp->rec_len = big_endian ? bswap_16(dp_reclen) : dp_reclen;
-		
+
 		/* Point entry_dp to the end of this entry */
 		entry_dp = (struct ext2_dir_entry *)((char*)dp + dp_reclen);
 
@@ -1231,7 +1231,7 @@ ext2_mknod (struct ext2_inode *dip, char * name, int ino)
 
     /* By the time we get here, one of two things has happened:
      *
-     *	If entry_dp is non-NULL, then entry_dp points to the 
+     *	If entry_dp is non-NULL, then entry_dp points to the
      *  place in dirbuf where the entry lives, and diroffset
      *  is the directory offset of the beginning of dirbuf.
      *
@@ -1315,7 +1315,7 @@ ext2_remove_entry (char *name)
 			     */
 			    if(pdp) {
 				if(big_endian) {
-				    pdp->rec_len = 
+				    pdp->rec_len =
 					bswap_16(bswap_16(pdp->rec_len)+dp_reclen);
 				}
 				else {
@@ -1362,7 +1362,7 @@ ext2_remove_entry (char *name)
 	 * component string...
 	 */
 	dir_inode = ext2_iget(next_ino);
-	
+
 	component = next_component;
     }
 

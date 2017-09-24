@@ -2,9 +2,9 @@
  * inflate.c -- Not copyrighted 1992 by Mark Adler
  * version c10p1, 10 January 1993
  */
-/* 
+/*
  * Adapted for booting Linux by Hannu Savolainen 1993
- * based on gzip-1.0.3 
+ * based on gzip-1.0.3
  */
 
 #include "gzip.h"
@@ -339,7 +339,7 @@ struct huft *t;         /* table to free */
     q = (--p)->v.t;
     free(p);
     p = q;
-  } 
+  }
   return 0;
 }
 

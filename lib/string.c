@@ -10,7 +10,7 @@
  *
  * These are buggy as well..
  */
- 
+
 #include <stdlib.h>
 #include <sys/types.h>
 

@@ -107,7 +107,7 @@ main(int argc, char ** argv)
     memset(bsbuf, 0, bootstrap_size);
     read(infile, bsbuf, bootstrap_size);
     close(infile);
-    
+
     /* Get the inode for the file we want to create */
     ip = ext2_namei(namebuf);
     if(ip) {
@@ -195,7 +195,7 @@ main(int argc, char ** argv)
     /* At this point we have an inode for an empty regular file.
      * Fill it up!
      */
-    
+
     bs_start = ext2_fill_contiguous(ip, bootstrap_size/blocksize);
     if(bs_start <= 0) {
 	printf("Cannot allocate blocks for %s... goodbye!\n", argv[2]);
@@ -219,7 +219,7 @@ main(int argc, char ** argv)
     /* Prepare and write out a bootblock */
     memset(iobuf, 0, blocksize);
     bbp = (struct boot_block *)iobuf;
-    
+
     bbp->count = bootstrap_size / CONSOLE_BLOCK_SIZE;
     bbp->lbn   = (bs_start * blocksize) / CONSOLE_BLOCK_SIZE;
     bbp->flags = 0;

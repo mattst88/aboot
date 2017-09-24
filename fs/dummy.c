@@ -18,7 +18,7 @@ static long dev = -1;
 
 
 /*
- * Initialize 'filesystem' 
+ * Initialize 'filesystem'
  * Returns 0 if successful, -1 on failure.
  */
 static int
@@ -42,7 +42,7 @@ dummy_bread(int fd, long blkno, long nblks, char *buffer)
 		aboot_size &= ~(SECT_SIZE - 1);
 	}
 
-	if (cons_read(dev, buffer, nblks*BLOCKSIZE, 
+	if (cons_read(dev, buffer, nblks*BLOCKSIZE,
 		      BOOT_SECTOR*SECT_SIZE + blkno*BLOCKSIZE + aboot_size)
 	    != nblks*BLOCKSIZE)
 	{
@@ -54,7 +54,7 @@ dummy_bread(int fd, long blkno, long nblks, char *buffer)
 
 
 /*
- * Unix-like open routine.  Returns a small integer 
+ * Unix-like open routine.  Returns a small integer
  * (does not care what file, we say it's OK)
  */
 static int dummy_open(const char *filename)

@@ -71,7 +71,7 @@ set_disk_size (int fd)
 	unsigned long blocks;
 	unsigned int sectors_per_block;
 	int r1, r2;
-	
+
 	sectors_per_block = sector_size / 512;
 	heads = sectors = cylinders = blocks = 0;
 
@@ -84,12 +84,12 @@ set_disk_size (int fd)
 		sectors = hd.sectors;
 		cylinders = hd.cylinders;
 		if (heads * sectors * cylinders == 0) { r1 = -1; }
-		/* fdisk says: "never use hd.cylinders - it is truncated" 
+		/* fdisk says: "never use hd.cylinders - it is truncated"
 		   if BLKGETSIZE works we'll calculate our own value for
 		   cylinders in a little bit, but for now, use it anyway */
-		total_disk_size=(heads*sectors*cylinders); /* in sectors */ 
+		total_disk_size=(heads*sectors*cylinders); /* in sectors */
 	}
-	
+
 	r2 = ioctl(fd,BLKGETSIZE, &blocks);
 
 	if (r2) {
@@ -112,7 +112,7 @@ set_disk_size (int fd)
 		cylinders = heads = 1;
 		sectors = blocks / sectors_per_block;
 	}
-	fprintf(stderr,"%d heads, %d sectors, %d cylinders %dK total size\n", 
+	fprintf(stderr,"%d heads, %d sectors, %d cylinders %dK total size\n",
 		heads, sectors, cylinders, total_disk_size/2);
 }
 #endif
@@ -139,7 +139,7 @@ set_partition (int fd,struct disklabel *d,int num,int offset,int size,int fstype
 	x=overlaplabel(d,offset,endplace,1U<<num);
 	if(x!=-1)
 	  fprintf(stderr,"Warning: added partition %d overlaps with partition %d\n",num,x);
-	  
+
 	d->d_partitions[num].p_offset=offset;
 	d->d_partitions[num].p_size=size;
 	d->d_partitions[num].p_fstype=fstype;
