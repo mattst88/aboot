@@ -184,16 +184,6 @@ void * memset(void * s, int c, size_t count)
 	return s;
 }
 
-char * bcopy(const char * src, char * dest, int count)
-{
-	char *tmp = dest;
-
-	while (count--)
-		*tmp++ = *src++;
-
-	return dest;
-}
-
 void * memcpy(void * dest,const void *src,size_t count)
 {
 	char *tmp = (char *) dest, *s = (char *) src;
