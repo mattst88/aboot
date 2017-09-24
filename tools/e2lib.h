@@ -1,9 +1,6 @@
 #ifndef EXT2_LIB_H
 #define EXT2_LIB_H
 
-#include <fcntl.h>
-
-
 /* Definitions cribbed from ext2_fs.h, modified so's to be 64-bit clean
  * when cross-compiling on Alpha
  */
