@@ -224,19 +224,3 @@ int memcmp(const void * cs,const void * ct,size_t count)
 			break;
 	return res;
 }
-
-/*
- * find the first occurrence of byte 'c', or 1 past the area if none
- */
-void * memscan(void * addr, unsigned char c, size_t size)
-{
-	unsigned char * p = (unsigned char *) addr;
-
-	while (size) {
-		if (*p == c)
-			return (void *) p;
-		p++;
-		size--;
-	}
-  	return (void *) p;
-}
