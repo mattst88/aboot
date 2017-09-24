@@ -52,9 +52,9 @@ override ASFLAGS	+= $(CPPFLAGS)
 .c.o:
 	$(CC) $(CFLAGS) -c -o $*.o $<
 .S.s:
-	$(CC) $(ASFLAGS) -D__ASSEMBLY__ -traditional -E -o $*.o $<
+	$(CC) $(ASFLAGS) -D__ASSEMBLY__ -E -o $*.o $<
 .S.o:
-	$(CC) $(ASFLAGS) -D__ASSEMBLY__ -traditional -c -o $*.o $<
+	$(CC) $(ASFLAGS) -D__ASSEMBLY__ -c -o $*.o $<
 
 NET_OBJS = net.o
 DISK_OBJS = disk.o fs/ext2.o fs/ufs.o fs/dummy.o fs/iso.o

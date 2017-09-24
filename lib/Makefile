@@ -1,5 +1,5 @@
 override CPPFLAGS += -U_FORTIFY_SOURCE -I../include
-override ASFLAGS += $(CPPFLAGS) -D__ASSEMBLY__ -traditional
+override ASFLAGS += $(CPPFLAGS) -D__ASSEMBLY__
 
 ifeq ($(TESTING),)
 ifeq ($(FOREIGN),"yes")
