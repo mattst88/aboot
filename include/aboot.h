@@ -17,7 +17,7 @@ extern struct segment {
 } *chunks;
 extern int nchunks;
 
-extern struct bootfs *	bfs;
+extern const struct bootfs *	bfs;
 extern char *		dest_addr;
 extern long		bytes_to_copy;
 extern long		text_offset;

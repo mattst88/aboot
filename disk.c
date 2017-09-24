@@ -44,7 +44,7 @@ extern struct bootfs dummyfs;
 struct disklabel * label;
 int boot_part = -1;
 
-static struct bootfs *bootfs[] = {
+static const struct bootfs *bootfs[] = {
 	&ext2fs,
 	&iso,
 	&ufs
@@ -292,11 +292,11 @@ get_disklabel (long dev)
 }
 
 
-struct bootfs *
+const struct bootfs *
 mount_fs (long dev, int partition)
 {
 	struct d_partition * part;
-	struct bootfs * fs = 0;
+	const struct bootfs * fs = 0;
 	int i;
 
 #ifdef DEBUG
@@ -348,7 +348,7 @@ mount_fs (long dev, int partition)
 }
 
 void
-list_directory (struct bootfs *fs, char *dir)
+list_directory (const struct bootfs *fs, char *dir)
 {
 	int fd = (*fs->open)(dir);
 	/* yes, our readdir() is not exactly like the real one */
@@ -367,7 +367,7 @@ list_directory (struct bootfs *fs, char *dir)
 }
 
 int
-open_config_file(struct bootfs *fs)
+open_config_file(const struct bootfs *fs)
 {
 	static const char *configs[] = {
 		"/etc/aboot.conf",
@@ -387,7 +387,7 @@ open_config_file(struct bootfs *fs)
 }
 
 void
-print_config_file (struct bootfs *fs)
+print_config_file (const struct bootfs *fs)
 {
 	int fd, nread, blkno = 0;
 	char *buf;
@@ -412,7 +412,7 @@ print_config_file (struct bootfs *fs)
 
 
 int
-get_default_args (struct bootfs *fs, char *str, int num)
+get_default_args (const struct bootfs *fs, char *str, int num)
 {
 	int fd, nread, state, line, blkno = 0;
 	char *buf, *d, *p;
@@ -572,7 +572,7 @@ get_aboot_options (long dev)
 
 	if (preset || interactive) {
 		char buf[256], *p;
-		struct bootfs *fs = 0;
+		const struct bootfs *fs = 0;
 		static int first = 1;
 		int done = 0;
 
