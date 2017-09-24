@@ -47,4 +47,7 @@ unsigned long		simple_strtoul(const char *cp, char **endp,
 extern void		run_kernel (unsigned long entry, unsigned long stack)
 			__attribute__((noreturn));
 
+/* From disk.c */
+long load_kernel(void);
+
 #endif /* aboot_h */

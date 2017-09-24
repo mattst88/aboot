@@ -220,7 +220,6 @@ void unzip_error(char *x)
 
 int main()
 {
-	extern long load_kernel();
 	long result;
 
 	get_boot_args();
@@ -241,7 +240,6 @@ int main()
 void
 main_ (void)
 {
-	extern long load_kernel (void);
 	long i, result;
 
 	cons_init();
