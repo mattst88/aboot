@@ -16,8 +16,6 @@
 #include <utils.h>
 #endif
 
-extern const struct bootfs isofs;
-
 static long cd_device = -1;
 
 
