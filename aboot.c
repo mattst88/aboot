@@ -171,8 +171,6 @@ first_block (const unsigned char *buf, long blocksize)
 static void
 get_boot_args(void)
 {
-	long result;
-
 	/* get boot command line: */
 #ifdef TESTING
 	const char *e;
@@ -189,6 +187,8 @@ get_boot_args(void)
 		strcpy(kernel_args, "i");
 	}
 #else
+	long result;
+
 	result = cons_getenv(ENV_BOOTED_FILE, boot_file, sizeof(boot_file));
 	if (result < 0) {
 		printf("aboot: warning: can't get ENV_BOOTED_FILE "
