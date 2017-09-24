@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <byteswap.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -46,60 +47,42 @@ struct inode_table_entry {
 	unsigned short		old_mode;
 } inode_table[MAX_OPEN_FILES];
 
-/* Utility functions to byte-swap 16 and 32 bit quantities... */
-
-unsigned short
-swap16 (unsigned short s)
-{
-    return((unsigned short)( ((s << 8) & 0xff00) | ((s >> 8) & 0x00ff)));
-}
-
-unsigned int
-swap32 (unsigned int i)
-{
-    return((unsigned int)(
-                ((i << 24) & 0xff000000) |
-                ((i << 8) & 0x00ff0000) |
-                ((i >> 8) & 0x0000ff00) |
-                ((i >> 24) & 0x000000ff)) );
-}
-
 void
 ext2_swap_sb (struct ext2_super_block *sb)
 {
-    sb->s_inodes_count = swap32(sb->s_inodes_count);
-    sb->s_blocks_count = swap32(sb->s_blocks_count);
-    sb->s_r_blocks_count = swap32(sb->s_r_blocks_count);
-    sb->s_free_blocks_count = swap32(sb->s_free_blocks_count);
-    sb->s_free_inodes_count = swap32(sb->s_free_inodes_count);
-    sb->s_first_data_block = swap32(sb->s_first_data_block);
-    sb->s_log_block_size = swap32(sb->s_log_block_size);
-    sb->s_log_cluster_size = swap32(sb->s_log_cluster_size);
-    sb->s_blocks_per_group = swap32(sb->s_blocks_per_group);
-    sb->s_clusters_per_group = swap32(sb->s_clusters_per_group);
-    sb->s_inodes_per_group = swap32(sb->s_inodes_per_group);
-    sb->s_mtime = swap32(sb->s_mtime);
-    sb->s_wtime = swap32(sb->s_wtime);
-    sb->s_mnt_count = swap16(sb->s_mnt_count);
-    sb->s_max_mnt_count = swap16(sb->s_max_mnt_count);
-    sb->s_magic = swap16(sb->s_magic);
-    sb->s_state = swap16(sb->s_state);
-    sb->s_errors = swap16(sb->s_errors);
-    sb->s_minor_rev_level = swap16(sb->s_minor_rev_level);
-    sb->s_lastcheck = swap32(sb->s_lastcheck);
-    sb->s_checkinterval = swap32(sb->s_checkinterval);
+    sb->s_inodes_count = bswap_32(sb->s_inodes_count);
+    sb->s_blocks_count = bswap_32(sb->s_blocks_count);
+    sb->s_r_blocks_count = bswap_32(sb->s_r_blocks_count);
+    sb->s_free_blocks_count = bswap_32(sb->s_free_blocks_count);
+    sb->s_free_inodes_count = bswap_32(sb->s_free_inodes_count);
+    sb->s_first_data_block = bswap_32(sb->s_first_data_block);
+    sb->s_log_block_size = bswap_32(sb->s_log_block_size);
+    sb->s_log_cluster_size = bswap_32(sb->s_log_cluster_size);
+    sb->s_blocks_per_group = bswap_32(sb->s_blocks_per_group);
+    sb->s_clusters_per_group = bswap_32(sb->s_clusters_per_group);
+    sb->s_inodes_per_group = bswap_32(sb->s_inodes_per_group);
+    sb->s_mtime = bswap_32(sb->s_mtime);
+    sb->s_wtime = bswap_32(sb->s_wtime);
+    sb->s_mnt_count = bswap_16(sb->s_mnt_count);
+    sb->s_max_mnt_count = bswap_16(sb->s_max_mnt_count);
+    sb->s_magic = bswap_16(sb->s_magic);
+    sb->s_state = bswap_16(sb->s_state);
+    sb->s_errors = bswap_16(sb->s_errors);
+    sb->s_minor_rev_level = bswap_16(sb->s_minor_rev_level);
+    sb->s_lastcheck = bswap_32(sb->s_lastcheck);
+    sb->s_checkinterval = bswap_32(sb->s_checkinterval);
 }
 
 void
 ext2_swap_gd (struct ext2_group_desc *gd)
 {
-	gd->bg_block_bitmap = swap32(gd->bg_block_bitmap);
-	gd->bg_inode_bitmap = swap32(gd->bg_inode_bitmap);
-	gd->bg_inode_table = swap32(gd->bg_inode_table);
-	gd->bg_free_blocks_count = swap16(gd->bg_free_blocks_count);
-	gd->bg_free_inodes_count = swap16(gd->bg_free_inodes_count);
-	gd->bg_used_dirs_count = swap16(gd->bg_used_dirs_count);
-	gd->bg_flags = swap16(gd->bg_flags);
+	gd->bg_block_bitmap = bswap_32(gd->bg_block_bitmap);
+	gd->bg_inode_bitmap = bswap_32(gd->bg_inode_bitmap);
+	gd->bg_inode_table = bswap_32(gd->bg_inode_table);
+	gd->bg_free_blocks_count = bswap_16(gd->bg_free_blocks_count);
+	gd->bg_free_inodes_count = bswap_16(gd->bg_free_inodes_count);
+	gd->bg_used_dirs_count = bswap_16(gd->bg_used_dirs_count);
+	gd->bg_flags = bswap_16(gd->bg_flags);
 }
 
 void
@@ -107,25 +90,25 @@ ext2_swap_inode (struct ext2_inode *ip)
 {
     int		i;
 
-    ip->i_mode = swap16(ip->i_mode);
-    ip->i_uid = swap16(ip->i_uid);
-    ip->i_size = swap32(ip->i_size);
-    ip->i_atime = swap32(ip->i_atime);
-    ip->i_ctime = swap32(ip->i_ctime);
-    ip->i_mtime = swap32(ip->i_mtime);
-    ip->i_dtime = swap32(ip->i_dtime);
-    ip->i_gid = swap16(ip->i_gid);
-    ip->i_links_count = swap16(ip->i_links_count);
-    ip->i_blocks = swap32(ip->i_blocks);
-    ip->i_flags = swap32(ip->i_flags);
-    ip->osd1.linux1.l_i_version = swap32(ip->osd1.linux1.l_i_version);
+    ip->i_mode = bswap_16(ip->i_mode);
+    ip->i_uid = bswap_16(ip->i_uid);
+    ip->i_size = bswap_32(ip->i_size);
+    ip->i_atime = bswap_32(ip->i_atime);
+    ip->i_ctime = bswap_32(ip->i_ctime);
+    ip->i_mtime = bswap_32(ip->i_mtime);
+    ip->i_dtime = bswap_32(ip->i_dtime);
+    ip->i_gid = bswap_16(ip->i_gid);
+    ip->i_links_count = bswap_16(ip->i_links_count);
+    ip->i_blocks = bswap_32(ip->i_blocks);
+    ip->i_flags = bswap_32(ip->i_flags);
+    ip->osd1.linux1.l_i_version = bswap_32(ip->osd1.linux1.l_i_version);
     for(i = 0; i < EXT2_N_BLOCKS; i++) {
-	ip->i_block[i] = swap32(ip->i_block[i]);
+	ip->i_block[i] = bswap_32(ip->i_block[i]);
     }
-    ip->i_generation = swap32(ip->i_generation);
-    ip->i_file_acl = swap32(ip->i_file_acl);
-    ip->i_dir_acl = swap32(ip->i_dir_acl);
-    ip->i_faddr = swap32(ip->i_faddr);
+    ip->i_generation = bswap_32(ip->i_generation);
+    ip->i_file_acl = bswap_32(ip->i_file_acl);
+    ip->i_dir_acl = bswap_32(ip->i_dir_acl);
+    ip->i_faddr = bswap_32(ip->i_faddr);
 }
 
 
@@ -172,13 +155,13 @@ ext2_init (char * name, int access)
 	return(-1);
     }
 
-    if((sb.s_magic != EXT2_SUPER_MAGIC) && (sb.s_magic != swap16(EXT2_SUPER_MAGIC))) {
+    if((sb.s_magic != EXT2_SUPER_MAGIC) && (sb.s_magic != bswap_16(EXT2_SUPER_MAGIC))) {
 	fprintf(stderr, "ext2 bad magic 0x%x\n", sb.s_magic);
 	close(fd);
 	return(-1);
     }
 
-    if(sb.s_magic == swap32(EXT2_SUPER_MAGIC)) {
+    if(sb.s_magic == bswap_32(EXT2_SUPER_MAGIC)) {
 	big_endian = 1;
 
 	/* Byte-swap the fields in the superblock... */
@@ -432,7 +415,7 @@ find_first_zero_bit (unsigned int * addr, unsigned size)
 	lwsize = (size + BITS_PER_LONG - 1) >> 5;
 	for (longword = 0; longword < lwsize; longword++, ap++) {
 	    if(*ap != 0xffffffff) {
-		lwval = big_endian ? swap32(*ap) : *ap;
+		lwval = big_endian ? bswap_32(*ap) : *ap;
 
 		for (bit = 0, mask = 1; bit < BITS_PER_LONG; bit++, mask <<= 1)
 		{
@@ -451,9 +434,9 @@ set_bit (unsigned int *addr, int bitno)
 {
     if(big_endian) {
 	int	lwval;
-	lwval = swap32(addr[bitno/BITS_PER_LONG]);
+	lwval = bswap_32(addr[bitno/BITS_PER_LONG]);
 	lwval |= (1 << (bitno % BITS_PER_LONG));
-	addr[bitno/BITS_PER_LONG] = swap32(lwval);
+	addr[bitno/BITS_PER_LONG] = bswap_32(lwval);
     }
     else {
         addr[bitno / BITS_PER_LONG] |= (1 << (bitno % BITS_PER_LONG));
@@ -465,9 +448,9 @@ clear_bit (unsigned int *addr, int bitno)
 {
     if(big_endian) {
 	int	lwval;
-	lwval = swap32(addr[bitno/BITS_PER_LONG]);
+	lwval = bswap_32(addr[bitno/BITS_PER_LONG]);
 	lwval &= ~((unsigned int)(1 << (bitno % BITS_PER_LONG)));
-	addr[bitno/BITS_PER_LONG] = swap32(lwval);
+	addr[bitno/BITS_PER_LONG] = bswap_32(lwval);
     }
     else {
         addr[bitno / BITS_PER_LONG] &= 
@@ -704,7 +687,7 @@ ext2_fill_contiguous (struct ext2_inode * ip, int nblocks)
 	    ip->i_block[i] = firstblock+i;
 	}
 	else {
-	    *lp++ = big_endian ? swap32(firstblock+i) : firstblock+i;
+	    *lp++ = big_endian ? bswap_32(firstblock+i) : firstblock+i;
 	}
     }
 
@@ -850,7 +833,7 @@ ext2_blkno (struct ext2_inode *ip, int blkoff, int allocate)
 	bread(iblkno, blkbuf);
 	
 	if(big_endian) {
-	    blkno = swap32(lp[blkoff-(directlim+1)]);
+	    blkno = bswap_32(lp[blkoff-(directlim+1)]);
 	}
 	else {
 	    blkno = lp[blkoff-(directlim+1)];
@@ -859,7 +842,7 @@ ext2_blkno (struct ext2_inode *ip, int blkoff, int allocate)
 	    /* No block allocated but we need one. */
 	    if(big_endian) {
 		blkno = ext2_balloc();
-		lp[blkoff-(directlim+1)] = swap32(blkno);
+		lp[blkoff-(directlim+1)] = bswap_32(blkno);
 	    }
 	    else {
 	        blkno = lp[blkoff-(directlim+1)] = ext2_balloc();
@@ -907,7 +890,7 @@ ext2_blkno (struct ext2_inode *ip, int blkoff, int allocate)
 	/* Find the single-indirect block pointer ... */
 	iblkno = lp[(blkoff - (ind1lim+1)) / ptrs_per_blk];
 	if(big_endian) {
-		iblkno = swap32(iblkno);
+		iblkno = bswap_32(iblkno);
 	}
 
 	if((iblkno == 0) && allocate) {
@@ -922,7 +905,7 @@ ext2_blkno (struct ext2_inode *ip, int blkoff, int allocate)
 	    if(verbose) {
 		printf("Allocated single-indirect block %d\n", iblkno);
 	    }
-	    lp[(blkoff-(ind1lim+1)) / ptrs_per_blk] = big_endian ? swap32(iblkno) :  iblkno;
+	    lp[(blkoff-(ind1lim+1)) / ptrs_per_blk] = big_endian ? bswap_32(iblkno) :  iblkno;
 	    bwrite(diblkno, blkbuf);
 
 	    memset(blkbuf, 0, blocksize);
@@ -940,13 +923,13 @@ ext2_blkno (struct ext2_inode *ip, int blkoff, int allocate)
 	/* Find the block itself. */
 	blkno = lp[(blkoff-(ind1lim+1)) % ptrs_per_blk];
 	if(big_endian) {
-		blkno = swap32(blkno);
+		blkno = bswap_32(blkno);
 	}
 	if((blkno == 0) && allocate) {
 	    /* No block allocated but we need one. */
 	    if(big_endian) {
 		blkno = ext2_balloc();
-		lp[(blkoff-(ind1lim+1)) % ptrs_per_blk] = swap32(blkno);
+		lp[(blkoff-(ind1lim+1)) % ptrs_per_blk] = bswap_32(blkno);
 	    }
 	    else {
 	        blkno = lp[(blkoff-(ind1lim+1)) % ptrs_per_blk] = ext2_balloc();
@@ -1120,15 +1103,15 @@ ext2_namei (char *name)
 		int namelen;
 
 	        dp = (struct ext2_dir_entry *)(dirbuf+blockoffset);
-		namelen = big_endian ? swap16(dp->name_len) : dp->name_len;
+		namelen = big_endian ? bswap_16(dp->name_len) : dp->name_len;
 		if((namelen == component_length) &&
 		   (strncmp(component, dp->name, component_length) == 0)) {
 			/* Found it! */
-			next_ino = big_endian ? swap32(dp->inode) : dp->inode;
+			next_ino = big_endian ? bswap_32(dp->inode) : dp->inode;
 			break;
 		}
 		/* Go to next entry in this block */
-		blockoffset += (big_endian ? swap16(dp->rec_len) : dp->rec_len);
+		blockoffset += (big_endian ? bswap_16(dp->rec_len) : dp->rec_len);
 	    }
 	    if(next_ino >= 0) {
 		break;
@@ -1195,9 +1178,9 @@ ext2_mknod (struct ext2_inode *dip, char * name, int ino)
 	while(blockoffset < blocksize) {
 
 	    dp = (struct ext2_dir_entry *)(dirbuf+blockoffset);
-	    dp_inode = big_endian ? swap32(dp->inode) : dp->inode;
-	    dp_reclen = big_endian ? swap16(dp->rec_len) : dp->rec_len;
-	    dp_namelen = big_endian ? swap16(dp->name_len) : dp->name_len;
+	    dp_inode = big_endian ? bswap_32(dp->inode) : dp->inode;
+	    dp_reclen = big_endian ? bswap_16(dp->rec_len) : dp->rec_len;
+	    dp_namelen = big_endian ? bswap_16(dp->name_len) : dp->name_len;
 
 	    if((dp_inode == 0) && (dp_reclen >= EXT2_DIR_REC_LEN(namelen))) {
 		/* Found an *empty* entry that can hold this name. */
@@ -1216,18 +1199,18 @@ ext2_mknod (struct ext2_inode *dip, char * name, int ino)
 
 		/* Chop the in-use entry down to size */
 		if(big_endian) {
-		    dp_reclen = EXT2_DIR_REC_LEN(swap16(dp->name_len));
+		    dp_reclen = EXT2_DIR_REC_LEN(bswap_16(dp->name_len));
 		}
 		else {
 		    dp_reclen = EXT2_DIR_REC_LEN(dp->name_len);
 		}
-		dp->rec_len = big_endian ? swap16(dp_reclen) : dp_reclen;
+		dp->rec_len = big_endian ? bswap_16(dp_reclen) : dp_reclen;
 		
 		/* Point entry_dp to the end of this entry */
 		entry_dp = (struct ext2_dir_entry *)((char*)dp + dp_reclen);
 
 		/* Set the record length for this entry */
-		entry_dp->rec_len = big_endian ? swap16(new_reclen) : new_reclen;
+		entry_dp->rec_len = big_endian ? bswap_16(new_reclen) : new_reclen;
 
 		/* all set! */
 		break;
@@ -1257,17 +1240,17 @@ ext2_mknod (struct ext2_inode *dip, char * name, int ino)
      *  this entry...
      */
     if(entry_dp) {
-	entry_dp->inode = big_endian ? swap32(ino) : ino;
-	entry_dp->name_len = big_endian ? swap16(namelen) : namelen;
+	entry_dp->inode = big_endian ? bswap_32(ino) : ino;
+	entry_dp->name_len = big_endian ? bswap_16(namelen) : namelen;
 	strncpy(entry_dp->name, name, namelen);
 	ext2_bwrite(dip, diroffset/blocksize, dirbuf);
     }
     else {
 	entry_dp = (struct ext2_dir_entry *)dirbuf;
-	entry_dp->inode = big_endian ? swap32(ino) : ino;
-	entry_dp->name_len = big_endian ? swap16(namelen) : namelen;
+	entry_dp->inode = big_endian ? bswap_32(ino) : ino;
+	entry_dp->name_len = big_endian ? bswap_16(namelen) : namelen;
 	strncpy(entry_dp->name, name, namelen);
-	entry_dp->rec_len = big_endian ? swap16(blocksize) : blocksize;
+	entry_dp->rec_len = big_endian ? bswap_16(blocksize) : blocksize;
 	ext2_bwrite(dip, dip->i_size/blocksize, dirbuf);
 	dip->i_size += blocksize;
     }
@@ -1316,9 +1299,9 @@ ext2_remove_entry (char *name)
 	    ext2_bread(dir_inode, diroffset / blocksize, dirbuf);
 	    while(blockoffset < blocksize) {
 	        dp = (struct ext2_dir_entry *)(dirbuf+blockoffset);
-		dp_inode = big_endian ? swap32(dp->inode) : dp->inode;
-		dp_reclen = big_endian ? swap16(dp->rec_len) : dp->rec_len;
-		dp_namelen = big_endian ? swap16(dp->name_len) : dp->name_len;
+		dp_inode = big_endian ? bswap_32(dp->inode) : dp->inode;
+		dp_reclen = big_endian ? bswap_16(dp->rec_len) : dp->rec_len;
+		dp_namelen = big_endian ? bswap_16(dp->name_len) : dp->name_len;
 
 		if((dp_namelen == component_length) &&
 		   (strncmp(component, dp->name, component_length) == 0)) {
@@ -1333,7 +1316,7 @@ ext2_remove_entry (char *name)
 			    if(pdp) {
 				if(big_endian) {
 				    pdp->rec_len = 
-					swap16(swap16(pdp->rec_len)+dp_reclen);
+					bswap_16(bswap_16(pdp->rec_len)+dp_reclen);
 				}
 				else {
 				    pdp->rec_len += dp_reclen;
@@ -1439,7 +1422,7 @@ ext2_free_indirect (int indirect_blkno, int level)
 	    /* These are pointers to data blocks; just free them up */
 	    if(indirect_block[i]) {
 		if(big_endian) {
-	            ext2_bfree(swap32(indirect_block[i]));
+	            ext2_bfree(bswap_32(indirect_block[i]));
 		}
 		else {
 	            ext2_bfree(indirect_block[i]);
@@ -1451,7 +1434,7 @@ ext2_free_indirect (int indirect_blkno, int level)
 	    /* These are pointers to *indirect* blocks.  Go down the chain */
 	    if(indirect_block[i]) {
 		if(big_endian) {
-		    ext2_free_indirect(swap32(indirect_block[i]), level-1);
+		    ext2_free_indirect(bswap_32(indirect_block[i]), level-1);
 		}
 		else {
 		    ext2_free_indirect(indirect_block[i], level-1);

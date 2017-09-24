@@ -15,6 +15,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <byteswap.h>
 
 #include <sys/stat.h>
 
@@ -41,8 +42,6 @@ struct  boot_block {
 #define CONSOLE_BLOCK_SIZE	512
 
 extern int big_endian;
-extern unsigned short swap16();
-extern unsigned int swap32();
 
 
 int
@@ -237,14 +236,14 @@ main(int argc, char ** argv)
 	/* Need to flip the bootblock fields so they come out
 	 * right on disk...
 	 */
-	bbp->count   = (((u_int64_t) swap32(bbp->count & 0xffffffff) << 32)
-			| swap32(bbp->count >> 32));
-	bbp->lbn     = (((u_int64_t) swap32(bbp->lbn & 0xffffffff) << 32)
-			| swap32(bbp->lbn >> 32));
-	bbp->flags   = (((u_int64_t) swap32(bbp->flags & 0xffffffff) << 32)
-			| swap32(bbp->flags >> 32));
-	bbp->chk_sum = (((u_int64_t) swap32(bbp->chk_sum & 0xffffffff) << 32)
-			| swap32(bbp->chk_sum >> 32));
+	bbp->count   = (((u_int64_t) bswap_32(bbp->count & 0xffffffff) << 32)
+			| bswap_32(bbp->count >> 32));
+	bbp->lbn     = (((u_int64_t) bswap_32(bbp->lbn & 0xffffffff) << 32)
+			| bswap_32(bbp->lbn >> 32));
+	bbp->flags   = (((u_int64_t) bswap_32(bbp->flags & 0xffffffff) << 32)
+			| bswap_32(bbp->flags >> 32));
+	bbp->chk_sum = (((u_int64_t) bswap_32(bbp->chk_sum & 0xffffffff) << 32)
+			| bswap_32(bbp->chk_sum >> 32));
     }
 
     ext2_write_bootblock((char *) bbp);
