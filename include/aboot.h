@@ -34,7 +34,6 @@ extern unsigned long	initrd_start, initrd_size;
 /* page size is in the INIT_HWRPB */
 extern unsigned long	page_offset, page_shift;
 
-extern long		first_block (const unsigned char *buf, long blocksize);
 extern unsigned long	switch_to_osf_pal (unsigned long nr,
 					   struct pcb_struct *pcb_va,
 					   struct pcb_struct *pcb_pa,
@@ -46,6 +45,9 @@ unsigned long		simple_strtoul(const char *cp, char **endp,
 				       unsigned int base);
 extern void		run_kernel (unsigned long entry, unsigned long stack)
 			__attribute__((noreturn));
+
+/* From aboot.c */
+long is_loadable_elf(const unsigned char *buf, long blocksize);
 
 /* From disk.c */
 long load_kernel(void);

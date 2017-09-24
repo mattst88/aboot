@@ -226,7 +226,7 @@ flush_window(void)
 	updcrc(window, outcnt);
 
 	if (!bytes_out) /* first block - look for headers */
-		if (first_block(window, outcnt) < 0)
+		if (is_loadable_elf(window, outcnt) < 0)
 			unzip_error("invalid exec header"); /* does a longjmp() */
 
 	bytes_out += outcnt;

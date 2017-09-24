@@ -62,12 +62,13 @@ unsigned long   page_shift  = 13;
 static unsigned long entry_addr = START_ADDR;
 
 /*
- * The decompression code calls this function after decompressing the
- * first block of the object file.  The first block must contain all
- * the relevant header information.
+ * Checks if content of buf contain a valid ELF header.
+ * Each ELF section is checked whether it can be loaded in
+ * memory.
+ * The function returns 0 on success or -1 on failure.
  */
 long
-first_block (const unsigned char *buf, long blocksize)
+is_loadable_elf(const unsigned char *buf, long blocksize)
 {
 	Elf64_Ehdr *elf;
 	Elf64_Phdr *phdrs;
