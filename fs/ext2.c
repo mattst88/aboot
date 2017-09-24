@@ -12,6 +12,7 @@
 #include "bootfs.h"
 #include "cons.h"
 #include "disklabel.h"
+#include "ext4.h"
 #include "utils.h"
 #include <string.h>
 
@@ -297,11 +298,62 @@ static int ext2_blkno(struct ext2_inode *ip, int blkoff)
 	return -1;
 }
 
+static int ext4_breadi(struct ext2_inode *ip, long blkno, long nblks, char *buffer)
+{
+	long tot_bytes = 0;
 
-static int ext2_breadi(struct ext2_inode *ip, long blkno, long nblks,
-		       char *buffer)
+	struct ext4_extent_header *hdr;
+	hdr = (struct ext4_extent_header *)&ip->i_block[0];
+
+	if (hdr->eh_magic != EXT4_EXT_MAGIC) {
+		printf("ext4_breadi: Extent header magic wrong.\n");
+		return -1;
+	}
+
+	if (hdr->eh_entries != 1) {
+		printf("ext4_breadi: Extent entries must be 1.\n");
+		return -1;
+	}
+
+	struct ext4_extent *ext;
+	ext = (struct ext4_extent *)&ip->i_block[3];
+
+	if (ext->ee_block != 0) {
+		printf("ext4_breadi: First logical block must be 0.\n");
+		return -1;
+	}
+
+	if (nblks > ext->ee_len) {
+		printf("ext4_breadi: Request nblks greater than extent len.\n");
+		return -1;
+	}
+
+	long ee_start = ((long)ext->ee_start_hi << 32) + ext->ee_start_lo;
+
+	if (blkno + nblks > ext->ee_len) {
+		nblks = ext->ee_len - blkno;
+	}
+
+	long offset = partition_offset + (ee_start + blkno) * ext2fs.blocksize;
+	long nbytes = nblks * ext2fs.blocksize;
+
+	tot_bytes = cons_read(dev, buffer, nbytes, offset);
+	if (tot_bytes != nbytes) {
+		printf("ext4_breadi: cons_read failed.\n");
+		return -1;
+	}
+
+	return tot_bytes;
+}
+
+static int ext2_breadi(struct ext2_inode *ip, long blkno, long nblks, char *buffer)
 {
 	long dev_blkno, ncontig, offset, nbytes, tot_bytes;
+
+	if (ip->i_flags & EXT4_EXTENTS_FL) {
+		printf("ext2_breadi: This function does not handle ext4 extents\n");
+		return -1;
+	}
 
 	tot_bytes = 0;
 	if ((blkno+nblks)*ext2fs.blocksize > ip->i_size)
@@ -343,6 +395,14 @@ static int ext2_breadi(struct ext2_inode *ip, long blkno, long nblks,
 	return tot_bytes;
 }
 
+static int extn_breadi(struct ext2_inode *ip, long blkno, long nblks, char *buffer) {
+	if (ip->i_flags & EXT4_EXTENTS_FL) {
+		return ext4_breadi(ip, blkno, nblks, buffer);
+	} else {
+		return ext2_breadi(ip, blkno, nblks, buffer);
+	}
+}
+
 static struct ext2_dir_entry_2 *ext2_readdiri(struct ext2_inode *dir_inode,
 					      int rewind)
 {
@@ -354,7 +414,7 @@ static struct ext2_dir_entry_2 *ext2_readdiri(struct ext2_inode *dir_inode,
 		diroffset = 0;
 		blockoffset = 0;
 		/* read first block */
-		if (ext2_breadi(dir_inode, 0, 1, blkbuf) < 0)
+		if (extn_breadi(dir_inode, 0, 1, blkbuf) < 0)
 			return NULL;
 	}
 
@@ -371,7 +431,7 @@ static struct ext2_dir_entry_2 *ext2_readdiri(struct ext2_inode *dir_inode,
 			diroffset);
 #endif
 		/* assume that this will read the whole block */
-		if (ext2_breadi(dir_inode,
+		if (extn_breadi(dir_inode,
 				diroffset / ext2fs.blocksize,
 				1, blkbuf) < 0)
 			return NULL;
@@ -479,7 +539,8 @@ static int ext2_bread(int fd, long blkno, long nblks, char *buffer)
 {
 	struct ext2_inode * ip;
 	ip = &inode_table[fd].inode;
-	return ext2_breadi(ip, blkno, nblks, buffer);
+
+	return extn_breadi(ip, blkno, nblks, buffer);
 }
 
 /*
@@ -533,7 +594,7 @@ static struct ext2_inode * ext2_follow_link(struct ext2_inode * from,
 
 	if (from->i_blocks) {
 		linkto = blkbuf;
-		if (ext2_breadi(from, 0, 1, blkbuf) == -1)
+		if (extn_breadi(from, 0, 1, blkbuf) == -1)
 			return NULL;
 #ifdef DEBUG_EXT2
 		printf("long link!\n");
