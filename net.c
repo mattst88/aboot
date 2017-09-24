@@ -37,7 +37,6 @@ dang (void)
 	printf("aboot: oops, unimplemented net-bfs function called!\n");
 }
 
-extern char _end;
 static char *src = 0;
 static char *kern_src=0, *ird_src=0;
 static int  header_size=0, kern_size=0, ird_size=0;

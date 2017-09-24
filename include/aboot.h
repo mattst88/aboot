@@ -50,6 +50,9 @@ extern void		run_kernel (unsigned long entry, unsigned long stack)
 /* From aboot.c */
 bool is_loadable_elf(const unsigned char *buf, long blocksize);
 
+/* From aboot.lds */
+extern char _end; /* The program break. The address where the program ends. */
+
 /* From disk.c */
 long load_kernel(void);
 

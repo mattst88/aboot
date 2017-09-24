@@ -61,7 +61,6 @@ static struct bootfs *bootfs[] = {
 int
 load_raw (long dev)
 {
-	extern char _end;
 	unsigned char *buf;
 	long aboot_size = &_end - (char *) BOOT_ADDR;
 	long ksect = (aboot_size + SECT_SIZE - 1) / SECT_SIZE + BOOT_SECTOR;

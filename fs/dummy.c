@@ -35,7 +35,6 @@ dummy_mount(long cons_dev, long p_offset, long quiet)
 static int
 dummy_bread(int fd, long blkno, long nblks, char *buffer)
 {
-	extern char _end;
 	static long aboot_size = 0;
 
 	if (!aboot_size) {
