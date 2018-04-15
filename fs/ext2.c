@@ -44,11 +44,11 @@ static int directlim;			/* Maximum direct blkno */
 static int ind1lim;			/* Maximum single-indir blkno */
 static int ind2lim;			/* Maximum double-indir blkno */
 static int ptrs_per_blk;		/* ptrs/indirect block */
-static char blkbuf[EXT2_MAX_BLOCK_SIZE];
+static char *blkbuf;
 static int cached_iblkno = -1;
-static char iblkbuf[EXT2_MAX_BLOCK_SIZE];
+static char *iblkbuf;
 static int cached_diblkno = -1;
-static char diblkbuf[EXT2_MAX_BLOCK_SIZE];
+static char *diblkbuf;
 static long dev = -1;
 static long partition_offset;
 
@@ -108,6 +108,9 @@ static int ext2_mount(long cons_dev, long p_offset, long quiet)
 	          malloc((size_t)(ngroups * sizeof(struct ext2_group_desc)));
 
 	ext2fs.blocksize = EXT2_BLOCK_SIZE(&sb);
+	blkbuf = malloc(ext2fs.blocksize);
+	iblkbuf = malloc(ext2fs.blocksize);
+	diblkbuf = malloc(ext2fs.blocksize);
 
 	/* read in the group descriptors (immediately follows superblock) */
 	cons_read(dev, gds, ngroups * sizeof(struct ext2_group_desc),
