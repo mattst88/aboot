@@ -41,9 +41,6 @@ struct  boot_block {
 
 #define CONSOLE_BLOCK_SIZE	512
 
-extern int big_endian;
-
-
 int
 main(int argc, char ** argv)
 {
@@ -231,20 +228,6 @@ main(int argc, char ** argv)
 	checksum += lbp[i];
     }
     bbp->chk_sum = checksum;
-
-    if(big_endian) {
-	/* Need to flip the bootblock fields so they come out
-	 * right on disk...
-	 */
-	bbp->count   = (((u_int64_t) bswap_32(bbp->count & 0xffffffff) << 32)
-			| bswap_32(bbp->count >> 32));
-	bbp->lbn     = (((u_int64_t) bswap_32(bbp->lbn & 0xffffffff) << 32)
-			| bswap_32(bbp->lbn >> 32));
-	bbp->flags   = (((u_int64_t) bswap_32(bbp->flags & 0xffffffff) << 32)
-			| bswap_32(bbp->flags >> 32));
-	bbp->chk_sum = (((u_int64_t) bswap_32(bbp->chk_sum & 0xffffffff) << 32)
-			| bswap_32(bbp->chk_sum >> 32));
-    }
 
     ext2_write_bootblock((char *) bbp);
 
