@@ -150,30 +150,6 @@ ext2_blocksize (void)
     return blocksize;
 }
 
-int
-ext2_total_blocks (void)
-{
-    return sb.s_blocks_count;
-}
-
-int
-ext2_free_blocks (void)
-{
-    return sb.s_free_blocks_count;
-}
-
-int
-ext2_total_inodes (void)
-{
-    return sb.s_inodes_count;
-}
-
-int
-ext2_free_inodes (void)
-{
-    return sb.s_free_inodes_count;
-}
-
 /* Call this when we're all done with the file system.  This will write
  * back any superblock and group changes to the file system.
  */
@@ -856,82 +832,6 @@ ext2_bwrite (struct ext2_inode *ip, int blkno, char * buffer)
     }
 }
 
-/* More convenient forms of ext2_bread/ext2_bwrite.  These allow arbitrary
- * data alignment and buffer sizes...
- */
-int
-ext2_seek_and_read (struct ext2_inode *ip, int offset, char *buffer, int count)
-{
-    int		blkno;
-    int		blkoffset;
-    int		bytesleft;
-    int		nread;
-    int		iosize;
-    char	*bufptr;
-    char	blkbuf[EXT2_MAX_BLOCK_SIZE];
-
-    bufptr = buffer;
-    bytesleft = count;
-    nread = 0;
-    blkno = offset / blocksize;
-    blkoffset = offset % blocksize;
-
-    while(bytesleft > 0) {
-	iosize = ((blocksize-blkoffset) > bytesleft) ?
-				bytesleft : (blocksize-blkoffset);
-	if((blkoffset == 0) && (iosize == blocksize)) {
-	    ext2_bread(ip, blkno, bufptr);
-	}
-	else {
-	    ext2_bread(ip, blkno, blkbuf);
-	    memcpy(bufptr, blkbuf+blkoffset, iosize);
-	}
-   	bytesleft -= iosize;
-	bufptr += iosize;
-	nread += iosize;
-	blkno++;
-	blkoffset = 0;
-    }
-    return(nread);
-}
-
-int
-ext2_seek_and_write (struct ext2_inode *ip, int offset, char *buffer, int count)
-{
-    int		blkno;
-    int		blkoffset;
-    int		bytesleft;
-    int		nwritten;
-    int		iosize;
-    char	*bufptr;
-    char	blkbuf[EXT2_MAX_BLOCK_SIZE];
-
-    bufptr = buffer;
-    bytesleft = count;
-    nwritten = 0;
-    blkno = offset / blocksize;
-    blkoffset = offset % blocksize;
-
-    while(bytesleft > 0) {
-	iosize = ((blocksize-blkoffset) > bytesleft) ?
-				bytesleft : (blocksize-blkoffset);
-	if((blkoffset == 0) && (iosize == blocksize)) {
-	    ext2_bwrite(ip, blkno, bufptr);
-	}
-	else {
-	    ext2_bread(ip, blkno, blkbuf);
-	    memcpy(blkbuf+blkoffset, bufptr, iosize);
-	    ext2_bwrite(ip, blkno, blkbuf);
-	}
-   	bytesleft -= iosize;
-	bufptr += iosize;
-	nwritten += iosize;
-	blkno++;
-	blkoffset = 0;
-    }
-    return(nwritten);
-}
-
 struct ext2_inode *
 ext2_namei (char *name)
 {
@@ -1116,114 +1016,6 @@ ext2_mknod (struct ext2_inode *dip, char * name, int ino)
     }
 }
 
-/* This is a close cousin to namei, only it *removes* the entry
- * in addition to finding it.  This routine assumes that the specified
- * entry has already been found...
- */
-void
-ext2_remove_entry (char *name)
-{
-    char 	namebuf[256];
-    char 	dirbuf[EXT2_MAX_BLOCK_SIZE];
-    char *	component;
-    struct ext2_inode *		dir_inode;
-    struct ext2_dir_entry *dp;
-    int		next_ino;
-    int		dp_inode, dp_reclen, dp_namelen;
-
-    /* Squirrel away a copy of "namebuf" that we can molest */
-    strcpy(namebuf, name);
-
-    /* Start at the root... */
-    dir_inode = ext2_iget(EXT2_ROOT_INO);
-
-    component = strtok(namebuf, "/");
-    while(component) {
-	unsigned diroffset;
-	int blockoffset, component_length;
-	char *next_component;
-	struct ext2_dir_entry * pdp;
-
-	/* Search for the specified component in the current directory
-	 * inode.
-	 */
-
-	next_component = NULL;
-	pdp = NULL;
-	next_ino = -1;
-
-	component_length = strlen(component);
-	diroffset = 0;
-	while (diroffset < dir_inode->i_size) {
-	    blockoffset = 0;
-	    ext2_bread(dir_inode, diroffset / blocksize, dirbuf);
-	    while(blockoffset < blocksize) {
-	        dp = (struct ext2_dir_entry *)(dirbuf+blockoffset);
-		dp_inode = dp->inode;
-		dp_reclen = dp->rec_len;
-		dp_namelen = dp->name_len;
-
-		if((dp_namelen == component_length) &&
-		   (strncmp(component, dp->name, component_length) == 0)) {
-			/* Found it! */
-			next_component = strtok(NULL, "/");
-			if(next_component == NULL) {
-			    /* We've found the entry that needs to be
-			     * zapped.  If it's at the beginning of the
-			     * block, then zap it.  Otherwise, coalesce
-			     * it with the previous entry.
-			     */
-			    if(pdp) {
-				pdp->rec_len += dp_reclen;
-			    }
-			    else {
-				dp->inode = 0;
-				dp->name_len = 0;
-			    }
-	    		    ext2_bwrite(dir_inode, diroffset / blocksize, dirbuf);
-			    return;
-			}
-			next_ino = dp_inode;
-			break;
-		}
-		/* Go to next entry in this block */
-		pdp = dp;
-		blockoffset += dp_reclen;
-	    }
-	    if(next_ino >= 0) {
-		break;
-	    }
-
-	    /* If we got here, then we didn't find the component.
-	     * Try the next block in this directory...
-	     */
-	    diroffset += blocksize;
-	}
-
-	/* At this point, we're done with this directory whether
-	 * we've succeeded or failed...
-	 */
-	ext2_iput(dir_inode);
-
-	/* If next_ino is negative, then we've failed (gone all the
-	 * way through without finding anything)
-	 */
-	if(next_ino < 0) {
-	    return;
-	}
-
-	/* Otherwise, we can get this inode and find the next
-	 * component string...
-	 */
-	dir_inode = ext2_iget(next_ino);
-
-	component = next_component;
-    }
-
-    ext2_iput(dir_inode);
-}
-
-
 void
 ext2_truncate (struct ext2_inode *ip)
 {
@@ -1288,13 +1080,4 @@ ext2_free_indirect (int indirect_blkno, int level)
 	}
     }
     ext2_bfree(indirect_blkno);
-}
-
-int
-ext2_get_inumber (struct ext2_inode *ip)
-{
-    struct inode_table_entry *itp;
-
-    itp = (struct inode_table_entry *)ip;
-    return(itp->inumber);
 }
