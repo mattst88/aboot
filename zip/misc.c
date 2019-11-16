@@ -127,7 +127,7 @@ updcrc(unsigned char *s, unsigned n)
 /*
  * Clear input and output buffers
  */
-void
+static void
 clear_bufs(void)
 {
 	outcnt = 0;

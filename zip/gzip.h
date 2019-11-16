@@ -85,7 +85,6 @@ void unzip(int in, int out);
 
 /* in misc.c: */
 unsigned long updcrc(unsigned char *s, unsigned n);
-void clear_bufs(void);
 int  fill_inbuf(void);
 void flush_window(void);
 void unzip_error(char *m);
