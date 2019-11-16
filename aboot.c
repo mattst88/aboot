@@ -65,9 +65,8 @@ static unsigned long entry_addr = START_ADDR;
  * Checks if content of buf contain a valid ELF header.
  * Each ELF section is checked whether it can be loaded in
  * memory.
- * The function returns 0 on success or -1 on failure.
  */
-long
+bool
 is_loadable_elf(const unsigned char *buf, long blocksize)
 {
 	Elf64_Ehdr *elf;
@@ -82,20 +81,20 @@ is_loadable_elf(const unsigned char *buf, long blocksize)
 	    || elf->e_ident[3] != 'F')
 	{
 		/* Fail silently, it might be a compressed file */
-		return -1;
+		return false;
 	}
 	if (elf->e_ident[EI_CLASS] != ELFCLASS64
 	    || elf->e_ident[EI_DATA] != ELFDATA2LSB
 	    || elf->e_machine != EM_ALPHA)
 	{
 		printf("aboot: ELF executable not for this machine\n");
-		return -1;
+		return false;
 	}
 
 	/* Looks like an ELF binary. */
 	if (elf->e_type != ET_EXEC) {
 		printf("aboot: not an executable ELF file\n");
-		return -1;
+		return false;
 	}
 
 	if (elf->e_phoff + elf->e_phnum * sizeof(*phdrs) > (unsigned) blocksize)
@@ -103,7 +102,7 @@ is_loadable_elf(const unsigned char *buf, long blocksize)
 		printf("aboot: "
 		       "ELF program headers not in first block (%ld)\n",
 		       (long) elf->e_phoff);
-		return -1;
+		return false;
 	}
 
 	phdrs = (Elf64_Phdr *) (buf + elf->e_phoff);
@@ -143,7 +142,7 @@ is_loadable_elf(const unsigned char *buf, long blocksize)
 			       (status == -ENOMEM) ?
 			          "Not Found" :
 				  "Busy (Reserved)");
-			return -1;
+			return false;
 		}
 #endif
 
@@ -152,7 +151,7 @@ is_loadable_elf(const unsigned char *buf, long blocksize)
 				printf("aboot: Can't load kernel.\n"
 				       "  Multiple BSS segments"
 				       " (PHDR %d)\n", i);
-				return -1;
+				return false;
 			}
 			bss_start = (char *) (phdrs[i].p_vaddr +
 				              phdrs[i].p_filesz);
@@ -166,7 +165,7 @@ is_loadable_elf(const unsigned char *buf, long blocksize)
 	printf("aboot: bss at 0x%p, size %#lx\n", bss_start, bss_size);
 #endif
 
-	return 0;
+	return true;
 }
 
 static void

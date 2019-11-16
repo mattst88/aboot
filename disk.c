@@ -80,7 +80,7 @@ load_raw (long dev)
 		       nread, (long) SECT_SIZE);
 		return -1;
 	}
-	if (is_loadable_elf(buf, SECT_SIZE) < 0) {
+	if (!is_loadable_elf(buf, SECT_SIZE)) {
 		return -1;
 	}
 
@@ -138,7 +138,7 @@ load_uncompressed (int fd)
 		}
 	}
 #endif
-	if (is_loadable_elf(buf, bfs->blocksize) < 0) {
+	if (!is_loadable_elf(buf, bfs->blocksize)) {
 		return -1;
 	}
 

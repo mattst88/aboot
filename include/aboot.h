@@ -2,6 +2,7 @@
 #define aboot_h
 
 #include <stdarg.h>
+#include <stdbool.h>
 #include <sys/types.h>
 
 #include "hwrpb.h"
@@ -47,7 +48,7 @@ extern void		run_kernel (unsigned long entry, unsigned long stack)
 			__attribute__((noreturn));
 
 /* From aboot.c */
-long is_loadable_elf(const unsigned char *buf, long blocksize);
+bool is_loadable_elf(const unsigned char *buf, long blocksize);
 
 /* From disk.c */
 long load_kernel(void);
