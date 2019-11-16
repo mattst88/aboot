@@ -1502,7 +1502,7 @@ static char * get_rock_ridge_symlink(struct iso_inode *inode)
        slp = &rr->u.SL.link;
        while (slen > 1){
 	 if (!rpnt){
-	   rpnt = (char *) malloc (itp->size +1);
+	   rpnt = malloc (itp->size +1);
 	   if (!rpnt) goto out;
 	   *rpnt = 0;
 	 };

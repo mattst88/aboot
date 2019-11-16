@@ -299,8 +299,8 @@ uncompress_kernel(int fd)
 {
 	input_fd = fd;
 
-	inbuf = (unsigned char*) malloc(INBUFSIZ);
-	window = (unsigned char*) malloc(WSIZE);
+	inbuf = malloc(INBUFSIZ);
+	window = malloc(WSIZE);
 
 	clear_bufs();
 	makecrc();

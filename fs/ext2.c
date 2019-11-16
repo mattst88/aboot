@@ -88,8 +88,7 @@ static int ext2_mount(long cons_dev, long p_offset, long quiet)
 		   EXT2_BLOCKS_PER_GROUP(&sb) - 1)
 		/ EXT2_BLOCKS_PER_GROUP(&sb);
 
-	gds = (struct ext2_group_desc *)
-	          malloc((size_t)(ngroups * sizeof(struct ext2_group_desc)));
+	gds = malloc((size_t)(ngroups * sizeof(struct ext2_group_desc)));
 
 	ext2fs.blocksize = EXT2_BLOCK_SIZE(&sb);
 	blkbuf = malloc(ext2fs.blocksize);

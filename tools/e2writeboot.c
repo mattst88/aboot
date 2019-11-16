@@ -100,7 +100,7 @@ main(int argc, char ** argv)
     /* Allocate a buffer to hold the entire bootstrap, then read
      * in the text+data segments.
      */
-    bsbuf = (char *)malloc(bootstrap_size);
+    bsbuf = malloc(bootstrap_size);
     memset(bsbuf, 0, bootstrap_size);
     read(infile, bsbuf, bootstrap_size);
     close(infile);

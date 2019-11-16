@@ -109,7 +109,7 @@ bread(int blkno, void * blkbuf)
 
     buflist[lowcount_buf].blkno = blkno;
     if(!buflist[lowcount_buf].data) {
-	buflist[lowcount_buf].data = (char *)malloc(bio_blocksize);
+	buflist[lowcount_buf].data = malloc(bio_blocksize);
     }
     lseek(bio_fd, blkno * bio_blocksize, 0);
     if(read(bio_fd,buflist[lowcount_buf].data,bio_blocksize)!=bio_blocksize) {
@@ -170,7 +170,7 @@ bwrite(int blkno, void * blkbuf)
 
     buflist[lowcount_buf].blkno = blkno;
     if(!buflist[lowcount_buf].data) {
-	buflist[lowcount_buf].data = (char *)malloc(bio_blocksize);
+	buflist[lowcount_buf].data = malloc(bio_blocksize);
     }
     buflist[lowcount_buf].last_access = ++bio_counter;
     memcpy(buflist[lowcount_buf].data, blkbuf, bio_blocksize);

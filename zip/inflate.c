@@ -256,7 +256,7 @@ DEBG1("3 ");
         z = 1 << j;             /* table entries for j-bit table */
 
         /* allocate and link in new table */
-        q = (struct huft *)malloc((z + 1)*sizeof(struct huft));
+        q = malloc((z + 1)*sizeof(struct huft));
 DEBG1("4 ");
         hufts += z + 1;         /* track memory usage */
         *t = q + 1;             /* link to list for huft_free() */

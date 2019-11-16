@@ -101,8 +101,7 @@ ext2_init (char * name, int access)
     }
 
     ngroups = (sb.s_blocks_count+sb.s_blocks_per_group-1)/sb.s_blocks_per_group;
-    gds = (struct ext2_group_desc *)
-	      malloc((size_t)(ngroups * sizeof(struct ext2_group_desc)));
+    gds = malloc((size_t)(ngroups * sizeof(struct ext2_group_desc)));
 
     /* Read in the group descriptors (immediately follows superblock) */
     if ((size_t) read(fd, gds, ngroups * sizeof(struct ext2_group_desc))
