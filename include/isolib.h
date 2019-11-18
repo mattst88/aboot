@@ -1,12 +1,6 @@
 #ifndef isolib_h
 #define isolib_h
 
-#ifndef __KERNEL_STRICT_NAMES
-  /* ask kernel to be careful about name-space pollution: */
-# define __KERNEL_STRICT_NAMES
-# define fd_set kernel_fd_set
-#endif
-
 int  iso_read_super (void * data, int quiet);
 int  iso_open (const char * filename);
 int  iso_bread (int fd, long blkno, long nblks, char * buffer);

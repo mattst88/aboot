@@ -1,12 +1,6 @@
 #ifndef __disklabel_h__
 #define __disklabel_h__
 
-#ifndef __KERNEL_STRICT_NAMES
-  /* ask kernel to be careful about name-space pollution: */
-# define __KERNEL_STRICT_NAMES
-# define fd_set kernel_fd_set
-#endif
-
 #include <linux/types.h>
 
 #define DISKLABELMAGIC (0x82564557UL)
