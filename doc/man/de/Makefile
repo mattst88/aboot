@@ -2,7 +2,6 @@ all:  srmbootraw.8 aboot.8 aboot.conf.5 abootconf.8 isomarkboot.1 sdisklabel.8  
 
 clean :
 	rm -f *.html srmbootraw.8 srmbootfat.1 sdisklabel.8 isomarkboot.1 abootconf.8 aboot.conf.5 aboot.8 netabootwrap.1 manpage.links manpage.log manpage.refs
-	rm -rf SRM-HOWTO 
 
 %.1: %.sgml
 	docbook2man -d docbook2man-de-spec.pl $<
