@@ -2,6 +2,7 @@
 #include <asm/console.h>
 #include "system.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <string.h>
 #include <sys/stat.h>
