@@ -31,8 +31,8 @@ extern int method;			/* compression method */
 #define WSIZE		 0x8000	/* window size--must be a power of two, and */
 				/*  at least 32K for zip's deflate method */
 
-unsigned char *inbuf;	/* input buffer */
-unsigned char *window;	/* sliding window and suffix table (unlzw) */
+extern unsigned char *inbuf;	/* input buffer */
+extern unsigned char *window;	/* sliding window and suffix table (unlzw) */
 
 extern unsigned insize; /* valid bytes in inbuf */
 extern unsigned inptr;  /* index of next byte to be processed in inbuf */

@@ -19,6 +19,6 @@ struct bootfs {
 	   mix it with other I/O or you will die horribly */
 	const char *	(*readdir)(int fd, int rewind);
 	int	(*fstat)(int fd, struct stat* buf);
-} ext2fs;
+};
 
 #endif /* boot_fs_h */

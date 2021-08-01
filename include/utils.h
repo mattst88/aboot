@@ -19,6 +19,6 @@ void		getline (char *buf, int maxlen);
 
 int		check_memory(unsigned long, unsigned long);
 unsigned long	memory_end(void);
-unsigned long	free_mem_ptr;
+extern unsigned long	free_mem_ptr;
 
 #endif /* utils_h */
